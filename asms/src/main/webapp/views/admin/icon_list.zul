@@ -1,0 +1,46 @@
+<!-- 图标列表 -->
+<borderlayout width="100%" height="100%" autag=""
+              apply="org.zkoss.bind.BindComposer"
+              viewModel="@id('vm') @init('com.sunjet.vm.admin.IconListVM')">
+    <north sclass="c-north">
+        <include src="/views/macros/list_toolbar.zul"/>
+    </north>
+    <center sclass="c-center">
+        <vlayout width="100%" height="100%">
+            <grid id="gridIcon" hflex="true" vflex="true" sclass="list-grid"
+                  model="@bind(vm.resultDTO.pageContent)">
+                <columns sizable="true">
+                    <!--<column hflex="1" label="选择"/>-->
+                    <!--<column hflex="3" label="标识"/>-->
+                    <column width="30px" label="序号" align="center"/>
+                    <column hflex="5" label="图标名称" align="left"/>
+                    <column hflex="4" label="图标" align="left"/>
+                    <column width="60px" label="操作" align="center"/>
+                </columns>
+                <template name="model">
+                    <row>
+                        <!--<checkbox id="${each.objId}" checked="false" onCheck="@command('checkList',objId=each.objId)"/>-->
+                        <!--<label value="${each.objId}"/>-->
+                        <label value="${forEachStatus.index+1}" sclass="label-index"/>
+                        <label value="${each.name}" style="color:rgb(78,116,149);font-weight:700"/>
+                        <span class="${each.name}" style="color:rgb(78,116,149);font-weight:700;font-size:16px"/>
+                        <include src="/views/macros/grid_toolbar.zul"/>
+                        <!--<a style="color:green" id="update_${each.objId}" iconSclass="z-icon-edit" tooltiptext="编辑" href="#" onClick='alert(self.iconSclass)'/>-->
+                        <!--<a style="color:red" id="delete_${each.objId}" iconSclass="z-icon-trash-o" tooltiptext="删除" href="#" onClick='alert(self.id)'/>-->
+                        <!--<image src="images/toolbar/${vm.themeName}/edit.png" onClick='alert(self.src)'/>-->
+                        <!--<image src="images/toolbar/${vm.themeName}/delete.png" onClick='alert(self.src)'/>-->
+                    </row>
+                </template>
+            </grid>
+            <paging
+                    pageSize="@bind(vm.resultDTO.pageSize)"
+                    totalSize="@bind(vm.resultDTO.total)"
+                    pageIncrement="1"
+                    detailed="true"
+                    activePage="@bind(vm.currentPageNo)"
+                    onPaging="@command('gotoPageNo',e=event)"
+                    style="border:0px"
+            />
+        </vlayout>
+    </center>
+</borderlayout>

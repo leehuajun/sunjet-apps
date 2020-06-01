@@ -1,0 +1,62 @@
+<!-- 项目编辑对话框 -->
+<window title="项目信息编辑" border="normal" width="580px" height="260px" sizable="false"
+        style="padding-top:0px;padding-left:0px;" position="@load(vm.window_position)" closable="true"
+        onClose="spaceOwner.detach();"
+        viewModel="@id('vm') @init('com.sunjet.vm.project.ProjectEditDialogVM')"
+        validationMessages="@id('vmsgs')"
+        form="@id('fx') @load(vm.configEntity) @save(vm.configEntity, before='submit')">
+    <borderlayout>
+        <north sclass="c-north" style="border-bottom:1px solid #cccccc">
+            <hlayout>
+                <label value="配置项信息" style="font-weight:700"/>
+                <label value="   -   " style="color:#ccc"/>
+                <label value="@load(fx.comment)" style="color:#ccc"/>
+            </hlayout>
+        </north>
+        <center sclass="c-center" style="border-bottom:1px solid #cccccc">
+            <grid oddRowSclass="none" hflex="1" sclass="form-grid" style="margin-top:10px">
+                <columns>
+                    <column hflex="1"></column>
+                    <column hflex="3"></column>
+                    <column hflex="1"></column>
+                    <column hflex="3"></column>
+                </columns>
+                <rows style="line-height:40px">
+                    <row style="border:none" spans="1,3">
+                        <label value="参数名称 :"/>
+                        <textbox constraint="no empty" value="@bind(fx.configKey)"
+                                 width="150px" tabindex="1" readonly="true"/>
+                    </row>
+                    <row style="border:none;height:50px">
+                        <label value="当前值 :"/>
+                        <textbox constraint="no empty" value="@bind(fx.configValue)"
+                                 width="150px" tabindex="2"/>
+                        <label value="默认值 :"/>
+                        <textbox constraint="no empty" value="@bind(fx.configDefaultValue)"
+                                 width="150px" tabindex="2" readonly="true"/>
+                    </row>
+                    <row style="border:none" spans="1,3">
+                        <label value="描述 :"/>
+                        <label value="@load(fx.comment)" style="align:left"/>
+                    </row>
+                </rows>
+            </grid>
+        </center>
+        <south sclass="c-south" style="height:55px;">
+            <div align="center" style="margin-top:10px;margin-bottom:20px">
+                <hlayout spacing="10px">
+                    <button label="保存" iconSclass="@load(iconVariable.icon_save)" style="width:80px;height:25px;"
+                            tabindex="7"
+                            sclass="btn-success c-button"
+                            onClick="@command('submit') @global-command('saveConfigEntity',model=vm.configEntity)"/>
+                    <!--<button label="重置" iconSclass="z-icon-refresh" style="width:80px;height:25px;" tabindex="8"-->
+                    <!--sclass="btn-info c-button"-->
+                    <!--onClick="alert(self.sclass)"/>-->
+                    <button label="关闭" iconSclass="@load(iconVariable.icon_close)" tabindex="9"
+                            sclass="btn-warning c-button"
+                            onClick="spaceOwner.detach();"/>
+                </hlayout>
+            </div>
+        </south>
+    </borderlayout>
+</window>

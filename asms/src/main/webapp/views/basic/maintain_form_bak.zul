@@ -1,0 +1,145 @@
+<!--
+基础管理 >>维修项目及定时金额表单
+-->
+<window title="维修项目编辑" border="normal" width="550px" height="350px"
+        sizable="false"
+        style="margin:20px;padding-top:0px;padding-left:0px;" position="@load(vm.window_position)" closable="true"
+        onClose="spaceOwner.detach();"
+        viewModel="@id('vm') @init('com.sunjet.vm.basic.MaintainFormVM')"
+        validationMessages="@id('vmsgs')">
+    <borderlayout>
+        <north sclass="c-north" style="border-bottom:1px solid #cccccc;padding-top:15px">
+            <div sclass="ctoolbars" style="padding-top:2px">
+                <div sclass="ctoolbar">
+                    <button iconSclass="@load(iconVariable.icon_refresh)" sclass="btn-info c-button"
+                            label="保存"
+                            onClick="@command('refreshData')"/>
+                    <button iconSclass="@load(iconVariable.icon_refresh)" sclass="btn-info c-button"
+                            label="提交"
+                            onClick="@command('refreshData')"/>
+                </div>
+            </div>
+        </north>
+        <center sclass="c-center" hflex="true" vflex="true" autoscroll="true">
+            <grid oddRowSclass="none" sclass="form-grid" style="margin-top:10px">
+                <!--<auxhead>-->
+                <!--<auxheader label="基本信息" colspan="6" style="color:green"/>-->
+                <!--</auxhead>-->
+                <columns>
+                    <column width="60px"></column>
+                    <column hflex="1"></column>
+                    <column width="60px"></column>
+                    <column hflex="1"></column>
+                    <column width="60px"></column>
+                    <column hflex="1"></column>
+                    <column width="60px"></column>
+                    <column hflex="1"></column>
+                </columns>
+                <rows>
+                    <row>
+                        <label value="项目编号"/>
+                        <textbox value="" hflex="1" tabindex="1" readonly="true"/>
+                        <label value="所属系统"/>
+                        <textbox value="" hflex="1" tabindex="1" readonly="true"/>
+                        <label value="子系统"/>
+                        <textbox value="" hflex="1" tabindex="1" readonly="true"/>
+                        <label value="是否索赔"/>
+                        <textbox value="" hflex="1" tabindex="1" readonly="true"/>
+                    </row>
+                    <row>
+                        <label value="项目名称"/>
+                        <textbox value="" hflex="1" tabindex="1" readonly="true"/>
+                        <label value="工时定额"/>
+                        <textbox value="" hflex="1" tabindex="1" readonly="true"/>
+                        <label value="适用车型"/>
+                        <textbox value="" hflex="1" tabindex="1" readonly="true"/>
+                        <label value="备注说明"/>
+                        <textbox value="" hflex="1" tabindex="1" readonly="true"/>
+                    </row>
+                    <row>
+                        <cell colspan="8" height="20px"/>
+                    </row>
+                    <row>
+                        <cell colspan="4">
+                            <label value="=== 子项目维修工时列表 ===" style="color:green;font-weight:700"/>
+                        </cell>
+                        <cell colspan="4" align="right">
+                            <button iconSclass="@load(iconVariable.icon_refresh)" sclass="btn-info c-button"
+                                    label="增加"
+                                    onClick="@command('refreshData')"/>
+                            <button iconSclass="@load(iconVariable.icon_refresh)" sclass="btn-info c-button"
+                                    label="删除"
+                                    onClick="@command('refreshData')"/>
+                        </cell>
+                    </row>
+                    <row>
+                        <cell colspan="8">
+                            <grid hflex="true" vflex="true" sclass="list-grid" oddRowSclass="none">
+                                <columns sizable="true">
+                                    <column width="40px" align="center">
+                                        <checkbox hflex="1" label=""/>
+                                    </column>
+                                    <column width="120px" label="项目编号" align="left"/>
+                                    <column hflex="1" label="项目名称" align="left"/>
+                                    <column width="100px" label="所属系统" align="left"/>
+                                    <column width="100px" label="子系统" align="left"/>
+                                    <column width="100px" label="工时定额" align="right"/>
+                                    <column width="80px" label="是否索赔" align="right"/>
+                                </columns>
+                                <template name="model">
+                                    <row>
+                                        <label value=""/>
+                                        <label value=""/>
+                                        <label value=""/>
+                                        <label value=""/>
+                                        <label value=""/>
+                                        <label value=""/>
+                                        <label value=""/>
+                                    </row>
+                                </template>
+                            </grid>
+                        </cell>
+                    </row>
+                    <row>
+                        <cell colspan="8" height="20px"/>
+                    </row>
+                    <row>
+                        <cell colspan="4">
+                            <label value="=== 配件清单 ===" style="color:green;font-weight:700"/>
+                        </cell>
+                        <cell colspan="4" align="right">
+                            <button iconSclass="@load(iconVariable.icon_refresh)" sclass="btn-info c-button"
+                                    label="增加"
+                                    onClick="@command('refreshData')"/>
+                            <button iconSclass="@load(iconVariable.icon_refresh)" sclass="btn-info c-button"
+                                    label="删除"
+                                    onClick="@command('refreshData')"/>
+                        </cell>
+                    </row>
+                    <row>
+                        <cell colspan="8">
+                            <grid hflex="true" vflex="true" sclass="list-grid" oddRowSclass="none">
+
+                                <columns sizable="true">
+                                    <column width="40px" align="center">
+                                        <checkbox hflex="1" label=""/>
+                                    </column>
+                                    <column width="150px" label="配件件号" align="left"/>
+                                    <column hflex="1" label="配件名称" align="left"/>
+                                    <column width="150px" label="数量" align="right"/>
+                                </columns>
+                                <template name="model">
+                                    <row>
+                                        <checkbox/>
+                                        <label value=""/>
+                                        <label value=""/>
+                                        <label value=""/>
+                                    </row>
+                                </template>
+                            </grid>
+                        </cell>
+                    </row>
+                </rows>
+            </grid>
+        </center>
+    </borderlayout>

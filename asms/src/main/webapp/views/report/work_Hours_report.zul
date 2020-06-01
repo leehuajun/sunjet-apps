@@ -1,0 +1,95 @@
+<!-- 故障件明细 列表 -->
+<borderlayout width="100%" height="100%"
+              apply="org.zkoss.bind.BindComposer"
+              viewModel="@id('vm') @init('com.sunjet.vm.report.WorkHoursReportListVM')">
+    <north sclass="c-north">
+        <vlayout>
+            <grid oddRowSclass="none" hflex="1" sclass="form-grid" style="margin-top:10px">
+                <columns>
+                    <column width="70px"></column>
+                    <column hflex="1"></column>
+                    <column width="100px"></column>
+                    <column width="70px"></column>
+                    <column width="70px"></column>
+                    <column hflex="1"></column>
+                    <column width="70px"></column>
+                    <column hflex="1"></column>
+                </columns>
+                <rows>
+                    <row style="border:none;height:30px">
+                        <label value="项目名称"/>
+                        <textbox value="@bind(vm.name)" hflex="1"/>
+                        <label value="是否夜间工时补贴"/>
+                        <listbox mold="select"
+                                 hflex="1"
+                                 selectedItem="@bind(vm.type)"
+                        >
+                            <listitem label="是" value="1" selected="true"></listitem>
+                            <listitem label="否" value="0"></listitem>
+                        </listbox>
+                        <label value="申请日期从"/>
+                        <datebox hflex="1" format="medium" value="@bind(vm.startDate)" readonly="true"/>
+                        <label value="至"/>
+                        <datebox hflex="1" format="medium" value="@bind(vm.endDate)" readonly="true"/>
+                    </row>
+                </rows>
+            </grid>
+            <include src="/views/macros/flow_list_toolbar.zul"/>
+        </vlayout>
+    </north>
+    <center sclass="c-center">
+        <vlayout width="100%" height="100%">
+            <grid hflex="true" vflex="true"
+                  sclass="list-grid"
+                  oddRowSclass="none"
+                  mold="paging"
+                  style="margin:0;padding:0"
+
+                  model="@load(vm.maps)">
+                <columns sizable="true">
+                    <column width="30px" label="序号" align="center"/>
+                    <column width="120px" label="项目编号" align="center"/>
+                    <column width="120px" label="项目名称" align="center"/>
+                    <column width="120px" label="工时定额" align="center"/>
+                    <column width="120px" label="维修措施" align="center"/>
+                    <column width="120px" label="夜间工时补贴费用" align="center"/>
+                    <column width="120px" label="省份" align="center"/>
+                    <column width="100px" label="服务站编号" align="center"/>
+                    <column width="160px" label="服务站名称" align="center"/>
+                    <column width="120px" label="服务单号" align="center"/>
+                    <column width="120px" label="VIN" align="center"/>
+                    <column width="120px" label="车型" align="center"/>
+                    <column width="120px" label="发动机型号" align="center"/>
+                    <column width="120px" label="发动机号" align="center"/>
+                </columns>
+                <template name="model">
+                    <row>
+                        <label value="${forEachStatus.index+1}" sclass="label-index"/>
+                        <label value="@load(each.code)"/>
+                        <label value="@load(each.name)"/>
+                        <label value="@load(each.work_time)"/>
+                        <label value="@load(each.measure)"/>
+                        <label value="@load(each.night_expense)"/>
+                        <label value="@load(each.province_name)"/>
+                        <label value="@load(each.dealer_code)"/>
+                        <label value="@load(each.dealer_name)"/>
+                        <label value="@load(each.doc_no)"/>
+                        <label value="@load(each.vin)"/>
+                        <label value="@load(each.vehicle_model)"/>
+                        <label value="@load(each.engine_model)"/>
+                        <label value="@load(each.engine_no)"/>
+                    </row>
+                </template>
+            </grid>
+            <!--<paging-->
+            <!--pageSize="@bind(vm.resultDTO.pageSize)"-->
+            <!--totalSize="@bind(vm.resultDTO.total)"-->
+            <!--pageIncrement="1"-->
+            <!--detailed="true"-->
+            <!--activePage="@bind(vm.currentPageNo)"-->
+            <!--onPaging="@command('gotoPageNo',e=event)"-->
+            <!--style="border:0px"-->
+            <!--/>-->
+        </vlayout>
+    </center>
+</borderlayout>

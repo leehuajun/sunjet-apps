@@ -1,0 +1,194 @@
+<!--
+基础数据管理>>运输周期
+-->
+<borderlayout width="100%" height="100%"
+              apply="org.zkoss.bind.BindComposer"
+              viewModel="@id('vm') @init('com.sunjet.vm.poms.TransportScheduleVM')"
+              style="background-color:rgb(255,255,255);padding:0px;">
+    <north sclass="c-north">
+        <vlayout style="padding:none">
+            <grid oddRowSclass="none" sclass="form-grid">
+                <columns>
+                    <column hflex="1"></column>
+                    <column hflex="2"></column>
+                    <column hflex="1"></column>
+                    <column hflex="2"></column>
+                    <column hflex="1"></column>
+                    <column hflex="2"></column>
+                    <column hflex="1"></column>
+                    <column hflex="2"></column>
+                </columns>
+                <rows>
+                    <row>
+                        <label value="品牌:"/>
+                        <listbox hflex="1" mold="select" multiple="false" checkmark="true">
+                            <listitem label="全部" value="0" selected="true"></listitem>
+                            <listitem label="五菱" value="1"></listitem>
+                            <listitem label="宝骏" value="2"></listitem>
+                        </listbox>
+                        <label value="区域:"/>
+                        <listbox hflex="1" mold="select" multiple="false" checkmark="true"
+                                 selectedItem="@bind(vm.dealerArea)"
+                                 onSelect="@command('chooseArea')"
+                                 model="@load(vm.dealerAreaProvinceRels)">
+                            <template name="model">
+                                <listitem label="@load(each)"
+                                          value="@load(each)">
+                                    <!--<listcell label="@load(each.roleEntity)" />-->
+                                </listitem>
+                            </template>
+                        </listbox>
+                        <label value="省份:"/>
+                        <listbox hflex="1" mold="select" multiple="false" checkmark="true"
+                                 selectedItem="@bind(vm.province)"
+                                 onSelect="@command('chooseProvince')"
+                                 model="@load(vm.provinces)">
+                            <template name="model">
+                                <listitem label="@load(each.provinceName)"
+                                          value="@load(each.provinceId)">
+                                    <!--<listcell label="@load(each.roleEntity)" />-->
+                                </listitem>
+                            </template>
+                        </listbox>
+                        <label value="城市:"/>
+                        <listbox hflex="1" mold="select" multiple="false" checkmark="true"
+                                 selectedItem="@bind(vm.city)"
+                                 model="@load(vm.citys)">
+                            <template name="model">
+                                <listitem label="@load(each.name)"
+                                          value="@load(each.code)">
+                                    <!--<listcell label="@load(each.roleEntity)" />-->
+                                </listitem>
+                            </template>
+                        </listbox>
+                        <!--<listbox hflex="1" mold="select" multiple="true"-->
+                        <!--selectedItems="@bind(vm.dictionaryExt.selectedList_PJSX)"-->
+                        <!--model="@load(vm.dictionaryExt.lstDictionary_PJSX)">-->
+                        <!--<template name="model">-->
+                        <!--<listitem label="@load(each.name)"-->
+                        <!--value="@load(each.objId)">-->
+                        <!--&lt;!&ndash;<listcell label="@load(each.roleEntity)" />&ndash;&gt;-->
+                        <!--</listitem>-->
+                        <!--</template>-->
+                        <!--</listbox>-->
+                    </row>
+                    <row>
+                        <label value="服务站代码:"/>
+                        <combobox hflex="1" selectedItem="@bind(vm.dealerCode)" id="dealerCode2" autodrop="false"
+                                  buttonVisible="false"/>
+                        <zscript><![CDATA[
+              ListEntity dictEntity= new SimpleListEntity(com.sunjet.vm.poms.TransportScheduleVM.getDealerCodess());
+                dealerCode2.setEntity(dictEntity);
+              ]]>
+                        </zscript>
+                        <label value="发货地:"/>
+                        <listbox hflex="1" mold="select"
+                                 selectedItem="@bind(vm.dictionaryExt.selectedItem_FHD)"
+                                 model="@load(vm.dictionaryExt.lstDictionary_FHD)">
+                            <template name="model">
+                                <listitem label="@load(each.name)"
+                                          value="@load(each.objId)">
+                                </listitem>
+                            </template>
+                        </listbox>
+                        <label value="物料类型:"/>
+                        <listbox hflex="1" mold="select"
+                                 selectedItem="@bind(vm.dictionaryExt.selectedItem_WLLX)"
+                                 model="@load(vm.dictionaryExt.lstDictionary_WLLX)">
+                            <template name="model">
+                                <listitem label="@load(each.name)"
+                                          value="@load(each.objId)">
+                                    <!--<listcell label="@load(each.roleEntity)" />-->
+                                </listitem>
+                            </template>
+                        </listbox>
+                        <label value="运输方式:"/>
+                        <listbox hflex="1" mold="select"
+                                 selectedItem="@bind(vm.dictionaryExt.selectedItem_YSFS)"
+                                 model="@load(vm.dictionaryExt.lstDictionary_YSFS)">
+                            <template name="model">
+                                <listitem label="@load(each.name)"
+                                          value="@load(each.objId)">
+                                </listitem>
+                            </template>
+                        </listbox>
+                    </row>
+                </rows>
+            </grid>
+            <div sclass="ctoolbars" style="float:right;margin-top:none">
+                <div sclass="ctoolbar" style="margin-top:none">
+                    <button onClick="@command('editEntity',model=null)" iconSclass="z-icon-plus"
+                            sclass="btn-success c-button" label="添加"/>
+                    <button iconSclass="@load(iconVariable.icon_refresh)" sclass="btn-info c-button" label="查询"
+                            onClick="@command('queryEntity')"/>
+                    <button iconSclass="@load(iconVariable.icon_export)" sclass="btn-success c-button" label="导出"/>
+                    <button iconSclass="@load(iconVariable.icon_import)" sclass="btn-warning c-button" label="导入"/>
+
+                </div>
+            </div>
+        </vlayout>
+    </north>
+    <center autoscroll="true" sclass="c-center">
+        <vlayout width="100%" height="100%">
+            <grid hflex="true" vflex="true" sclass="list-grid" oddRowSclass="none"
+                  model="@load(vm.resultDTO.pageContent)">
+                <columns>
+                    <column hflex="1" label="ID" visible="false"/>
+                    <!--<column hflex="1" >-->
+                    <!--<checkbox checked="false"></checkbox>-->
+                    <!--</column>-->
+                    <column hflex="2" label="区域" align="left"/>
+                    <column hflex="2" label="省份" align="left"/>
+                    <column hflex="2" label="城市" align="left"/>
+                    <column hflex="4" label="服务站代码" align="left"/>
+                    <column hflex="8" label="服务站名称" align="left"/>
+                    <column hflex="4" label="发货地" align="left"/>
+                    <column hflex="2" label="物料类型" align="left"/>
+                    <column hflex="2" label="运输方式" align="left"/>
+                    <column hflex="4" label="承运商" align="left"/>
+                    <column hflex="2" label="运输时限(天)" align="left"/>
+                    <column hflex="3" label="操作" align="right"/>
+                </columns>
+                <template name="model">
+                    <row onDoubleClick="@command('editEntity',model=each)">
+                        <label value=""/>
+                        <!--<checkbox checked="false"></checkbox>-->
+                        <label value="@load(each.dealerEntity.dealerAreaName)"/>
+                        <label value="@load(each.dealerEntity.province)"/>
+                        <label value="@load(each.dealerEntity.city)"/>
+                        <label value="@load(each.dealerEntity.dealerCode)"/>
+                        <label value="@load(each.dealerEntity.name)"/>
+                        <label value="@load(each.originName)"/>
+                        <label value="@load(each.productTypeName)" tooltiptext="@load(each.productTypeName)"/>
+                        <label value="@load(each.transportModeName)" tooltiptext="@load(each.transportModeName)"/>
+                        <label value="@load(each.carrierName)"/>
+                        <label value="@load(each.estimatedTimeEnroute)"/>
+                        <div align="right" width="100%">
+                            <hlayout>
+                                <button iconSclass="@load(iconVariable.icon_edit)" sclass="btn-success inner-button"
+                                        label="" tooltiptext="修改"
+                                        onClick="@command('editEntity',model=each)"
+                                        style="padding-left:5px;font-weight:700;font-size:14px;"/>
+                                <!--<separator spacing="2px"/>-->
+                                <button iconSclass="@load(iconVariable.icon_delete)" sclass="btn-warning inner-button"
+                                        label="" tooltiptext="删除"
+                                        onClick="@command('deleteEntity',model=each)"
+                                        style="padding-left:5px;font-weight:700;font-size:14px;"/>
+                            </hlayout>
+                        </div>
+                    </row>
+                </template>
+
+            </grid>
+            <paging
+                    pageSize="@bind(vm.resultDTO.pageSize)"
+                    totalSize="@bind(vm.resultDTO.total)"
+                    pageIncrement="1"
+                    detailed="true"
+                    activePage="@bind(vm.currentPageNo)"
+                    onPaging="@command('gotoPageNo',e=event)"
+                    style="border:0px"
+            />
+        </vlayout>
+    </center>
+</borderlayout>

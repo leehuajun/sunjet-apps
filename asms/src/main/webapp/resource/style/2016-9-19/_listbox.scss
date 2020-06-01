@@ -1,0 +1,71 @@
+@import "base";
+
+.z-listbox {
+  border-top: 2px solid #678cb1;
+  border-bottom: 1px solid #6fb3e0;
+  /*border: 1px;*/
+}
+
+.z-listheader-content {
+  font-weight: bold;
+  padding-top: 0px;
+  position: relative;
+}
+
+.z-listheader-content {
+  line-height: $listboxHeaderHeight;
+}
+
+.z-listheader-content, .z-listcell-content, .z-listgroup-content, .z-listgroupfoot-content, .z-listfooter-content {
+  font-family: $baseFontFamily;
+  font-size: $listboxFontSize;
+  font-weight: normal;
+  font-style: normal;
+  color: $baseColor;
+  padding: $listboxCellPadding;
+  line-height: $listboxContentHeight;
+  overflow: hidden;
+}
+
+.z-listheader-content, .z-listhead-bar {
+  background-color: $baseBgColor4;
+}
+
+.z-listheader-checkable, .z-listitem-checkable {
+  border-radius: 3px;
+  display: inline-block;
+  width: $listboxCheckboxSize;
+  height: $listboxCheckboxSize;
+  border: 1px solid $listboxCheckboxBorderColor;
+  background: $listboxCheckboxBackgroundColor;
+  vertical-align: middle;
+}
+
+.z-listbox-odd.z-listitem,
+.z-listbox-odd.z-listitem:hover {
+  background-color: transparent;
+  background-image: none;
+}
+
+.z-listcell-content {
+  font-size: $listboxFontSize;
+  padding: $listboxCellPadding;
+}
+
+.z-listitem,
+.z-listitem:hover {
+  background-color: transparent;
+  background-image: none;
+}
+
+.z-listitem > .z-listcell,
+.z-listitem:hover > .z-listcell {
+  background-color: transparent;
+  background-image: none;
+}
+
+.z-listitem.z-listitem-selected > .z-listcell,
+.z-listitem.z-listitem-selected:hover > .z-listcell {
+  background-color: transparent;
+  background-image: none;
+}

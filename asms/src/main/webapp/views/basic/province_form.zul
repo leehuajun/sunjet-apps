@@ -1,0 +1,102 @@
+<!--
+基础管理 >>严寒省份设置表单
+-->
+<borderlayout width="100%" height="100%" apply="org.zkoss.bind.BindComposer"
+              viewModel="@id('vm') @init('com.sunjet.vm.basic.ProvinceFormVM')"
+              style="background-color:reg(255,255,255);padding:0px;">
+    <center sclass="c-north">
+        <vlayout>
+            <label value="严寒省份设置信息表"/>
+            <div align="left" style="margin-top:10px;margin-bottom:20px;">
+                <div sclass="ctoobar">
+                    <button iconSclass="@loadVariable_save" sclass="btn-info c-button" label="保存"
+                            onClick="@command('saveModel')"/>
+                    <button iconSclass="" sclass="btn-info c-button" label="提交" onClick="@command('')"/>
+
+                    <window title="编辑严寒省份" border="normal" width="50%" height="50%" sizable="true"
+                            style="padding-top:0px;padding-left:0px;" position="@load(vm.window_position)"
+                            closable="true"
+                            onClose="spaceOwner.detach();" maximizable="true"
+                            viewModel="@id('vm') @init('com.sunjet.vm.dealer.LeveChangeFormDialogVM')"
+                            validationMessages="@id('vmsgs')">
+                        <borderlayout>
+                            <north sclass="c-north" style="border-bottom:1px solid #cccccc;padding-top:5px">
+                                <div sclass="ctoolbars" style="padding-top:2px">
+                                    <div sclass="ctoolbar">
+                                        <button iconSclass="z-icon-plus" sclass="btn-success c-button"
+                                                label="保存"></button>
+                                        <button iconSclass="z-icon-windows" sclass="btn-info c-button"
+                                                label="提交"></button>
+                                    </div>
+                                </div>
+                            </north>
+                            <center sclass="c-center" hflex="true" vflex="true" autoscroll="true">
+                                <vlayout vflex="100%" hflex="100%">
+                                    <grid oddRowSclass="none" sclass="form-grid" style="margin-top:10px">
+                                        <auxhead>
+                                            <auxheader label="基本信息" colspan="8" style="color:green"/>
+                                        </auxhead>
+                                        <columns>
+                                            <column hflex="1"></column>
+                                            <column hflex="1"></column>
+                                            <column hflex="1"></column>
+                                            <column hflex="1"></column>
+                                            <column hflex="1"></column>
+                                            <column hflex="1"></column>
+                                        </columns>
+                                        <rows>
+                                            <row style="border:none;height:30px">
+                                                <label value="名称"></label>
+                                                <textbox value="" hflex="1" tabindex="1" readonly="true"></textbox>
+                                                <label value="代码"></label>
+                                                <textbox value="" hflex="1" tabindex="1" readonly="true"></textbox>
+                                                <label value="备注说明"></label>
+                                                <textbox value="" hflex="1" tabindex="1" readonly="true"></textbox>
+                                            </row>
+                                        </rows>
+                                    </grid>
+                                    <tabbox sclass="ntabbox" id="tb" vflex="true" hflex="true">
+                                        <tabs>
+                                            <tab label="配件清单"></tab>
+                                        </tabs>
+                                        <toolbar sclass="nav_toolbar">
+                                            <toolbarbutton style="color: green;font-size:14px" tooltiptext="增加"
+                                                           iconSclass="@load(iconVariable.icon_add)"/>
+                                            <toolbarbutton style="color: #DD5A43;font-size:14px" tooltiptext="删除"
+                                                           iconSclass="@load(iconVariable.icon_delete)"/>
+                                        </toolbar>
+                                        <tabpanels>
+                                            <tabpanel>
+                                                <grid hflex="true" vflex="true" sclass="form-grid" oddRowSclass="none">
+                                                    <columns>
+                                                        <column hflex="1" label="序号"></column>
+                                                        <column hflex="3" label="名称"></column>
+                                                        <column hflex="3" label="代码"></column>
+                                                    </columns>
+                                                    <rows>
+                                                        <row style="border:none;height:30px">
+                                                            <checkbox checked="" label="1"></checkbox>
+
+                                                            <textbox value="" hflex="1" tabindex="1"
+                                                                     readonly="true"></textbox>
+                                                            <textbox value="" hflex="1" tabindex="1"
+                                                                     readonly="true"></textbox>
+
+                                                            <textbox value="" hflex="1" tabindex="1"></textbox>
+                                                            <textbox value=""></textbox>
+
+                                                        </row>
+                                                    </rows>
+                                                </grid>
+                                            </tabpanel>
+                                        </tabpanels>
+                                    </tabbox>
+                                </vlayout>
+                            </center>
+                        </borderlayout>
+                    </window>
+                </div>
+            </div>
+        </vlayout>
+    </center>
+</borderlayout>

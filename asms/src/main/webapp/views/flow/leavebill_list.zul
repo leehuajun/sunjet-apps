@@ -1,0 +1,69 @@
+<!-- 用户列表 -->
+<!--<window xmlns:w="client">-->
+<borderlayout width="100%" height="100%"
+              apply="org.zkoss.bind.BindComposer"
+              viewModel="@id('vm') @init('com.sunjet.vm.flow.LeaveBillListVM')"
+              style="background-color:rgb(255,255,255);padding:0px;"
+>
+    <north sclass="c-north">
+        <div sclass="ctoolbars">
+            <div sclass="ctoolbar">
+                <button iconSclass="@load(iconVariable.icon_add)" sclass="btn-info" label="新建"
+                        onClick="@command('handleTaskByEntity',entity=null,formUrl=vm.formUrl)"></button>
+                <!--<a iconSclass="@load(iconVariable.icon_add)" sclass="btn btn-info" label="新建"-->
+                <!--onClick="@command('handleTask',entity=null)" href="#"/>-->
+                <button iconSclass="@load(iconVariable.icon_refresh)" sclass="btn-info" label="刷新"
+                        onClick="@command('refreshData')"></button>
+            </div>
+        </div>
+    </north>
+    <center autoscroll="true" sclass="c-center">
+        <vlayout width="100%" height="100%" style="padding-bottom:0px">
+            <grid hflex="true" vflex="true" sclass="list-grid" oddRowSclass="none"
+                  model="@load(vm.resultDTO.pageContent)">
+                <columns>
+                    <column width="30px" label="序号" align="center"/>
+                    <column width="150px" label="申请时间" align="center"/>
+                    <column width="80px" label="请假天数" align="center"/>
+                    <column width="150px" label="开始日期" align="center"/>
+                    <column hflex="1" label="请假原因" align="left"/>
+                    <column hflex="1" label="备注" align="left"/>
+                    <column width="40px" label="状态" align="center"/>
+                    <column width="130px" label="操作" align="center"/>
+                </columns>
+                <template name="model">
+                    <row onDoubleClick="@command('handleTaskByEntity',entity=each,formUrl=vm.formUrl)">
+                        <label value="${forEachStatus.index+1}" sclass="label-index"/>
+                        <label hflex="1" value="@load(each.createdTime)" style="color:rgb(78,116,149);font-weight:700"/>
+                        <label hflex="1" value="@load(each.days)"/>
+                        <label hflex="1" value="@load(each.startDate)"/>
+                        <label hflex="1" value="@load(each.reason)" tooltiptext="@load(each.reason)"/>
+                        <label hflex="1" value="@load(each.comment)" tooltiptext="@load(each.comment)"/>
+                        <label hflex="1" value="@load(vm.getStatusName(each.status))"/>
+                        <div align="right" hflex="1">
+                            <hlayout>
+                                <button sclass="btn-success"
+                                        label="查看"
+                                        tooltiptext="查看"
+                                        onClick="@command('handleTaskByEntity',entity=each,formUrl=vm.formUrl)"/>
+                                <button sclass="btn-warning"
+                                        label="删除"
+                                        tooltiptext="删除"
+                                        onClick="@command('deleteEntity',model=each)"/>
+                            </hlayout>
+                        </div>
+                    </row>
+                </template>
+            </grid>
+            <paging
+                    pageSize="@bind(vm.resultDTO.pageSize)"
+                    totalSize="@bind(vm.resultDTO.total)"
+                    pageIncrement="1"
+                    detailed="true"
+                    activePage="@bind(vm.currentPageNo)"
+                    onPaging="@command('gotoPageNo',e=event)"
+                    style="border:0px"
+            />
+        </vlayout>
+    </center>
+</borderlayout>

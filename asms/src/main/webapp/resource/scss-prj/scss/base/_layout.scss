@@ -1,0 +1,147 @@
+@import "variables";
+
+.z-east-splitter, .z-west-splitter, .z-north-splitter, .z-south-splitter {
+  width: $layout-splitter-width;
+  height: $layout-splitter-height;
+  background: $layout-splitter-bg;
+  /*background: rgb(227,227,227);*/
+  position: absolute;
+  overflow: hidden;
+  cursor: e-resize;
+}
+
+.z-north-noborder, .z-south-noborder, .z-west-noborder, .z-center-noborder, .z-east-noborder {
+  border: 0;
+}
+
+.z-north-header, .z-south-header, .z-west-header, .z-center-header, .z-east-header {
+  //font-family: 'Helvetica Neue",Helvetica,Arial,sans-serif';
+  font-size: $layout-region-header-font-size;
+  font-weight: $layout-region-header-font-weight;
+  font-style: $layout-region-header-font-style;
+  color: $layout-region-header-color;
+  height: $layout-region-header-height;
+  border-bottom: 1px solid $layout-region-header-border;
+  padding: 1px 5px 1px;
+  //line-height: $layout-region-header-height;
+  background: #e3e3e3;
+  overflow: hidden;
+  cursor: default;
+  white-space: nowrap;
+}
+
+.z-west-header {
+  line-height: $layout-region-header-height;
+}
+
+.z-north-header, .z-south-header, .z-center-header, .z-east-header {
+  //line-height: 25px;
+  height: 25px;
+}
+
+//.z-north-header, .z-south-header, .z-west-header, .z-center-header, .z-east-header {
+//    font-size: 15px;
+//    font-weight: bold;
+//    font-style: normal;
+//    color: #555555;
+//    height: 30px;
+//    border-bottom: 1px solid #e3e3e3;
+//    padding: 5px 4px 3px;
+//    line-height: 38px;
+//    background: #e3e3e3;
+//    overflow: hidden;
+//    cursor: default;
+//    white-space: nowrap;
+
+.z-borderlayout-icon {
+  font-size: 20px;
+  width: 30px;
+  color: #666;
+}
+
+.index-north {
+  border: none;
+  height: $layout-index-north-height;
+  background-color: $layout-index-north-bg;
+}
+
+.c-north {
+  margin: 0;
+  border: none;
+  padding: 8px 8px 0px 8px;
+}
+
+.c-center {
+  margin: 0;
+  border: none;
+  padding: 0px 8px 0px 8px;
+}
+
+.c-south, .c-east {
+  margin: 0;
+  border: none;
+  padding: 0px 8px 0px 8px;
+}
+
+.z-window-header {
+  background-color: $window-header-bg;
+  color: $window-header-color;
+  font-size: $font-size-large;
+  padding: $window-header-padding;
+}
+
+.z-vlayout {
+  padding: 0px;
+}
+
+.z-window-content {
+  padding: $window-content-padding;
+}
+
+.z-vlayout-inner {
+  margin: 0px;
+  padding: 0px !important;
+}
+
+/* busy等待窗口 设置 */
+.z-loading-indicator {
+  padding: $loading-padding;
+  color: $loading-color;
+  font-size: $loading-font-size;
+  //width:$loading-win-width;
+  //height:$loading-win-height;
+  border: 1px solid $loading-border;
+  background: $loading-bg;
+  white-space: pre-wrap;
+  //vertical-align: bottom;
+  //text-align: center;
+}
+
+.z-apply-loading-indicator {
+  color: $loading-color;
+  border: 1px solid $loading-border;
+  background: $loading-bg;
+  white-space: pre-wrap;
+}
+
+.z-apply-loading-icon, .z-loading-icon {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.z-apply-loading-icon, .z-loading-icon, .z-renderdefer {
+  width: $loading-icon-width;
+  height: $loading-icon-height;
+
+  margin-right: $loading-icon-margin-right;
+  background: transparent url($loading-image-url) no-repeat center;
+}
+
+.z-window-modal.z-window-shadow, .z-window-highlighted.z-window-shadow {
+  @include border-radius(3px);
+  -moz-box-shadow: inset 0px 1px 1px #FFFFFF, 0 0 4px rgba(0, 0, 0, 0.7);
+}
+
+.z-window-icon {
+  @include border-radius(2px);
+}

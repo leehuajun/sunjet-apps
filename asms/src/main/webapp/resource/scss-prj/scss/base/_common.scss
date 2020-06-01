@@ -1,0 +1,57 @@
+@import "variables";
+
+body {
+  padding: 0;
+  margin: 0;
+  background-color: $body-bg;
+  min-height: 100%;
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+  font-weight: normal;
+  font-style: normal;
+  color: $text-color;
+  line-height: 1.0;
+}
+
+a {
+  &:hover, &:visited, a:active, &:focus {
+    text-decoration: none;
+  }
+}
+
+.z-a {
+  > [class*="icon-"] {
+    margin-right: 5px;
+  }
+  &[disabled] {
+    color: $text-disabled-color;
+  }
+}
+
+.custom-div {
+  //background-color: #FFFFFF;
+  margin: 0px 0px;
+  border: none;
+}
+
+.div-mark {
+  position: absolute;
+  border: 2px solid red;
+  @include border-radius(10px);
+}
+
+.comment-div {
+  color: red;
+}
+
+$use-mozilla-ellipsis-binding: true;
+.text-ellipsis {
+  @include ellipsis();
+}
+
+.z-html {
+  color: $text-color;
+  line-height: 20px;
+}
+
+

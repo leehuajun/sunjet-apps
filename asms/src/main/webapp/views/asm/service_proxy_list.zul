@@ -1,0 +1,97 @@
+<!-- 服务委托列表 -->
+<borderlayout width="100%" height="100%"
+              apply="org.zkoss.bind.BindComposer"
+              viewModel="@id('vm') @init('com.sunjet.vm.asm.ServiceProxyListVM')">
+    <north sclass="c-north">
+        <vlayout>
+            <grid oddRowSclass="none" hflex="1" sclass="form-grid" style="margin-top:10px">
+                <columns>
+                    <column width="70px"></column>
+                    <column hflex="1"></column>
+                    <column width="70px"></column>
+                    <column hflex="1"></column>
+                    <column width="70px"></column>
+                    <column hflex="1"></column>
+                    <column width="80px"></column>
+                </columns>
+                <rows>
+                    <row style="border:none;height:30px">
+                        <label value="服务站编号"/>
+                        <textbox value="@bind(vm.dealerCode)" hflex="1"/>
+                        <label value="服务站名称"/>
+                        <textbox value="@bind(vm.dealerName)" hflex="1" tabindex="1" readonly="true"/>
+                        <label value="单据编号"/>
+                        <textbox value="@bind(vm.activitydocNo)" hflex="1"/>
+                        <button label="清空" sclass="btn-info c-button" onClick="@command('reset')"></button>
+                    </row>
+                    <row style="border:none;height:30px">
+                        <label value="申请日期从"/>
+                        <datebox hflex="1" format="medium" value="@bind(vm.startDate)" readonly="true"/>
+                        <label value="至"/>
+                        <datebox hflex="1" format="medium" value="@bind(vm.endDate)" readonly="true"/>
+                        <label value="状态"/>
+                        <listbox mold="select"
+                                 model="@load(vm.statusWrappers)"
+                                 hflex="1"
+                                 selectedItem="@bind(vm.selectedStatusWrapper)">
+                            <template name="model">
+                                <listitem label="@load(each.entity)"
+                                          value="@load(each.entity)">
+                                </listitem>
+                            </template>
+                        </listbox>
+                        <button label="查询" sclass="btn-info c-button" onClick="@command('search')"></button>
+                    </row>
+                </rows>
+            </grid>
+            <div sclass="ctoolbars">
+                <div sclass="ctoolbar">
+                    <button iconSclass="@load(iconVariable.icon_refresh)" sclass="btn-info c-button"
+                            label="新增"
+                            onClick="@command('openTab',name='服务委托单',url=vm.formUrl,model=null)"/>
+                    <button iconSclass="@load(iconVariable.icon_refresh)" sclass="btn-info c-button"
+                            label="刷新"
+                            onClick="@command('filterList')"/>
+                </div>
+            </div>
+        </vlayout>
+    </north>
+    <center sclass="c-center">
+        <vlayout width="100%" height="100%">
+
+            <grid hflex="true" vflex="true" sclass="list-grid" model="@load(vm.resultDTO.pageContent)">
+                <columns sizable="true">
+                    <column hflex="1" label="选择" align="left"/>
+                    <column hflex="3" label="单据编号" align="left"/>
+                    <column hflex="3" label="服务站名称" align="left"/>
+                    <column hflex="2" label="服务站编号" align="left"/>
+                    <column hflex="1" label="状态" align="left"/>
+                    <column hflex="2" label="申请日期" align="right"/>
+                    <column hflex="1" label="申请人" align="right"/>
+                    <column hflex="1" label="当前处理人" align="right"/>
+                </columns>
+                <template name="model">
+                    <row onDoubleClick="@command('openTab',name='服务委托单',url=vm.formUrl,model=each)">
+                        <label hflex="1" value="1"/>
+                        <label hflex="1" value="@load(each.docNo)"/>
+                        <label hflex="1" value="@load(each.dealerName)"/>
+                        <label hflex="1" value="@load(each.dealerCode)"/>
+                        <label hflex="1" value="@load(each.provinceName)"/>
+                        <label hflex="1" value="@load(each.repairDate)"/>
+                        <label hflex="1" value="@load(each.operator)"/>
+                        <label hflex="1" value="1"/>
+                    </row>
+                </template>
+            </grid>
+            <paging
+                    pageSize="20"
+                    totalSize="120"
+                    pageIncrement="1"
+                    detailed="true"
+                    activePage="0"
+                    onPaging="@command('gotoPageNo',e=event)"
+                    style="border:0px"
+            />
+        </vlayout>
+    </center>
+</borderlayout>

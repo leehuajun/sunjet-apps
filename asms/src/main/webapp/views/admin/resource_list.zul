@@ -1,0 +1,55 @@
+<!-- 资源列表 -->
+<borderlayout width="100%" height="100%"
+              apply="org.zkoss.bind.BindComposer"
+              viewModel="@id('vm') @init('com.sunjet.vm.admin.ResourceListVM')"
+              style="background-color:rgb(255,255,255);padding:0px;">
+    <north sclass="c-north">
+        <include src="/views/macros/list_toolbar.zul"/>
+    </north>
+    <center autoscroll="true" sclass="c-center">
+        <vlayout width="100%" height="100%">
+            <grid hflex="true" vflex="true" sclass="list-grid"
+                  model="@load(vm.resultDTO.pageContent)"
+                  emptyMessage="@load(vm.emptyMessage)">
+                <columns>
+                    <column width="30px" label="序号" align="center"/>
+                    <column width="200px" label="资源编码" align="left"/>
+                    <column width="180px" label="资源名称" align="left"/>
+                    <column hflex="1" label="允许操作" align="left"/>
+                    <column width="40px" label="状态" align="center"/>
+                    <column width="60px" label="操作" align="center"/>
+                </columns>
+                <template name="model">
+                    <row onDoubleClick="@command('openDialog',entity=each,url=vm.formUrl)">
+                        <label value="${forEachStatus.index+1}" sclass="label-index"/>
+                        <label value="@load(each.code)"/>
+                        <label value="@load(each.name)" style="color:rgb(78,116,149);font-weight:700"/>
+                        <label value="@load(each.operationEntityList.toString().replace('[','').replace(']',''))"
+                               tooltiptext="@load(each.operationEntityList.toString().replace('[','').replace(']',''))"/>
+                        <label value="@load(each.enabled eq true ? '启用':'禁用' )"
+                               style="@load(each.enabled eq true ? 'color:green':'color:red' )"/>
+                        <!--<div align="right" width="100%">-->
+                        <!--<hbox>-->
+                        <!--<span style="color:green;font-size:16px" class="z-icon-edit" tooltiptext="编辑"-->
+                        <!--onClick="@command('editEntity',model=each)"/>-->
+                        <!--<separator spacing="5px"/>-->
+                        <!--<span  style="color:red;font-size:16px" class="z-icon-trash-o"-->
+                        <!--tooltiptext="删除" onClick="@command('deleteEntity',model=each)"/>-->
+                        <!--</hbox>-->
+                        <!--</div>-->
+                        <include src="/views/macros/grid_toolbar.zul"/>
+                    </row>
+                </template>
+            </grid>
+            <paging
+                    pageSize="@bind(vm.resultDTO.pageSize)"
+                    totalSize="@bind(vm.resultDTO.total)"
+                    pageIncrement="1"
+                    detailed="true"
+                    activePage="@bind(vm.currentPageNo)"
+                    onPaging="@command('gotoPageNo',e=event)"
+                    style="border:0px"
+            />
+        </vlayout>
+    </center>
+</borderlayout>

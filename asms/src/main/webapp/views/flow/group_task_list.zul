@@ -1,0 +1,58 @@
+<!-- 用户列表 -->
+<!--<window xmlns:w="client">-->
+<borderlayout width="100%" height="100%"
+              apply="org.zkoss.bind.BindComposer"
+              viewModel="@id('vm') @init('com.sunjet.vm.flow.GroupTaskListVM')"
+              style="background-color:rgb(255,255,255);padding:0px;"
+>
+    <north sclass="c-north">
+        <div sclass="ctoolbars">
+            <div sclass="ctoolbar">
+                <button iconSclass="@load(iconVariable.icon_refresh)" sclass="btn-info" label="刷新"
+                        onClick="@command('refreshData')"></button>
+            </div>
+        </div>
+    </north>
+    <center autoscroll="true" sclass="c-center">
+        <vlayout width="100%" height="100%" style="padding-bottom:0px">
+            <grid hflex="true" vflex="true" sclass="list-grid" oddRowSclass="none"
+                  model="@load(vm.tasks)">
+                <columns>
+                    <column width="80px" label="任务ID" align="left"/>
+                    <column hflex="1" label="任务名称" align="left"/>
+                    <column width="80px" label="流程实例ID" align="left"/>
+                    <column width="180px" label="流程定义ID" align="left"/>
+                    <column width="150px" label="创建时间" align="left"/>
+                    <column width="80px" label="处理人" align="center"/>
+                    <column width="50px" label="状态" align="center"/>
+                    <column width="80px" label="操作" align="right"/>
+                </columns>
+                <template name="model">
+                    <row onDoubleClick="@command('openTab',name='请假申请',url=vm.formUrl,model=each)">
+                        <label hflex="1" value="@load(each.id)" style="color:rgb(78,116,149);font-weight:700"/>
+                        <label hflex="1" value="@load(each.name)"/>
+                        <label hflex="1" value="@load(each.processInstanceId)"/>
+                        <label hflex="1" value="@load(each.processDefinitionId)"/>
+                        <label hflex="1" value="@load(each.createTime)"/>
+                        <label hflex="1" value="@load(each.assignee)"/>
+                        <label hflex="1" value=""/>
+                        <div align="right" hflex="1">
+                            <hlayout>
+                                <button iconSclass="@load(iconVariable.icon_edit)" sclass="btn-success inner-button"
+                                        label=""
+                                        tooltiptext="修改"
+                                        onClick="@command('openTab',name='请假申请',url=vm.formUrl,model=each)"
+                                        style="font-weight:700;font-size:14px;"/>
+                                <button iconSclass="@load(iconVariable.icon_delete)" sclass="btn-warning inner-button"
+                                        label=""
+                                        tooltiptext="删除"
+                                        onClick="@command('deleteEntity',model=each)"
+                                        style="font-weight:700;font-size:14px;"/>
+                            </hlayout>
+                        </div>
+                    </row>
+                </template>
+            </grid>
+        </vlayout>
+    </center>
+</borderlayout>

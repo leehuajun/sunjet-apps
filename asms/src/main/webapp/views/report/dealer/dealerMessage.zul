@@ -1,0 +1,225 @@
+<!--
+服务站统计信息
+-->
+<borderlayout width="100%" height="100%" apply="org.zkoss.bind.BindComposer"
+              viewModel="@id('vm') @init('com.sunjet.vm.report.dealer.DealerMessageVM')"
+              style="background-color:rgb(255,255,255);padding:0px;">
+
+    <north sclass="c-north" style="padding-top:5px;padding-bottom:5px;">
+        <vlayout>
+            <grid oddRowSclass="none" hflex="1" sclass="form-grid" style="margin-top:10px">
+                <columns>
+                    <column width="70px"></column>
+                    <column hflex="1"></column>
+                    <column width="70px"></column>
+                    <column hflex="1"></column>
+                    <column width="70px"></column>
+                    <column hflex="1"></column>
+                    <column width="50px"></column>
+                    <column hflex="1"></column>
+                </columns>
+                <rows>
+                    <row>
+                        <label value="服务站编号"/>
+                        <textbox value="@bind(vm.dealerCode)" hflex="1" tabindex="1"/>
+                        <label value="服务站名称"/>
+                        <textbox value="@bind(vm.dealerName)" hflex="1" tabindex="1"/>
+                        <label value="等级"></label>
+                        <listbox mold="select"
+                                 model="@load(vm.listStar)"
+                                 hflex="1"
+                                 selectedItem="@bind(vm.dealerStar)">
+                            <template name="model">
+                                <listitem
+                                        label="@load(each)"
+                                        value="@bind(each)">
+                                </listitem>
+                            </template>
+                        </listbox>
+                        <label value="级别"></label>
+                        <listbox hflex="1"
+                                 mold="select"
+                                 selectedItem="@bind(vm.dealerLevel)">
+                            <listitem label="一级" value="一级"/>
+                            <listitem label="二级" value="二级"/>
+                        </listbox>
+                    </row>
+                    <row>
+                        <label value="省份"/>
+                        <listbox hflex="1"
+                                 mold="select"
+                                 model="@load(vm.provinceEntities)"
+                                 selectedItem="@bind(vm.selectedProvince)"
+                                 onSelect="@command('selectProvince2')">
+                            <template name="model">
+                                <listitem left="1" label="@load(each)" value="@load(each)"
+                                          selected="@load(each.name eq vm.selectedProvince.name?true:false)"></listitem>
+                            </template>
+                        </listbox>
+                        <label value="市"/>
+                        <listbox hflex="1"
+                                 mold="select"
+                                 model="@load(vm.cityEntities)"
+                                 selectedItem="@bind(vm.selectedCity)"
+                                 onSelect="@command('selectCity2')">
+                            <template name="model">
+                                <listitem left="1" label="@load(each)" value="@load(each)"
+                                          selected="@load(each.name eq vm.selectedCity.name?true:false)">
+                                </listitem>
+                            </template>
+                        </listbox>
+                        <label value="父级服务站"></label>
+                        <bandbox mold="rounded" autodrop="false" hflex="1" readonly="true"
+                                 value="@load(vm.parentDealer.name)">
+                            <bandpopup width="300px" height="300px">
+                                <vlayout hflex="1" vflex="1">
+                                    <hlayout>
+                                        <textbox value="@bind(vm.keyword)" hflex="1" placeholder="输入关键字..按Enter键搜索"
+                                                 sclass="input-prepend"
+                                                 onOK="@command('searchDealers2')" style="margin-bottom:2px"/>
+                                        <button label="清除" sclass="btn-warning"
+                                                onClick="@command('clearSelectedDealer2')"/>
+                                    </hlayout>
+                                    <grid style="border:none" vflex="1" model="@load(vm.parentDealers)"
+                                          emptyMessage="没有数据">
+                                        <columns>
+                                            <column hflex="1" label="服务站编号"/>
+                                            <column hflex="2" label="服务站名称"/>
+                                        </columns>
+                                        <template name="model">
+                                            <row onClick="@command('selectDealer2',model=each)">
+                                                <label value="@load(each.code)"/>
+                                                <label value="@load(each.name)"/>
+                                            </row>
+                                        </template>
+                                    </grid>
+                                </vlayout>
+                            </bandpopup>
+                        </bandbox>
+                        <label value="服务经理"/>
+                        <textbox value="@bind(vm.serviceManager)" hflex="1" tabindex="1"/>
+                    </row>
+                </rows>
+            </grid>
+            <include src="/views/macros/flow_list_toolbar.zul"/>
+        </vlayout>
+    </north>
+    <center sclass="c-center">
+        <vlayout width="100%" height="100%">
+            <grid hflex="true" vflex="true"
+                  sclass="list-grid"
+                  oddRowSclass="none"
+                  mold="paging"
+                  style="margin:0;padding:0"
+                  model="@load(vm.maps)">
+                <columns sizable="true">
+                    <column width="30px" label="序号" align="center"></column>
+                    <column width="100px" label="服务站编号" align="left"></column>
+                    <column width="150px" label="服务站名称" align="left"></column>
+                    <column width="100px" label="电话" align="left"></column>
+                    <column width="100px" label="传真" align="left"></column>
+                    <column width="110px" label="地址" align="left"></column>
+                    <column width="80px" label="所在省" align="left"></column>
+                    <column width="80px" label="市" align="left"></column>
+                    <column width="80px" label="SGMW体系" align="left"></column>
+                    <column width="80px" label="申请等级" align="center"></column>
+                    <column width="80px" label="维修资质" align="center"></column>
+                    <column width="80px" label="服务站级别" align="center"></column>
+                    <column width="80px" label="父级服务站" align="left"></column>
+                    <column width="80px" label="组织机构代码" align="left"></column>
+                    <column width="80px" label="纳税人识别号" align="left"></column>
+                    <column width="80px" label="开户银行" align="left"></column>
+                    <column width="80px" label="银行账号" align="left"></column>
+                    <column width="80px" label="营业执照号" align="left"></column>
+                    <column width="80px" label="服务经理" align="left"></column>
+                    <column width="80px" label="其他合作内容" align="left"></column>
+                    <column width="80px" label="法人代表" align="left"></column>
+                    <column width="80px" label="法人电话" align="left"></column>
+                    <column width="80px" label="站长" align="left"></column>
+                    <column width="80px" label="站长电话" align="center"></column>
+                    <column width="80px" label="技术主管" align="left"></column>
+                    <column width="80px" label="技术主管电话" align="center"></column>
+                    <column width="80px" label="索赔主管" align="center"></column>
+                    <column width="120px" label="索赔主管电话" align="center"></column>
+                    <column width="120px" label="配件主管" align="center"></column>
+                    <column width="100px" label="配件主管电话" align="center"></column>
+                    <column width="100px" label="财务经理" align="center"></column>
+                    <column width="100px" label="财务经理电话" align="center"></column>
+                    <column width="100px" label="员工总数" align="center"></column>
+                    <column width="100px" label="接待员数量" align="center"></column>
+                    <column width="100px" label="配件员数量" align="center"></column>
+                    <column width="100px" label="维修工数量" align="center"></column>
+                    <column width="100px" label="质检员数量" align="center"></column>
+                    <column width="100px" label="结算员数量" align="center"></column>
+                    <column width="100px" label="停车面积" align="center"></column>
+                    <column width="100px" label="接待室" align="center"></column>
+                    <column width="100px" label="综合维修区" align="center"></column>
+                    <column width="100px" label="总成维修区" align="center"></column>
+                    <column width="100px" label="配件库总面积" align="center"></column>
+                    <column width="100px" label="五菱库总面积" align="center"></column>
+                    <column width="100px" label="旧件库面积" align="center"></column>
+                    <column width="100px" label="五菱旧件库面积" align="center"></column>
+                    <column width="100px" label="其他车辆维修条件" align="center"></column>
+                    <column width="100px" label="其他品牌" align="center"></column>
+                    <column width="100px" label="维修产品" align="center"></column>
+                    <column width="100px" label="情况说明" align="center"></column>
+                </columns>
+                <template name="model">
+                    <row>
+                        <label value="${forEachStatus.index+1}" sclass="label-index"/>
+                        <label value="@load(each.bealerCode)"/>
+                        <label value="@load(each.bealerName)" tooltiptext="@load(each.bealerName)"/>
+                        <label value="@load(each.phone)"/>
+                        <label value="@load(each.fax)"/>
+                        <label value="@load(each.address)" tooltiptext="@load(each.address)"/>
+                        <label value="@load(each.provinceName)"/>
+                        <label value="@load(each.city)"/>
+                        <label value="@load(each.sgmw_system )"/>
+                        <label value="@load(each.star)"/>
+                        <label value="@load(each.qualification)"/>
+                        <label value="@load(each.level)"/>
+                        <label value="@load(each.parentName)"/>
+                        <label value="@load(each.org_code)"/>
+                        <label value="@load(each.taxpayer_code)"/>
+                        <label value="@load(each.bank)"/>
+                        <label value="@load(each.bank_account)"/>
+                        <label value="@load(each.business_license_code)"/>
+                        <label value="@load(each.service_manager)"/>
+                        <label value="@load(each.other_collaboration)"/>
+                        <label value="@load(each.legal_person)"/>
+                        <label value="@load(each.legal_person_phone)"/>
+                        <label value="@load(each.station_master)"/>
+                        <label value="@load(each.station_master_phone)"/>
+                        <label value="@load(each.technical_director)"/>
+                        <label value="@load(each.technical_director_phone)"/>
+                        <label value="@load(each.claim_director)"/>
+                        <label value="@load(each.claim_director_phone)"/>
+                        <label value="@load(each.part_director)"/>
+                        <label value="@load(each.part_director_phone)"/>
+                        <label value="@load(each.finance_director)"/>
+                        <label value="@load(each.finance_director_phone)"/>
+                        <label value="@load(each.employee_count)"/>
+                        <label value="@load(each.receptionist_count)"/>
+                        <label value="@load(each.part_keeyper_count)"/>
+                        <label value="@load(each.maintainer_count)"/>
+                        <label value="@load(each.qc_inspector_count)"/>
+                        <label value="@load(each.clerk_count)"/>
+                        <label value="@load(each.parking_area)"/>
+                        <label value="@load(each.reception_area)"/>
+                        <label value="@load(each.general_area)"/>
+                        <label value="@load(each.assembly_area)"/>
+                        <label value="@load(each.storage_area)"/>
+                        <label value="@load(each.storage_wuling_area)"/>
+                        <label value="@load(each.storage_userd_part_area)"/>
+                        <label value="@load(each.storage_wuling_userd_part_area)"/>
+                        <label value="@load(each.other_maintain_condition)"/>
+                        <label value="@load(each.other_brand)"/>
+                        <label value="@load(each.products_of_maintain)"/>
+                        <label value="@load(each.other_products)"/>
+
+                    </row>
+                </template>
+            </grid>
+        </vlayout>
+    </center>
+</borderlayout>

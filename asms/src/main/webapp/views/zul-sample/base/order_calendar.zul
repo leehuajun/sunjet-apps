@@ -1,0 +1,159 @@
+<!--
+基础数据管理>>订单日历
+-->
+<borderlayout width="100%" height="100%"
+              apply="org.zkoss.bind.BindComposer"
+              viewModel="@id('vm') @init('com.sunjet.vm.poms.OrderCalendarVM')"
+              style="background-color:rgb(255,255,255);padding:0px;">
+    <north sclass="c-north">
+        <vlayout style="padding:none">
+            <grid oddRowSclass="none" sclass="form-grid">
+                <columns>
+                    <column hflex="1"></column>
+                    <column hflex="2"></column>
+                    <column hflex="1"></column>
+                    <column hflex="2"></column>
+                    <column hflex="1"></column>
+                    <column hflex="2"></column>
+                    <column hflex="1"></column>
+                    <column hflex="2"></column>
+                </columns>
+                <rows>
+                    <row>
+                        <label value="品牌:"/>
+                        <listbox hflex="1" mold="select" multiple="false" checkmark="true">
+                            <listitem label="全部" value="0" selected="true"></listitem>
+                            <listitem label="五菱" value="1"></listitem>
+                            <listitem label="宝骏" value="2"></listitem>
+                        </listbox>
+                        <label value="区域:"/>
+                        <listbox hflex="1" mold="select" multiple="false" checkmark="true"
+                                 selectedItem="@bind(vm.dealerArea)"
+                                 onSelect="@command('chooseArea')"
+                                 model="@load(vm.dealerAreaProvinceRels)">
+                            <template name="model">
+                                <listitem label="@load(each)"
+                                          value="@load(each)">
+                                </listitem>
+                            </template>
+                        </listbox>
+                        <label value="省份:"/>
+                        <listbox hflex="1" mold="select" multiple="false" checkmark="true"
+                                 selectedItem="@bind(vm.province)"
+                                 onSelect="@command('chooseProvince')"
+                                 model="@load(vm.provinces)">
+                            <template name="model">
+                                <listitem label="@load(each.provinceId)"
+                                          value="@load(each.provinceName)">
+                                </listitem>
+                            </template>
+                        </listbox>
+                        <label value="城市:"/>
+                        <listbox hflex="1" mold="select" multiple="false" checkmark="true"
+                                 selectedItem="@bind(vm.city)"
+                                 model="@load(vm.citys)">
+                            <template name="model">
+                                <listitem label="@load(each.code)"
+                                          value="@load(each.name)">
+                                </listitem>
+                            </template>
+                        </listbox>
+                    </row>
+                    <row>
+                        <label value="服务站代码:"/>
+                        <combobox hflex="1" onSelect="@command('chooseDealerCode')" selectedItem="@bind(vm.dealerCode)"
+                                  id="dealerCode1" autodrop="false" buttonVisible="false"/>
+                        <zscript><![CDATA[
+              ListEntity dictEntity= new SimpleListEntity(com.sunjet.vm.poms.OrderCalendarVM.getDealerCodess());
+                dealerCode1.setEntity(dictEntity);
+              ]]>
+                        </zscript>
+                        <label value="服务站名称:"/>
+                        <textbox hflex="1" value="@bind(vm.name)" tooltiptext="@load(vm.name)"/>
+                        <label value="订单日历周期:"/>
+                        <listbox hflex="1" mold="select" multiple="false" checkmark="true">
+                            <listitem label="全部" value="0" selected="true"></listitem>
+                            <listitem label="周" value="1"></listitem>
+                            <listitem label="月" value="2"></listitem>
+                        </listbox>
+                    </row>
+                </rows>
+            </grid>
+            <div sclass="ctoolbars" style="float:right;margin-top:none">
+                <div sclass="ctoolbar" style="margin-top:none">
+                    <button iconSclass="@load(iconVariable.icon_add)" sclass="btn-success c-button" label="新增"/>
+                    <!--<button iconSclass="z-icon-minus" style="width:80px;height:25px;" sclass="btn-warning c-button" label="删除"-->
+                    <!--onClick="alert(self.sclass)"-->
+                    <!--disabled="true"/>-->
+                    <button iconSclass="@load(iconVariable.icon_refresh)" sclass="btn-info c-button" label="刷新"/>
+                    <!--<button style="width:100px;height:30px;" sclass="btn-info" label="修改" image="images/toolbar/${vm.getThemeName()}/edit.png" onClick="alert(self.sclass)"/>-->
+                    <!--<button style="width:100px;height:30px;" sclass="btn-danger" label="帮助" image="images/toolbar/${vm.getThemeName()}/help.png" onClick="alert(self.sclass)"/>-->
+                    <!--<button style="width:100px;height:30px;" sclass="btn-inverse" label="导出" image="images/toolbar/${vm.getThemeName()}/excel.png" onClick="alert(self.sclass)"/>-->
+                    <!--<button style="width:100px;height:30px;" sclass="btn-pink" label="审核" image="images/toolbar/${vm.getThemeName()}/audit.png" onClick="alert(self.sclass)"/>-->
+                    <!--<button style="width:100px;height:30px;" sclass="btn-warning" label="审核" image="images/toolbar/${vm.getThemeName()}/audit.png" onClick="alert(self.sclass)"/>-->
+                </div>
+            </div>
+        </vlayout>
+    </north>
+    <center autoscroll="true" sclass="c-center">
+        <vlayout width="100%" height="100%">
+            <grid hflex="true" vflex="true" style="margin-bottom:0px"
+                  model="@load(vm.resultDTO.pageContent)">
+                <!--<auxhead>-->
+                <!--<auxheader label="服务站地址" colspan="4"/>-->
+                <!--<auxheader label="服务站信息" colspan="6"/>-->
+                <!--<auxheader label="其它信息" colspan="3"/>-->
+                <!--</auxhead>-->
+                <columns>
+                    <column hflex="1" label="ID" visible="false"/>
+                    <column hflex="2" label="区域"/>
+                    <column hflex="2" label="省份"/>
+                    <column hflex="2" label="城市"/>
+                    <column hflex="2" label="服务站代码"/>
+                    <column hflex="5" label="订单日历周期" align="center"/>
+                    <column hflex="2" label="订单执行日"/>
+                    <column hflex="2" label="开始时间"/>
+                    <column hflex="2" label="结束时间"/>
+                </columns>
+                <template name="model">
+                    <row onDoubleClick="@command('editEntity',model=each)">
+                        <!--<label value="" style="border-right:solid 1px rgb(233,233,233)"/>-->
+                        <!--<label value=""/>-->
+                        <!--<label value=""/>-->
+                        <!--<label value=""/>-->
+                        <!--<label value=""/>-->
+                        <!--<label value=""/>-->
+                        <!--<label value=""/>-->
+                        <!--<label value=""/>-->
+                        <!--<label value=""/>-->
+                        <label value="@load(each.objId)" style="border-right:solid 1px rgb(233,233,233)"/>
+                        <label value="@load(each.dealerEntity.dealerAreaName)"/>
+                        <label value="@load(each.dealerEntity.province)"/>
+                        <label value="@load(each.dealerEntity.city)"/>
+                        <label value="@load(each.dealerEntity.dealerCode)"/>
+                        <label value="@load(each.periodType eq '1'?'周':'月')"/>
+                        <label value=""/>
+                        <label value="@load(each.beginDate)"/>
+                        <label value="@load(each.endDate)"/>
+                    </row>
+                </template>
+
+                <!--<foot style="padding:0px 0px;" height="18px">-->
+                <!--<footer span="4" style="margin:0px 0px;padding:0px 0px;height:18px">-->
+                <!--<label value="共有用户数:"/>-->
+                <!--<label value="@load(vm.userVoList.size())"/>-->
+                <!--</footer>-->
+                <!--</foot>-->
+            </grid>
+            <paging
+                    pageSize="@bind(vm.resultDTO.pageSize)"
+                    totalSize="@bind(vm.resultDTO.total)"
+                    pageIncrement="1"
+                    detailed="true"
+                    activePage="@bind(vm.currentPageNo)"
+                    onPaging="@command('gotoPageNo',e=event)"
+                    style="border:0px"
+            />
+        </vlayout>
+    </center>
+</borderlayout>

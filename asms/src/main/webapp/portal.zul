@@ -1,0 +1,148 @@
+<borderlayout width="100%" height="100%"
+              style="background-color:rgb(255,255,255);padding:0px;">
+    <!--<north autoscroll="true" border="none">-->
+    <!--<vlayout sclass="page-content" spacing="0">-->
+    <!--&lt;!&ndash;<include src="/views/content/alert.zul"/>&ndash;&gt;-->
+    <!--<div sclass="alert alert-info">欢迎登录</div>-->
+    <!--&lt;!&ndash;<div sclass="alert alert-warning">欢迎登录</div>&ndash;&gt;-->
+    <!--&lt;!&ndash;<div sclass="jumbotron">&ndash;&gt;-->
+    <!--&lt;!&ndash;<div sclass="container">&ndash;&gt;-->
+    <!--&lt;!&ndash;<vlayout>&ndash;&gt;-->
+    <!--&lt;!&ndash;<label value="Hello, world!" style="font-size:52px"/>&ndash;&gt;-->
+    <!--&lt;!&ndash;<label value="This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information."&ndash;&gt;-->
+    <!--&lt;!&ndash;style="font-size:16px"/>&ndash;&gt;-->
+    <!--&lt;!&ndash;&lt;!&ndash;<p>...</p>&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;<a sclass="btn btn-primary btn-lg" href="#">Learn more</a>&ndash;&gt;-->
+    <!--&lt;!&ndash;</vlayout>&ndash;&gt;-->
+    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+    <!--</vlayout>-->
+    <!--</north>-->
+    <center sclass="c-center" vflex="true" hflex="true" autoscroll="true">
+        <window border="normal" width="100%" height="100%"
+                apply="org.zkoss.bind.BindComposer"
+                sizable="true" style="padding-top:0px;padding-left:0px;" position="center,center" closable="true"
+                viewModel="@id('vm') @init('com.sunjet.vm.IndexVM')">
+            <borderlayout height="100%">
+                <west width="60%" vflex="true">
+                    <vlayout style="padding:0px">
+                        <div height="30px" style="margin-bottom:0px; background-color:rgba(217, 237, 247, 1)">
+                            <label style="font-size: 16px">待办任务</label>
+                        </div>
+                        <!--<div height="375px" hflex="true">-->
+                        <borderlayout width="100%" height="460px"
+                                      apply="org.zkoss.bind.BindComposer"
+                                      viewModel="@id('vm') @init('com.sunjet.vm.flow.TaskListVM')"
+                                      style="background-color:rgb(255,255,255);padding:0px;margin:0px;"
+                        >
+                            <center autoscroll="true" sclass="c-center">
+                                <vlayout width="100%" height="100%" style="padding-bottom:0px">
+                                    <grid hflex="true" vflex="true" sclass="list-grid" oddRowSclass="none"
+                                          autopaging="true"
+                                          model="@load(vm.tasks)"
+                                          style="margin-bottom:15px"
+                                          emptyMessage="@load(vm.emptyMessage)">
+                                        <columns sizable="true">
+                                            <column width="30px" label="序号" align="center"/>
+                                            <column hflex="1" label="流程名称" align="center"/>
+                                            <column width="120px" label="单据编号" align="center"/>
+                                            <column width="60px" label="申请人" align="center"/>
+                                            <column width="200px" label="申请人所在单位" align="center"/>
+                                            <!--<column width="95px" label="提交时间" align="center"/>-->
+                                            <column width="130px" label="操作" align="center"/>
+                                        </columns>
+                                        <template name="model">
+                                            <row onDoubleClick="@command('handleTaskByTask',task=each)">
+                                                <label value="${forEachStatus.index+1}" sclass="label-index"/>
+                                                <label hflex="1"
+                                                       value="@load(vm.mapProcessDefinition.get(each.processDefinitionId).name)"/>
+                                                <label hflex="1" value="@load(vm.getDocNo(each.processInstanceId))"/>
+                                                <label hflex="1"
+                                                       value="@load(vm.getSubmitterName(each.processInstanceId))"/>
+                                                <!--<label hflex="1"  value="@load(vm.getSubmitterName(each.processInstanceId))"/>-->
+                                                <label hflex="1"
+                                                       value="@load(vm.mapRequestOrg.get(vm.getSubmitter(each.processInstanceId)))"/>
+                                                <!--<label hflex="1" value="@load(each.createTime)"/>-->
+                                                <hlayout>
+                                                    <button sclass="btn-success" width="50px"
+                                                            label="处理"
+                                                            tooltiptext="办理任务"
+                                                            onClick="@command('handleTaskByTask',task=each)"/>
+                                                    <button sclass="btn-info" width="60px"
+                                                            label="流程图"
+                                                            tooltiptext="办理任务"
+                                                            onClick="@command('showFlowImage',task=each)"/>
+
+                                                </hlayout>
+                                                <!--</div>-->
+                                            </row>
+                                        </template>
+                                    </grid>
+                                </vlayout>
+                            </center>
+                        </borderlayout>
+                        <!--</div>-->
+                        <!--<div hflex="true" >-->
+                        <a label="更多任务" href="#" onClick="@command('enterTaskList')" style="float:right">
+                            <span class="z-icon-arrow-right"/>
+                        </a>
+                        <!--</div>-->
+                    </vlayout>
+                </west>
+                <east width="40%" vflex="true">
+                    <vlayout style="padding:0px">
+                        <div height="30px" style="margin-bottom:0px ;background-color:rgba(217, 237, 247, 1)">
+                            <label style="font-size: 16px">公告信息</label>
+                        </div>
+                        <!--<div height="375px">-->
+                        <borderlayout width="100%" height="460px"
+                                      apply="org.zkoss.bind.BindComposer"
+                                      viewModel="@id('vm') @init('com.sunjet.vm.basic.NoticeListVM')"
+                                      style="background-color:rgb(255,255,255);padding:0px;margin:0px;"
+                        >
+                            <center autoscroll="true" sclass="c-center">
+                                <vlayout width="100%" height="100%" style="padding-bottom:0px">
+                                    <grid hflex="true" vflex="true" sclass="list-grid" oddRowSclass="none"
+                                          autopaging="true"
+                                          model="@load(vm.resultDTO.pageContent)"
+                                          style="margin-bottom:15px"
+                                          emptyMessage="@load(vm.emptyMessage)">
+                                        <columns>
+                                            <column width="30px" label="序号" align="center"/>
+                                            <column hflex="1" label="标题" align="left"/>
+                                            <column width="95px" label="发布时间" align="center"/>
+                                            <column width="55px" label=" " align="center"/>
+                                        </columns>
+                                        <template name="model">
+                                            <row onDoubleClick="@command('openDialog',entity=each,url=vm.formUrl)">
+                                                <label value="${forEachStatus.index+1}" sclass="label-index"/>
+                                                <label value="@load(each.title)"
+                                                       style="color:rgb(78,116,149);font-weight:700"
+                                                       tooltiptext="@load(each.title)"/>
+
+                                                <label value="@load(each.publishDate)"/>
+                                                <hlayout>
+                                                    <button sclass="btn-success"
+                                                            label="查看" tooltiptext="查看"
+                                                            onClick="@command('openDialog',entity=each,url=vm.formUrl)"/>
+                                                </hlayout>
+                                            </row>
+                                        </template>
+                                    </grid>
+                                </vlayout>
+                            </center>
+                        </borderlayout>
+
+                        <!--</div>-->
+                        <!--<div>-->
+                        <a label="更多公告" href="#" onClick="@command('enterNoticeList')" style="float:right">
+                            <span class="z-icon-arrow-right"/>
+                        </a>
+                        <!--</div>-->
+                    </vlayout>
+                </east>
+
+            </borderlayout>
+        </window>
+    </center>
+</borderlayout>

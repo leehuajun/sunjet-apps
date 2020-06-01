@@ -1,0 +1,179 @@
+<!-- 系统配置对话框 -->
+<window title="编辑配置参数" border="normal" width="350px" sizable="true"
+        style="padding-top:0px;padding-left:0px;" position="@load(vm.window_position)" closable="true"
+        onClose="@command('closeDialog')"
+        viewModel="@id('vm') @init('com.sunjet.vm.admin.ConfigFormDialogVM')"
+        validationMessages="@id('vmsgs')"
+        form="@id('fx') @load(vm.configEntity) @save(vm.configEntity, before='submit')">
+    <style>
+        .water-mark {
+        color: gray; font-style: italic;
+        }
+        .form {
+        border: 0px solid #E1E1E1;
+        background: url('../widgets/effects/form_effect/img/bg.png');
+        padding: 20px 20px;
+        -webkit-border-radius:4px;
+        -moz-border-radius:4px;
+        border-radius:4px;
+        }
+        .form .name {
+        display: block;
+        width: 100px;
+        text-align: center;
+        color:black;
+        }
+        .z-listbox-body {
+        border-bottom:1px solid rgb(220, 220, 220);
+
+        }
+        .z-listhead-bar{
+
+        border: 0px solid #dddddd;
+        }
+        .z-listitem {
+        line-height:12px;
+        }
+        .z-listcell-content {
+        padding: 2px 5px;
+        line-height: 15px;
+        }
+    </style>
+    <vlayout>
+        <!--<grid style="border:none;margin:0px 0px;" width="400" vflex="1">
+          <columns>
+            <column hflex="1" label="属性"/>
+            <column hflex="2" label="值"/>
+            <column hflex="2" label="备注"/>
+          </columns>
+          <rows style="border:none">
+            <row>
+              <label value="用户名" width="150px"/>
+              <hlayout>
+                <textbox value="@bind(fx.name)"
+                     width="150px" tabindex="1"/>
+              </hlayout>
+              <div>
+                <label sclass="hightlight">文本框</label>
+              </div>
+            </row>
+            <row>
+              <label value="登录名" width="150px"/>
+              <hlayout>
+                <textbox value="@bind(fx.logId)"
+                     width="150px" tabindex="1"/>
+              </hlayout>
+              <div>
+                <label sclass="hightlight">文本框</label>
+              </div>
+            </row>
+            &lt;!&ndash;<row>&ndash;&gt;
+            &lt;!&ndash;<label value="密码" width="150px"/>&ndash;&gt;
+            &lt;!&ndash;<textbox type="password" value="@bind(fx.password)"&ndash;&gt;
+            &lt;!&ndash;width="150px" tabindex="2"/>&ndash;&gt;
+            &lt;!&ndash;<div>&ndash;&gt;
+            &lt;!&ndash;<label sclass="hightlight">文本框</label>&ndash;&gt;
+            &lt;!&ndash;type = "password"&ndash;&gt;
+            &lt;!&ndash;</div>&ndash;&gt;
+            &lt;!&ndash;</row>&ndash;&gt;
+            &lt;!&ndash;<row>&ndash;&gt;
+            &lt;!&ndash;<label value="重复密码" width="150px"/>&ndash;&gt;
+            &lt;!&ndash;<cell>&ndash;&gt;
+            &lt;!&ndash;<textbox type="password" value="@bind(vm.retypedPassword)"&ndash;&gt;
+            &lt;!&ndash;width="150px" tabindex="3"/>&ndash;&gt;
+            &lt;!&ndash;<label class="error" value="@load(vmsgs['password'])"/>&ndash;&gt;
+            &lt;!&ndash;</cell>&ndash;&gt;
+            &lt;!&ndash;<div>&ndash;&gt;
+            &lt;!&ndash;<label sclass="hightlight">Textbox</label>&ndash;&gt;
+            &lt;!&ndash;with value validate&ndash;&gt;
+            &lt;!&ndash;</div>&ndash;&gt;
+            &lt;!&ndash;</row>&ndash;&gt;
+            &lt;!&ndash;<row>&ndash;&gt;
+            &lt;!&ndash;<label value="Email" width="150px"/>&ndash;&gt;
+            &lt;!&ndash;<cell>&ndash;&gt;
+            &lt;!&ndash;<textbox value="@bind(fx.email)" width="150px" tabindex="4"/>&ndash;&gt;
+            &lt;!&ndash;<label class="error" value="@load(vmsgs['email'])" />&ndash;&gt;
+            &lt;!&ndash;</cell>&ndash;&gt;
+            &lt;!&ndash;<div>&ndash;&gt;
+            &lt;!&ndash;<label sclass="hightlight">Intbox</label>&ndash;&gt;
+            &lt;!&ndash;with constraint&ndash;&gt;
+            &lt;!&ndash;</div>&ndash;&gt;
+            &lt;!&ndash;</row>&ndash;&gt;
+            <row>
+              <label value="电话" width="150px"/>
+              <textbox constraint="no empty" value="@bind(fx.phone)"
+                   width="150px" maxlength="15" tabindex="5"/>
+              <div>
+                <label sclass="hightlight">Textbox</label>
+                with max length limit
+              </div>
+            </row>
+
+            &lt;!&ndash;<row>&ndash;&gt;
+            &lt;!&ndash;<label value="角色" width="150px"/>&ndash;&gt;
+            &lt;!&ndash;<vlayout>&ndash;&gt;
+            &lt;!&ndash;<checkbox label="${each}" forEach="${vm.roles}"/>&ndash;&gt;
+            &lt;!&ndash;</vlayout>&ndash;&gt;
+
+            &lt;!&ndash;<div>&ndash;&gt;
+            &lt;!&ndash;<label sclass="hightlight">Textbox</label>&ndash;&gt;
+            &lt;!&ndash;with max length limit&ndash;&gt;
+            &lt;!&ndash;</div>&ndash;&gt;
+            &lt;!&ndash;</row>&ndash;&gt;
+
+          </rows>
+          <foot>
+            <footer span="3" align="center">
+              &lt;!&ndash;<label visible="true" height="25px"&ndash;&gt;
+              <label visible="@load(empty vmsgs)"
+                   value="@load(empty vmsgs ? 'Form successfully submitted!' : '', before='submit')"/>
+              <div style="height:10px"/>
+              &lt;!&ndash;<hbox style="align:center">&ndash;&gt;
+
+              &lt;!&ndash;</hbox>&ndash;&gt;
+              <div style="height:10px"/>
+            </footer>
+          </foot>
+        </grid>-->
+        <vlayout spacing="10px" style="margin-top:5px;" class="form">
+            <!--<label value="On-line Shopping Info" style="font-size:16px;font-weight:bold;color:gray;" />-->
+            <hlayout spacing="7px">
+                <label class="name" value="键 :"/>
+                <textbox constraint="no empty" value="@bind(fx.configKey)"
+                         width="150px" tabindex="1" readonly="true"/>
+            </hlayout>
+            <hlayout spacing="7px">
+                <label class="name" value="当前值 :"/>
+                <textbox constraint="no empty" value="@bind(fx.configValue)"
+                         width="150px" tabindex="2"/>
+            </hlayout>
+            <hlayout spacing="7px">
+                <label class="name" value="默认值 :"/>
+                <textbox constraint="no empty" value="@bind(fx.configDefaultValue)"
+                         width="150px" tabindex="2" readonly="true"/>
+            </hlayout>
+            <hlayout spacing="7px">
+                <label class="name" value="描述 :"/>
+                <label class="name" value="@load(fx.comment)" style="align:left"/>
+            </hlayout>
+        </vlayout>
+
+        <label style="color:rgb(155,0,0)" visible="@load(empty vmsgs)"
+               value="@load(empty vmsgs ? 'Form successfully submitted!' : '', before='submit')"/>
+        <div align="center" style="margin-top:20px;margin-bottom:20px">
+            <hlayout spacing="10px">
+                <button label="保存" iconSclass="@load(iconVariable.icon_save)" style="width:80px;height:25px;"
+                        tabindex="7"
+                        sclass="btn-success c-button"
+                        onClick="@command('submit') @global-command('saveConfigEntity',model=vm.configEntity)"/>
+                <!--<button label="重置" iconSclass="z-icon-refresh" style="width:80px;height:25px;" tabindex="8"-->
+                <!--sclass="btn-info c-button"-->
+                <!--onClick="alert(self.sclass)"/>-->
+                <button label="关闭" iconSclass="@load(iconVariable.icon_close)" tabindex="9"
+                        sclass="btn-warning c-button"
+                        onClick="spaceOwner.detach();"/>
+
+            </hlayout>
+        </div>
+    </vlayout>
+</window>

@@ -1,0 +1,8 @@
+<!-- Alert -->
+<window closable="true" border="normal" title="" sclass="alert alert-success">
+    <caption>
+        欢迎登录
+        <label value="@bind(vm.app_name)"/>
+    </caption>
+</window>
+

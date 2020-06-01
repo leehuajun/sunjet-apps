@@ -1,0 +1,235 @@
+@import "base";
+
+.navbar {
+  margin-bottom: 0;
+  padding-left: 0;
+  padding-right: 0;
+  margin: 0;
+  border: none;
+  border-radius: 0;
+  min-height: $navbarHeight;
+  position: relative;
+  background: $navbarBackgroundColor;
+  .navbar-brand {
+    color: $navbarBrandColor;
+    font-size: $navbarBrandFontSize;
+    text-shadow: $navbarBrandTextShadow;
+    padding-top: $navbarBrandPaddingTop;
+    padding-bottom: $navbarBrandPaddingBottom;
+    &:hover, &:focus {
+      color: $navbarBrandColor;
+    }
+  }
+  .navbar-logo {
+    float: left;
+    width: $navbarLogoWidth;
+    height: $navbarLogoMarginHeight;
+    margin-top: $navbarLogoMarginTop;
+    margin-left: $navbarLogoMarginLeft;
+  }
+}
+
+.nav-user {
+  & > div {
+    .user-menu {
+      background-color: $baseBgColor2;
+      color: $navbarMenuColor;
+      display: block;
+      line-height: $navbarHeight;
+      height: $navbarHeight;
+      border-left: $navbarMenuBorderLeft;
+      text-align: center;
+      height: 100%;
+      width: auto;
+      min-width: $navbarMenuMinWidth;
+      padding: 0 $navbarMenuPadding;
+      position: relative;
+      vertical-align: middle;
+
+      .z-menu-selected {
+        color: $baseColor2 !important;
+
+      }
+      &.z-menubar {
+        padding: 0;
+        border: 0;
+        background: none;
+        filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+        border-left: 1px solid rgb(44, 64, 82);
+        img {
+          margin: -4px 8px 0 0;
+          /*${ t:borderRadius('100%') };*/
+          #border: 2px solid #FFF;
+          max-width: 40px;
+        }
+        .z-menu-content {
+          line-height: 45px;
+          height: 45px;
+          border: 0;
+          padding: 0 8px;
+          &:hover, &:focus {
+            background: none;
+            filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+          }
+          &:active {
+            border: 0;
+            /*${ t:boxShadow('none') };*/
+            background: none;
+            filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+          }
+        }
+        .z-menu-content [class*="z-icon-"] {
+          display: inline-block;
+          width: 1.25em;
+          text-align: center;
+        }
+        .z-menu {
+          margin: 0;
+          &:hover, &:focus {
+            background: none;
+            filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+          }
+        }
+        .z-menu-selected {
+          & > .z-menu-content {
+            border: 0;
+            /*${ t:boxShadow('none') };*/
+            background: none;
+            filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+          }
+        }
+        .z-menu-text {
+          max-width: 80px;
+          display: inline-block;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: normal;
+          text-align: left;
+          vertical-align: top;
+          line-height: 15px;
+          position: relative;
+          top: 6px;
+          color: #FFF;
+          font-size: 12px;
+          text-shadow: none;
+        }
+        .z-menu-icon {
+          top: 0;
+          right: 8px;
+        }
+      }
+    }
+    .badge {
+      position: relative;
+      top: -4px;
+      left: 2px;
+      padding-right: 5px;
+      padding-left: 5px;
+      color: whitesmoke;
+    }
+    & > a {
+      background-color: $baseBgColor2;
+      color: $navbarMenuColor;
+      display: block;
+      line-height: $navbarHeight;
+      height: $navbarHeight;
+      border-left: $navbarMenuBorderLeft;
+      text-align: center;
+      height: 100%;
+      width: auto;
+      min-width: $navbarMenuMinWidth;
+      padding: 0 $navbarMenuPadding;
+      position: relative;
+      vertical-align: middle;
+
+      .z-menu-selected {
+        color: $baseColor2 !important;
+      }
+      &:hover, &:focus {
+        background-color: #2c5976;
+      }
+    }
+    &[class*="z-icon-"] {
+      font-size: 16px;
+      color: #ffffff;
+      display: inline-block;
+      width: 20px;
+      text-align: center;
+    }
+    &:first-child {
+      & > a {
+        #border-left: none;
+      }
+    }
+    &:last-child {
+      & > a {
+        border-right: 1px solid rgb(44, 64, 82);
+      }
+    }
+  }
+}
+
+.badge {
+  text-shadow: none;
+  font-size: 12px;
+  padding-top: 1px;
+  padding-bottom: 3px;
+  font-weight: normal;
+  line-height: 15px;
+  background-color: rgb(44, 64, 82) !important;
+}
+
+@mixin badge-type($color_type,$bg_color) {
+  .label-#{$color_type},
+  .badge-#{$color_type} {
+    background-color: $bg_color !important;
+  }
+}
+
+@include badge-type("grey", #a0a0a0);
+@include badge-type("info", #3a87ad);
+@include badge-type("primary", #82af6f);
+@include badge-type("success", #a0a0a0);
+@include badge-type("danger", #d15b47);
+@include badge-type("important", #d15b47);
+@include badge-type("inverse", #333333);
+@include badge-type("warning", #f89406);
+@include badge-type("pink", #d6487e);
+@include badge-type("purple", #9585bf);
+@include badge-type("yellow", #fee188);
+@include badge-type("light", #e7e7e7);
+//@include badge-type("yellow",#fee188);
+
+.badge-yellow,
+.label-yellow {
+  color: #996633 !important;
+  border-color: #fee188;
+}
+
+.badge-default,
+.label-default {
+  color: #996633 !important;
+  border-color: #fee188;
+}
+
+@mixin nav-user-define($color_type,$bg_color1,$bg_color2) {
+  .nav-user > div > a.#{$color_type},
+  .nav-user > div .user-menu.#{$color_type} {
+    background-color: $bg_color1 ! important;
+  }
+  .nav-user > div > a.#{$color_type}.open,
+  .nav-user > div .user-menu.grey.open,
+  .nav-user > div > a.#{$color_type}:hover,
+  .nav-user > div .user-menu.#{$color_type}:hover,
+  .nav-user > div > a.#{$color_type}:focus,
+  .nav-user > div .user-menu.#{$color_type}:focus,
+  .nav-user > div > a.#{$color_type} .z-menu-selected,
+  .nav-user > div .user-menu.#{$color_type} .z-menu-selected {
+    background-color: $bg_color2 ! important;
+  }
+}
+
+@include nav-user-define("grey", #555555, #4b4b4b);
+@include nav-user-define("purple", #892e65, #762c59);
+@include nav-user-define("green", #2e8965, #2c7659);
+@include nav-user-define("light-blue", #62a8d1, #579ec8);

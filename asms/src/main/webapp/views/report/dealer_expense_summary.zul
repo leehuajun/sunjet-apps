@@ -1,0 +1,90 @@
+<!-- 服务站年度结算汇总 列表 -->
+<borderlayout width="100%" height="100%"
+              apply="org.zkoss.bind.BindComposer"
+              viewModel="@id('vm') @init('com.sunjet.vm.report.DealerExpenseSummaryVM')">
+    <north sclass="c-north">
+        <vlayout>
+            <grid oddRowSclass="none" hflex="1" sclass="form-grid" style="margin-top:10px">
+                <columns>
+                    <column width="70px"></column>
+                    <column hflex="1"></column>
+                    <column width="70px"></column>
+                    <column hflex="1"></column>
+                    <column width="70px"></column>
+                    <column hflex="1"></column>
+                </columns>
+                <rows>
+                    <row style="border:none;height:30px">
+                        <label value="服务站"/>
+                        <textbox value="@bind(vm.dealerName)" hflex="1"/>
+                        <label value="费用类型"></label>
+                        <listbox mold="select"
+                                 hflex="1"
+                                 selectedItem="@bind(vm.type)"
+                        >
+                            <listitem label="所有类型总费用" value="所有类型总费用" selected="true"></listitem>
+                            <listitem label="三包费用" value="三包费用"></listitem>
+                            <listitem label="活动费用" value="活动费用"></listitem>
+                            <listitem label="首保费用" value="首保费用"></listitem>
+                            <listitem label="故障件运费" value="故障件运费"></listitem>
+                            <listitem label="外出费用" value="外出费用"></listitem>
+                            <listitem label="配件费用" value="配件费用"></listitem>
+                            <listitem label="工时费用" value="工时费用"></listitem>
+                        </listbox>
+                    </row>
+                </rows>
+            </grid>
+            <include src="/views/macros/flow_list_toolbar.zul"/>
+        </vlayout>
+    </north>
+    <center sclass="c-center">
+        <vlayout width="100%" height="100%">
+            <grid hflex="true" vflex="true"
+                  sclass="list-grid"
+                  oddRowSclass="none"
+                  mold="paging"
+                  style="margin:0;padding:0"
+
+                  model="@load(vm.maps)">
+                <columns sizable="true">
+                    <column width="30px" label="序号" align="center"/>
+                    <column width="180px" label="服务站" align="center"/>
+                    <column hflex="1" label="1月" align="center"/>
+                    <column hflex="1" label="2月" align="center"/>
+                    <column hflex="1" label="3月" align="center"/>
+                    <column hflex="1" label="4月" align="center"/>
+                    <column hflex="1" label="5月" align="center"/>
+                    <column hflex="1" label="6月" align="center"/>
+                    <column hflex="1" label="7月" align="center"/>
+                    <column hflex="1" label="8月" align="center"/>
+                    <column hflex="1" label="9月" align="center"/>
+                    <column hflex="1" label="10月" align="center"/>
+                    <column hflex="1" label="11月" align="center"/>
+                    <column hflex="1" label="12月" align="center"/>
+                    <column hflex="1" label="年度汇总" align="center"/>
+                </columns>
+                <template name="model">
+                    <row>
+                        <label value="${forEachStatus.index+1}" sclass="label-index"/>
+                        <label value="@load(each.dealer_name)"/>
+                        <decimalbox format="####.##" readonly="true" value="@load(each.January)"/>
+                        <decimalbox format="####.##" readonly="true" value="@load(each.February)"/>
+                        <decimalbox format="####.##" readonly="true" value="@load(each.March)"/>
+                        <decimalbox format="####.##" readonly="true" value="@load(each.April)"/>
+                        <decimalbox format="####.##" readonly="true" value="@load(each.May)"/>
+                        <decimalbox format="####.##" readonly="true" value="@load(each.June)"/>
+                        <decimalbox format="####.##" readonly="true" value="@load(each.July)"/>
+                        <decimalbox format="####.##" readonly="true" value="@load(each.August)"/>
+                        <decimalbox format="####.##" readonly="true" value="@load(each.September)"/>
+                        <decimalbox format="####.##" readonly="true" value="@load(each.October)"/>
+                        <decimalbox format="####.##" readonly="true" value="@load(each.November)"/>
+                        <decimalbox format="####.##" readonly="true" value="@load(each.December)"/>
+                        <decimalbox format="####.##" readonly="true" value="@load(each.January+each.February+each.March+each.April
+                        +each.May+each.June+each.July+each.August+each.September
+                        +each.October+each.November+each.December)"/>
+                    </row>
+                </template>
+            </grid>
+        </vlayout>
+    </center>
+</borderlayout>

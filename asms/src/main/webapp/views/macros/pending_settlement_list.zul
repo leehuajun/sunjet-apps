@@ -1,0 +1,47 @@
+<vlayout width="100%" height="100%">
+    <grid hflex="true" vflex="true" sclass="list-grid" model="@load(vm.resultDTO.pageContent)">
+        <columns sizable="true">
+            <column width="35px" label="序号" align="center"/>
+            <column width="80px" label="来源单据类型" align="center"/>
+            <column width="100px" label="来源单据编号" align="center"/>
+            <column hflex="160px" label="服务站名称" align="center"/>
+            <column width="70px" label="服务站编号" align="center"/>
+            <column hflex="160px" label="经销商名称" align="center"/>
+            <column width="70px" label="经销商编号" align="center"/>
+            <column width="100px" label="业务时间" align="center"/>
+            <column width="60px" label="结算费用" align="center"/>
+            <column width="70px" label="经办人" align="center"/>
+            <column width="90px" label="联系电话" align="center"/>
+            <column width="50px" label="是否结算" align="center"/>
+            <column width="110px" label="结算单号" align="center"/>
+
+        </columns>
+        <template name="model">
+            <row>
+                <label value="${forEachStatus.index+1}" sclass="label-index"/>
+                <label hflex="1" value="@load(each.srcDocType)"/>
+                <label hflex="1" value="@load(each.srcDocNo)"/>
+                <label hflex="1" value="@load(each.dealerName)"/>
+                <label hflex="1" value="@load(each.dealerCode)"/>
+                <label hflex="1" value="@load(each.agencyName)"/>
+                <label hflex="1" value="@load(each.agencyCode)"/>
+                <label hflex="1" value="@load(each.businessDate)"/>
+                <decimalbox hflex="1" format="####.##" value="@load(each.expenseTotal)" readonly="true"/>
+                <label hflex="1" value="@load(each.operator)"/>
+                <label hflex="1" value="@load(each.operatorPhone)"/>
+                <label hflex="1" value="@load(each.settlement eq true ? '已结算':'未结算')"/>
+                <label hflex="1" value="@load(each.settlementDocNo)"/>
+
+            </row>
+        </template>
+    </grid>
+    <paging
+            pageSize="20"
+            totalSize="120"
+            pageIncrement="1"
+            detailed="true"
+            activePage="0"
+            onPaging="@command('gotoPageNo',e=event)"
+            style="border:0px"
+    />
+</vlayout>

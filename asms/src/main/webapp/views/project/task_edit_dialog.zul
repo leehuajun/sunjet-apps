@@ -1,0 +1,84 @@
+<!-- 菜单项编辑页面 -->
+<window title="任务编辑" border="normal"
+        width="600px" height="360px" sizable="false"
+        style="padding-top:0px;padding-left:0px;" position="@load(vm.window_position)" closable="true"
+        onClose="spaceOwner.detach()"
+        viewModel="@id('vm') @init('com.sunjet.vm.project.TaskFormDialogVM')"
+        validationMessages="@id('vmsgs')"
+        form="@id('fx') @load(vm.taskEntity) @save(vm.taskEntity, before='submit')">
+    <borderlayout>
+        <north sclass="c-north" style="border-bottom:1px solid #cccccc">
+            <label value="任务信息" style="font-weight:700"/>
+        </north>
+        <center sclass="c-center" style="border-bottom:1px solid #cccccc">
+            <grid oddRowSclass="none" hflex="1" sclass="form-grid">
+                <columns>
+                    <column hflex="1"></column>
+                    <column hflex="2"></column>
+                    <column hflex="1"></column>
+                    <column hflex="2"></column>
+                </columns>
+                <rows>
+                    <row style="border:none;height:40px" spans="1,3">
+                        <label value="任务名称:"/>
+                        <textbox width="100%" constraint="no empty" value="@bind(fx.name)" tabindex="1"/>
+                    </row>
+                    <row style="border:none;height:40px">
+                        <label value="任务编号:"/>
+                        <textbox width="100%" value="@bind(fx.code)" tabindex="2"/>
+                        <label value="执行人:"/>
+                        <!--<textbox constraint="no empty" value="@bind(fx.executorName)" tabindex="1"/>-->
+                        <listbox width="100%" mold="select" model="@load(vm.userList)" selectedItem="@bind(vm.executor)"
+                                 tabindex="2">
+                            <template name="model">
+                                <listitem value="@bind(each)">
+                                    <listcell label="@load(each.name)"/>
+                                </listitem>
+                            </template>
+                        </listbox>
+                    </row>
+                    <row style="border:none;height:40px">
+                        <label value="计划开始日期:"/>
+                        <datebox width="100%" format="medium" value="@bind(fx.beginDate)"/>
+                        <!--<textbox value="@bind(fx.beginDate)" tabindex="2"/>-->
+                        <label value="计划结束日期:"/>
+                        <!--<textbox constraint="no empty" value="@bind(fx.endDate)" tabindex="1"/>-->
+                        <datebox width="100%" format="medium" value="@bind(fx.endDate)"/>
+                    </row>
+                    <row style="border:none;height:40px">
+                        <label value="实际开始日期:"/>
+                        <!--<textbox value="@bind(fx.actualBeginDate)" tabindex="2"/>-->
+                        <datebox width="100%" format="medium" value="@bind(fx.actualBeginDate)"/>
+                        <label value="实际结束日期:"/>
+                        <!--<textbox constraint="no empty" value="@bind(fx.actualEndDate)" tabindex="1" />-->
+                        <datebox width="100%" format="medium" value="@bind(fx.actualEndDate)"/>
+                    </row>
+                    <row style="border:none;height:50px" spans="1,3">
+                        <label value="任务状态:"/>
+                        <textbox width="100%" constraint="no empty" value="@bind(fx.status)" tabindex="2"/>
+                    </row>
+                    <row style="border:none;height:40px" spans="1,3">
+                        <label value="备注:"/>
+                        <textbox width="100%" constraint="no empty" value="@bind(fx.content)" tabindex="2"/>
+                    </row>
+                    <row style="border:none;height:40px" spans="4">
+                        <label width="100%" style="color:rgb(155,0,0)" visible="@load(empty vmsgs)"
+                               value="@load(empty vmsgs ? 'Form successfully submitted!' : '', before='submit')"/>
+                    </row>
+                </rows>
+            </grid>
+        </center>
+        <south sclass="c-south" style="height:55px;">
+            <div align="center" style="margin-top:10px;margin-bottom:20px">
+                <hlayout spacing="10px">
+                    <button label="保存" iconSclass="@load(iconVariable.icon_save)" tabindex="7"
+                            sclass="btn-success c-button"
+                            onClick="@command('submit')"/>
+                    <button label="关闭" iconSclass="@load(iconVariable.icon_close)" tabindex="9"
+                            sclass="btn-warning c-button"
+                            onClick="spaceOwner.detach();"/>
+                </hlayout>
+            </div>
+        </south>
+    </borderlayout>
+</window>

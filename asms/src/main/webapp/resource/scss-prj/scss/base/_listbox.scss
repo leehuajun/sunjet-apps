@@ -1,0 +1,68 @@
+@import "variables";
+
+.z-listbox {
+  border-top: 2px solid $listbox-border-top;
+  border-bottom: 1px solid $listbox-border-base;
+  border-left: 1px solid $listbox-border-base;
+  border-right: 1px solid $listbox-border-base;
+
+  .z-listheader-content, .z-listhead-bar {
+    position: relative;
+    line-height: $listbox-header-height;
+    font-size: $listbox-header-font-size;
+    color: $listbox-color;
+    background-color: $listbox-header-bg;
+    padding: 0 $listbox-cell-padding 0 $listbox-cell-padding;;
+    overflow: hidden;
+  }
+  .z-listitem {
+    background: transparent none;
+    &:hover {
+      background: transparent none;
+      > .z-listcell {
+        background: transparent none;
+      }
+    }
+    > .z-listcell {
+      background: transparent none;
+    }
+
+  }
+  &.z-listitem-selected {
+    > .z-listcell, &:hover > .z-listcell {
+      background: transparent none;
+    }
+  }
+}
+
+.z-listcell-content, .z-listgroup-content, .z-listgroupfoot-content, .z-listfooter-content {
+  font-size: $listbox-font-size;
+  padding: 0 $listbox-cell-padding 0 $listbox-cell-padding;
+  color: $listbox-color;
+  line-height: $listbox-line-height;
+  overflow: hidden;
+}
+
+.z-listheader-checkable, .z-listitem-checkable {
+  @include border-radius($listbox-checkbox-border-radius);
+  display: inline-block;
+  width: $listbox-checkbox-width;
+  height: $listbox-checkbox-height;
+  border: 1px solid $listbox-checkbox-border;
+  background: $listbox-checkbox-bg;
+  vertical-align: middle;
+}
+
+.z-listbox-odd.z-listitem {
+  background: transparent none;
+  &:hover {
+    background: transparent none;
+  }
+}
+
+
+
+
+
+
+

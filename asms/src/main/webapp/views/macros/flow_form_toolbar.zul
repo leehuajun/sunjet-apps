@@ -1,0 +1,34 @@
+<div sclass="ctoolbars" style="padding-top:2px">
+    <div sclass="ctoolbar">
+        <button sclass="btn-success c-button" label="保存"
+                onClick="@command('saveFlowDocEntity')"
+                visible="@load(vm.checkCanEdit())"/>
+        <button sclass="btn-success c-button" label="提交"
+                onClick="@command('startProcess')"
+                visible="@load(vm.checkCanCommit())"/>
+        <button sclass="btn-success c-button" label="任务办理"
+                onClick="@command('showHandleForm')"
+                visible="@load(vm.checkCanHandleTask())"/>
+        <button sclass="btn-success c-button" label="单据作废"
+                onClick="@command('desert')"
+                visible="@load(vm.checkCanDesert())"/>
+        <button sclass="btn-success c-button" label="打印"
+                onClick="@command('printReport')"
+                visible="@load(vm.checkCanPrintReport())"/>
+        <button sclass="btn-success c-button" label="快递单打印"
+                onClick="@command('expressPrintReport')"
+                visible="@load(vm.checkCanExpressPrintReport())"/>
+    </div>
+    <!--<button iconSclass="z-icon-refresh" sclass="btn-info c-button" label="打印"></button>-->
+    <div sclass="ctoolbar" style="float:right">
+        <button sclass="btn-success c-button" label="生成调拨单"
+                onClick="@command('generateSupplyNotice')"
+                visible="@load(vm.checkCanEditSupply())"></button>
+        <button sclass="btn-success c-button" label="生成故障件返回通知单"
+                onClick="@command('generateRecycleNotice')"
+                visible="@load(vm.checkCanEditRecycle())"></button>
+        <button sclass="btn-success c-button" label="流程审批日志"
+                onClick="@command('showFlowImage',entity=vm.entity,users=vm.users)"
+                visible="@load(vm.checkCanShowFlowImage())"></button>
+    </div>
+</div>

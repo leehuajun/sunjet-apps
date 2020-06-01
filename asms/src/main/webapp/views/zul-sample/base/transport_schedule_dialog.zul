@@ -1,0 +1,130 @@
+<!--
+基础数据管理>>运输周期
+-->
+<!-- 用户项编辑页面 -->
+<window title="运输周期编辑" border="normal" width="800px" height="500px" sizable="false"
+        position="@load(vm.window_position)" closable="true" onClose="spaceOwner.detach();"
+        apply="org.zkoss.bind.BindComposer"
+        viewModel="@id('vm') @init('com.sunjet.vm.poms.TransportScheduleDialogVM')"
+        validationMessages="@id('vmsgs')" form="@id('fx')">
+    <borderlayout width="100%" height="100%" style="border:none;background-color:rgb(255,255,255);padding:0px;">
+        <center sclass="c-center">
+            <grid oddRowSclass="none" sclass="form-grid">
+                <columns>
+                    <column hflex="1"></column>
+                    <column hflex="2"></column>
+                    <column hflex="1"></column>
+                    <column hflex="2"></column>
+                    <column hflex="1"></column>
+                    <column hflex="2"></column>
+                </columns>
+                <rows>
+                    <row>
+                        <label value="区域:"/>
+                        <listbox hflex="1" mold="select" multiple="false" checkmark="true"
+                                 selectedItem="@bind(vm.dealerArea)"
+                                 onSelect="@command('chooseArea')"
+                                 model="@load(vm.dealerAreaProvinceRels)">
+                            <template name="model">
+                                <listitem label="@load(each)"
+                                          value="@load(each)">
+                                </listitem>
+                            </template>
+                        </listbox>
+                        <label value="省份:"/>
+                        <listbox hflex="1" mold="select" multiple="false" checkmark="true"
+                                 selectedItem="@bind(vm.province)"
+                                 onSelect="@command('chooseProvince')"
+                                 model="@load(vm.provinces)">
+                            <template name="model">
+                                <listitem label="@load(each)"
+                                          value="@load(each)">
+                                </listitem>
+                            </template>
+                        </listbox>
+                        <label value="城市:"/>
+                        <listbox hflex="1" mold="select" multiple="false" checkmark="true"
+                                 selectedItem="@bind(vm.city)"
+                                 model="@load(vm.citys)">
+                            <template name="model">
+                                <listitem label="@load(each)"
+                                          value="@load(each)">
+                                </listitem>
+                            </template>
+                        </listbox>
+                    </row>
+                    <row>
+                        <label value="服务站代码:"/>
+                        <combobox hflex="1" selectedItem="@bind(vm.dealerCode)" onSelect="@command('chooseDealerCode')"
+                                  id="dealerCode3" autodrop="false" buttonVisible="false"/>
+                        <zscript><![CDATA[
+              ListEntity dictEntity= new SimpleListEntity(com.sunjet.vm.poms.TransportScheduleVM.getDealerCodess());
+                dealerCode3.setEntity(dictEntity);
+              ]]>
+                        </zscript>
+                        <label value="服务站名称:"/>
+                        <textbox hflex="1" value="@bind(vm.name)" tooltiptext="@load(vm.name)" readonly="true"/>
+                        <label value="发货地:"/>
+                        <listbox hflex="1" mold="select"
+                                 selectedItem="@bind(vm.dictionaryExt.selectedItem_FHD)"
+                                 model="@load(vm.dictionaryExt.lstDictionary_FHD)">
+                            <template name="model">
+                                <listitem label="@load(each.name)"
+                                          value="@load(each.objId)">
+                                </listitem>
+                            </template>
+                        </listbox>
+                    </row>
+                    <row>
+                        <label value="物料类型:"/>
+                        <listbox hflex="1" mold="select"
+                                 selectedItem="@bind(vm.dictionaryExt.selectedItem_WLLX)"
+                                 model="@load(vm.dictionaryExt.lstDictionary_WLLX)">
+                            <template name="model">
+                                <listitem label="@load(each.name)"
+                                          value="@load(each.objId)">
+
+                                </listitem>
+                            </template>
+                        </listbox>
+
+                        <label value="运输方式:"/>
+                        <listbox hflex="1" mold="select"
+                                 selectedItem="@bind(vm.dictionaryExt.selectedItem_YSFS)"
+                                 model="@load(vm.dictionaryExt.lstDictionary_YSFS)">
+                            <template name="model">
+                                <listitem label="@load(each.name)"
+                                          value="@load(each.objId)">
+                                </listitem>
+                            </template>
+                        </listbox>
+
+                        <label value="承运商:"/>
+                        <listbox hflex="1" mold="select"
+                                 selectedItem="@bind(vm.dictionaryExt.selectedItem_CYS)"
+                                 model="@load(vm.dictionaryExt.lstDictionary_CYS)">
+                            <template name="model">
+                                <listitem label="@load(each.name)"
+                                          value="@load(each.objId)">
+                                </listitem>
+                            </template>
+                        </listbox>
+                    </row>
+                    <row>
+                        <label value="运输时限(天):"/>
+                        <textbox hflex="1" value="@bind(vm.textEntity.estimatedTimeEnroute)"/>
+                    </row>
+                </rows>
+            </grid>
+        </center>
+        <south size="300px" border="0" sclass="c-south">
+            <div height="30px" hflex="true" sclass="ctoolbars" style="float:left;margin-top:none">
+                <div sclass="ctoolbar" style="margin-top:none">
+                    <button onClick="@command('saveEntity')" iconSclass="@load(iconVariable.icon_save)"
+                            sclass="btn-success c-button" label="保存"/>
+                    <button iconSclass="@load(iconVariable.icon_close" sclass="btn-info c-button" label="关闭"/>
+                </div>
+            </div>
+        </south>
+    </borderlayout>
+</window>

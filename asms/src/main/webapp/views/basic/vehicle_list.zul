@@ -1,0 +1,92 @@
+<!--
+基础管理 >>车辆信息列表
+-->
+<borderlayout width="100%" height="100%" apply="org.zkoss.bind.BindComposer"
+              viewModel="@id('vm') @init('com.sunjet.vm.basic.VehicleListVM')"
+              style="background-color:rgb(255,255,255);padding:0px;">
+
+    <north sclass="c-north" style="padding-bottom:5px;padding-top:5px;">
+        <vlayout>
+            <grid oddRowSclass="none" hflex="1" sclass="form-grid" style="margin-top:10px">
+                <columns>
+                    <column width="40px"></column>
+                    <column hflex="1"></column>
+                    <column width="60px"></column>
+                    <column hflex="1"></column>
+                    <column width="60px"></column>
+                    <column hflex="1"></column>
+                    <column width="60px"></column>
+                    <column hflex="1"></column>
+                </columns>
+                <rows>
+                    <row style="border:none;height:30px">
+                        <label value="VIN"/>
+                        <textbox value="@bind(vm.vin)" hflex="1" tabindex="1"/>
+                        <label value="VSN"/>
+                        <textbox value="@bind(vm.vsn)" hflex="1" tabindex="1"/>
+                        <label value="车型型号"/>
+                        <textbox value="@bind(vm.vehicleModel)" hflex="1" tabindex="1"/>
+                        <label value="销售商"/>
+                        <textbox value="@bind(vm.seller)" hflex="1" tabindex="1"/>
+                        <!--<label value="经稍商"/>-->
+                        <!--<textbox value="" hflex="1" tabindex="1"/>-->
+                        <!--<button iconSclass="@load(iconVariable.icon_refresh)" sclass="btn-info c-button" label="查询"-->
+                        <!--onClick="@command('refreshData')"></button>-->
+                    </row>
+                </rows>
+            </grid>
+            <include src="/views/macros/basic_list_toolbar.zul"/>
+        </vlayout>
+    </north>
+    <center sclass="c-center">
+        <vlayout width="100%" height="100%">
+            <grid hflex="true" vflex="true" sclass="list-grid"
+                  model="@load(vm.resultDTO.pageContent)">
+                <columns sizable="true">
+                    <column width="30px" label="序号" align="center"></column>
+                    <column width="150px" label="VIN" align="center"></column>
+                    <column width="150px" label="VSN" align="center"></column>
+                    <column width="100px" label="车型型号" align="center"></column>
+                    <column width="100px" label="发动机号" align="center"></column>
+                    <column width="100px" label="车牌号" align="center"></column>
+                    <column width="100px" label="首保日期" align="center"></column>
+                    <column hflex="1" label="地址" align="center"></column>
+                    <column hflex="1" label="经销商" align="center"></column>
+                    <column hflex="1" label="服务站名称" align="center"></column>
+                    <column hflex="1" label="服务经理" align="center"></column>
+                    <column hflex="1" label="里程" align="center"></column>
+                    <column hflex="1" label="行驶里程" align="center"></column>
+                </columns>
+                <template name="model">
+                    <row onDoubleClick="@command('openDialog',url=vm.formUrl,entity=each)">
+                        <label value="${forEachStatus.index+1}" sclass="label-index"/>
+                        <label value="@load(each.vin)"/>
+                        <label value="@load(each.vsn)"/>
+                        <label value="@load(each.vehicleModel)"/>
+                        <label value="@load(each.engineNo)"/>
+                        <label value="@load(each.plate)"/>
+                        <label value="@load(each.fmDate)"/>
+                        <!--<div align="left">-->
+                        <!-- -->
+                        <!--</div>-->
+                        <label value="@load(each.address)"/>
+                        <label value="@load(each.seller)"/>
+                        <label value="@load(each.dealerName)"/>
+                        <label value="@load(each.serviceManager)"/>
+                        <label value="@load(each.vmt)"/>
+                        <label value="@load(each.mileage)"/>
+                    </row>
+                </template>
+            </grid>
+            <paging
+                    pageSize="@bind(vm.resultDTO.pageSize)"
+                    totalSize="@bind(vm.resultDTO.total)"
+                    pageIncrement="1"
+                    detailed="true"
+                    activePage="@bind(vm.currentPageNo)"
+                    onPaging="@command('gotoPageNo',e=event)"
+                    style="border:0px"
+            />
+        </vlayout>
+    </center>
+</borderlayout>

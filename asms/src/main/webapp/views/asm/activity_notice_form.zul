@@ -1,0 +1,256 @@
+<!-- 活动通知 表单 -->
+<window title="活动通知单" border="normal" width="0px" height="0px"
+        sizable="true" style="padding-top:0px;padding-left:0px;" position="center,center" closable="true"
+        viewModel="@id('vm') @init('com.sunjet.vm.asm.ActivityNoticeFormVM')"
+        validationMessages="@id('vmsgs')" onClose="spaceOwner.detach();"
+        onClientInfo="@command('checkClientInfo',evt=event)">
+    <borderlayout>
+        <north sclass="c-north" height="30px"
+               style="padding-top:15px;border-bottom:1px solid rgb(227,227,227);padding-bottom:10px">
+            <include src="/views/macros/flow_form_toolbar.zul"/>
+        </north>
+        <center sclass="c-center" hflex="true" vflex="true" autoscroll="true">
+            <vlayout height="100%">
+                <groupbox>
+                    <caption>基本信息</caption>
+
+                    <grid oddRowSclass="none" hflex="1" sclass="form-grid" style="margin:0;padding:0">
+                        <columns>
+                            <column width="70px"></column>
+                            <column hflex="1"></column>
+                            <column width="70px"></column>
+                            <column hflex="1"></column>
+                            <column width="70px"></column>
+                            <column hflex="1"></column>
+                            <column width="70px"></column>
+                            <column hflex="1"></column>
+                        </columns>
+                        <rows>
+                            <row style="border:none;height:30px">
+                                <label value="单据编号"/>
+                                <textbox value="@bind(vm.activityNoticeRequest.docNo)" hflex="1" readonly="true"/>
+                                <label value="开始日期"/>
+                                <datebox hflex="1" format="medium" value="@bind(vm.activityNoticeRequest.startDate)"
+                                         readonly="true" buttonVisible="@load(!vm.readonly)"/>
+                                <label value="结束日期"/>
+                                <datebox hflex="1" format="medium" value="@bind(vm.activityNoticeRequest.endDate)"
+                                         readonly="true" buttonVisible="@load(!vm.readonly)"/>
+                                <label value="状态"/>
+                                <textbox hflex="1" value="@load(vm.getStatusName(vm.activityNoticeRequest.status))"
+                                         readonly="true"/>
+                                <!--<textbox value="@bind(vm.activityNoticeRequest.startDate)" hflex="1"/>-->
+
+
+                            </row>
+                            <row style="border:none;height:30px">
+                                <label value="标题"/>
+                                <cell colspan="3">
+                                    <textbox value="@bind(vm.activityNoticeRequest.title)" hflex="1"
+                                             readonly="@load(vm.readonly)"/>
+                                </cell>
+                                <label value="发布时间"/>
+                                <datebox hflex="1" format="medium" value="@bind(vm.activityNoticeRequest.publishDate)"
+                                         readonly="true" buttonVisible="false"/>
+                                <label value="活动文件"/>
+                                <div>
+                                    <a target="_blank"
+                                       href="@load(vm.getFilePath(vm.activityNoticeRequest.noticeFile))"
+                                       label="查看"
+                                       visible="@bind(not empty vm.activityNoticeRequest.noticeFile)"/>
+                                    <button tooltiptext="上传文件" iconSclass="@load(iconVariable.icon_search)"
+                                            sclass="btn-warning inner-button" upload="true,maxsize=5120"
+                                            onUpload="@command('doUploadFile',event=event)"
+                                            disabled="@load(vm.readonly)"
+                                    />
+                                    <button iconSclass="@load(iconVariable.icon_delete)"
+                                            sclass="btn-warning inner-button" label=""
+                                            tooltiptext="删除" visible="@load(!vm.readonly)"
+                                            onClick="@command('delUploadFile')"
+                                            style="padding-left:5px;font-weight:700;font-size:14px;"/>
+                                </div>
+                            </row>
+                            <row style="border:none;height:30px">
+                                <label value="活动概述"/>
+                                <cell colspan="7">
+                                    <textbox value="@bind(vm.activityNoticeRequest.comment)" hflex="1" rows="3"
+                                             readonly="@load(vm.readonly)"/>
+                                </cell>
+                            </row>
+                        </rows>
+                    </grid>
+                </groupbox>
+                <groupbox>
+                    <caption>费用信息(单位：元)</caption>
+
+                    <grid oddRowSclass="none" hflex="1" sclass="form-grid" style="margin:0;padding:0">
+                        <columns>
+                            <column width="90px"></column>
+                            <column hflex="1"></column>
+                            <column width="80px"></column>
+                            <column hflex="1"></column>
+                            <column width="90px"></column>
+                            <column hflex="1"></column>
+                            <column width="80px"></column>
+                            <column hflex="1"></column>
+                            <column width="80px"></column>
+                            <column hflex="1"></column>
+                        </columns>
+                        <rows>
+                            <row style="border:none;height:30px">
+                                <label value="单台人工成本"/>
+                                <textbox value="@bind(vm.activityNoticeRequest.perLaberCost)" hflex="1"
+                                         readonly="@load(vm.readonly)"
+                                         onChange="@command('computeCost')" style="text-align:right"/>
+                                <label value="总人工成本"/>
+                                <textbox value="@bind(vm.activityNoticeRequest.amountLaberCost)" hflex="1"
+                                         readonly="true" style="text-align:right"/>
+                                <label value="单台配件成本"/>
+                                <textbox value="@bind(vm.activityNoticeRequest.perPartCost)" hflex="1" readonly="true"
+                                         style="text-align:right"/>
+                                <label value="总配件成本"/>
+                                <textbox value="@bind(vm.activityNoticeRequest.amountPartCost)" hflex="1"
+                                         readonly="true" style="text-align:right"/>
+                                <label value="成本合计"/>
+                                <textbox value="@bind(vm.activityNoticeRequest.amount)" hflex="1" readonly="true"
+                                         style="text-align:right"/>
+                            </row>
+                        </rows>
+                    </grid>
+                </groupbox>
+                <tabbox sclass="ntabbox" vflex="true" hflex="true" style="margin-bottom:10px;margin-top:15px">
+                    <tabs>
+                        <tab label="车辆及车主信息 "/>
+                        <tab label="配件信息 "/>
+                    </tabs>
+                    <tabpanels style="border-bottom:1px solid green">
+                        <tabpanel style="padding:0">
+                            <vlayout height="100%">
+                                <div sclass="ctoolbars">
+                                    <div sclass="ctoolbar">
+                                        <button iconSclass="@load(iconVariable.icon_add)" sclass="btn-info c-button"
+                                                label="添加车辆"
+                                                onClick="@command('openSelectVehicleForm')"
+                                                visible="@load(!vm.readonly)"/>
+                                    </div>
+                                </div>
+
+                                <grid hflex="true" vflex="true" sclass="list-grid"
+                                      model="@load(vm.activityNoticeRequest.activityVehicles)" mold="paging"
+                                >
+                                    <columns sizable="true">
+                                        <column width="30px" label="序号" align="center"/>
+                                        <column width="200px" label="VIN" align="center"/>
+                                        <column width="150px" label="VSN" align="center"/>
+                                        <column width="100px" label="车型型号" align="center"/>
+                                        <column hflex="1" label="用户" align="center"/>
+                                        <column width="80px" label="电话" align="center"/>
+                                        <column hflex="1" label="用户地址" align="center"/>
+                                        <column width="72px" label="购车日期" align="center"/>
+                                        <column width="80px" label="行驶里程" align="center"/>
+                                        <column width="60px" label="状态" align="center"/>
+                                        <column width="60px" label="操作" align="center"/>
+                                    </columns>
+                                    <template name="model">
+                                        <!--<row onClick="@command('selectNoticeVehicleEntity',model=each)">-->
+                                        <row>
+                                            <label value="${forEachStatus.index + 1}" sclass="label-index"/>
+                                            <label value="@load(each.vehicle.vin)"/>
+                                            <label value="@load(each.vehicle.vsn)"/>
+                                            <label value="@load(each.vehicle.vehicleModel)"/>
+                                            <label value="@load(each.vehicle.ownerName)"
+                                                   tooltiptext="@load(each.vehicle.ownerName)"/>
+                                            <label value="@load(each.vehicle.mobile)"/>
+                                            <label value="@load(each.vehicle.address)"
+                                                   tooltiptext="@load(each.vehicle.address)"/>
+                                            <datebox value="@load(each.vehicle.purchaseDate)" format="medium"
+                                                     readonly="true" buttonVisible="false" tabindex="4"/>
+                                            <label value="@load(each.mileage)"/>
+                                            <label hflex="1" value="@load(each.distribute eq true ? '已分配':'' )"
+                                                   style="@load(each.distribute eq true ? 'color:green':'color:red' )"/>
+                                            <button label="删除" onClick="@command('deleteVehicle',model=each)"
+                                                    sclass="btn-success" visible="@load(!vm.readonly)"></button>
+                                        </row>
+                                    </template>
+                                </grid>
+                            </vlayout>
+                        </tabpanel>
+                        <tabpanel style="padding:0">
+                            <vlayout height="100%">
+                                <div sclass="ctoolbars">
+                                    <div sclass="ctoolbar">
+                                        <button iconSclass="@load(iconVariable.icon_add)" sclass="btn-success c-button"
+                                                label="添加物料"
+                                                onClick="@command('addPart')" visible="@load(!vm.readonly)"/>
+                                        <!--<button iconSclass="@load(iconVariable.icon_refresh)" sclass="btn-info c-button"-->
+                                        <!--label="选择"-->
+                                        <!--onClick="@command('openSelectVehicleForm')"/>-->
+                                        <!--<button iconSclass="@load(iconVariable.icon_refresh)" sclass="btn-info c-button"-->
+                                        <!--label="导入"-->
+                                        <!--onClick="@command('importVehicle')"/>-->
+                                    </div>
+                                </div>
+                                <grid hflex="true" vflex="true" sclass="list-grid" mold="paging" pageSize="15"
+                                      model="@bind(vm.activityNoticeRequest.activityParts)">
+                                    <columns sizable="true">
+                                        <column width="30px" label="序号" align="center"/>
+                                        <column hflex="1" label="配件件号" align="center"/>
+                                        <column hflex="2" label="配件名称" align="center"/>
+                                        <column width="80px" label="零件类型" align="center"/>
+                                        <column width="80px" label="三包时间" align="center"/>
+                                        <column width="80px" label="三包里程" align="center"/>
+                                        <column width="80px" label="单价" align="center"/>
+                                        <column width="80px" label="单位" align="center"/>
+                                        <column width="80px" label="需求数量" align="center"/>
+                                        <column width="80px" label="操作" align="center"/>
+                                        <!--<column width="80px" label="已发数量" align="center"/>-->
+                                    </columns>
+                                    <template name="model">
+                                        <row onClick="@command('selectNoticePartEntity',model=each)">
+                                            <label value="${forEachStatus.index+1}" sclass="label-index"/>
+                                            <bandbox mold="rounded" autodrop="false" hflex="1" readonly="true"
+                                                     buttonVisible="@load(vm.readonly eq false)"
+                                                     value="@bind(each.part.code)">
+                                                <bandpopup width="300px" height="300px">
+                                                    <vlayout hflex="1" vflex="1">
+                                                        <textbox value="@bind(vm.keyword)" hflex="1"
+                                                                 placeholder="输入关键字..回车搜索"
+                                                                 sclass="input-prepend"
+                                                                 onOK="@command('searchParts')"/>
+                                                        <grid style="border:none" vflex="1" model="@load(vm.partList)"
+                                                              emptyMessage="没有数据">
+                                                            <columns>
+                                                                <column hflex="1" label="零件编号"/>
+                                                                <column hflex="1" label="零件名称"/>
+                                                            </columns>
+                                                            <template name="model">
+                                                                <row onClick="@command('selectPart',model=each)">
+                                                                    <label value="@load(each.code)"/>
+                                                                    <label value="@load(each.name)"/>
+                                                                    <label value="@bind(each.unit)"/>
+                                                                </row>
+                                                            </template>
+                                                        </grid>
+                                                    </vlayout>
+                                                </bandpopup>
+                                            </bandbox>
+                                            <label value="@bind(each.part.name)"/>
+                                            <label value="@bind(each.part.partType)"/>
+                                            <label value="@bind(each.part.warrantyTime)"/>
+                                            <label value="@bind(each.part.warrantyMileage)"/>
+                                            <label value="@bind(each.part.price)"/>
+                                            <label value="@bind(each.part.unit)"/>
+                                            <textbox hflex="1" value="@bind(each.amount)"
+                                                     onChange="@command('computeCost')" readonly="@load(vm.readonly)"/>
+                                            <button label="删除" onClick="@command('deletePart',model=each)"
+                                                    sclass="btn-success" visible="@load(!vm.readonly)"></button>
+                                        </row>
+                                    </template>
+                                </grid>
+                            </vlayout>
+                        </tabpanel>
+                    </tabpanels>
+                </tabbox>
+            </vlayout>
+        </center>
+    </borderlayout>
+</window>

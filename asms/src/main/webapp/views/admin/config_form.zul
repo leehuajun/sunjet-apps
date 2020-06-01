@@ -1,0 +1,63 @@
+<!-- 系统配置对话框 -->
+<window title="配置参数" border="normal" width="450px" height="320px" sizable="false"
+        style="padding-top:0px;padding-left:0px;" position="@load(vm.window_position)" closable="true"
+        onClose="spaceOwner.detach();"
+        viewModel="@id('vm') @init('com.sunjet.vm.admin.ConfigFormVM')"
+        validationMessages="@id('vmsgs')"
+        form="@id('fx') @load(vm.configEntity) @save(vm.configEntity, before='submit')">
+    <borderlayout>
+        <north sclass="c-north" style="border-bottom:1px solid #cccccc">
+            <hlayout>
+                <label value="配置项信息" style="font-weight:700"/>
+                <label value="   -   " style="color:#ccc"/>
+                <label value="@load(fx.comment)" style="color:#ccc"/>
+            </hlayout>
+        </north>
+        <center sclass="c-center" style="border-bottom:1px solid #cccccc">
+            <grid oddRowSclass="none" hflex="1" sclass="form-grid" style="margin-top:10px">
+                <columns>
+                    <column hflex="1"></column>
+                    <column hflex="3"></column>
+                </columns>
+                <rows style="line-height:40px">
+                    <row style="border:none;height:40px">
+                        <label value="参数名称"/>
+                        <textbox constraint="no empty" value="@bind(fx.configKey)"
+                                 width="300px" tabindex="1" readonly="@load(vm.readonly)"/>
+                    </row>
+                    <row style="border:none;height:40px">
+                        <label value="当前值"/>
+                        <textbox constraint="no empty" value="@bind(fx.configValue)"
+                                 width="300px" tabindex="2"/>
+                    </row>
+                    <!--<row style="border:none;height:50px">-->
+                    <!--<label value="默认值"/>-->
+                    <!--<textbox constraint="no empty" value="@bind(fx.configDefaultValue)"-->
+                    <!--width="300px" tabindex="2" readonly="true"/>-->
+                    <!--</row>-->
+                    <row>
+                        <label value="描述"/>
+                        <textbox constraint="no empty" value="@bind(fx.comment)"
+                                 width="300px" tabindex="2"/>
+                    </row>
+                </rows>
+            </grid>
+        </center>
+        <south sclass="c-south" style="height:55px;">
+            <div align="center" style="margin-top:10px;margin-bottom:20px">
+                <hlayout spacing="10px">
+                    <button label="保存" iconSclass="@load(iconVariable.icon_save)" style="width:80px;height:25px;"
+                            tabindex="7"
+                            sclass="btn-success c-button"
+                            onClick="@command('submit')"/>
+                    <!--<button label="重置" iconSclass="z-icon-refresh" style="width:80px;height:25px;" tabindex="8"-->
+                    <!--sclass="btn-info c-button"-->
+                    <!--onClick="alert(self.sclass)"/>-->
+                    <button label="关闭" iconSclass="@load(iconVariable.icon_close)" tabindex="9"
+                            sclass="btn-warning c-button"
+                            onClick="spaceOwner.detach();"/>
+                </hlayout>
+            </div>
+        </south>
+    </borderlayout>
+</window>

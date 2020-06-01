@@ -1,0 +1,41 @@
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<zk>
+    <window width="100%" apply="org.zkoss.bind.BindComposer" height="100%"
+            viewModel="@id('vm') @init('com.kjlink.uaas.ctrl.ParamSwitchCtrl')" validationMessages="@id('vmsgs')">
+        <groupbox width="100%" hflex="true" closable="true" mold="3d"
+                  form="@id('fx') @load(vm.paramSwitch) @save(vm.paramSwitch, before='submit') @validator(vm.validator)">
+            <caption label="其它配置"/>
+            <textbox value="@bind(fx.id)" visible="false"/>
+            <grid width="100%" hflex="true">
+                <columns>
+                    <column width="30%" align="right">参数项名称</column>
+                    <column width="70%">参数项值</column>
+                </columns>
+                <rows>
+                    <row>
+                        邮件链接url：
+                        <vlayout>
+                            <textbox id="organName" value="@bind(fx.mailLinksUrl)" width="98%"/>
+                            <label value="@load(vmsgs['mailLinksUrl'])" style="color:red"/>
+                        </vlayout>
+                    </row>
+                    <row>
+                        是否短信通知报案人:
+                        <vlayout>
+                            <radiogroup width="98%" selectedItem="@bind(fx.notifyClaimerSmsFlag)">
+                                <radio label="是" value="${true }"/>
+                                <radio label="否" value="${false }"/>
+                            </radiogroup>
+                            <label value="@load(vmsgs['notifyClaimerSmsFlag'])" style="color:red"/>
+                        </vlayout>
+                    </row>
+                    <row spans="2">
+                        <hlayout width="100%">
+                            <button id="btn_submit" label="提交" onClick="@command('submit')"/>
+                        </hlayout>
+                    </row>
+                </rows>
+            </grid>
+        </groupbox>
+    </window>
+</zk>

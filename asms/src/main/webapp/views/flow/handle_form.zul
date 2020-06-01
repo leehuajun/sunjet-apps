@@ -1,0 +1,37 @@
+<!-- 流程审批对话框 -->
+<?component name="comments" macroURI="/views/macros/comments.zul" inline="true"?>
+<window title="任务处理" border="normal" width="700px" height="400px"
+        sizable="false"
+        style="margin:20px;padding-top:0px;padding-left:0px;" position="@load(vm.window_position)" closable="true"
+        onClose="spaceOwner.detach();"
+        viewModel="@id('vm') @init('com.sunjet.vm.flow.HandleFormVM')">
+    <borderlayout>
+        <north sclass="c-north" height="40px" style="border-bottom:1px solid #cccccc">
+            <hlayout>
+                <button sclass="btn-primary"
+                        label="${each}"
+                        onClick="@command('commit',outcome=self.getAttribute(&quot;outcome&quot;))"
+                        forEach="${vm.outcomes}">
+                    <custom-attributes outcome="${each}"/>
+                </button>
+            </hlayout>
+        </north>
+        <center sclass="c-center" hflex="1" vflex="1">
+            <vlayout hflex="1" vflex="1">
+                <grid oddRowSclass="none" hflex="1" sclass="form-grid" style="margin-top:10px;margin-bottom:10px">
+                    <columns>
+                        <column width="80px"></column>
+                        <column hflex="1"></column>
+                    </columns>
+                    <rows>
+                        <row style="border:none;height:50px">
+                            <label value="意见"/>
+                            <textbox hflex="1" value="@bind(vm.comment)"/>
+                        </row>
+                    </rows>
+                </grid>
+                <comments data="@load(vm.comments)"/>
+            </vlayout>
+        </center>
+    </borderlayout>
+</window>

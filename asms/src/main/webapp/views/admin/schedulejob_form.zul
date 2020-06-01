@@ -1,0 +1,64 @@
+<!-- 定时任务编辑页面 -->
+<window title="@load(vm.entity eq null?'创建定时任务':'修改定时任务')" border="normal"
+        width="550px" height="360px" sizable="false"
+        style="padding-top:0px;padding-left:0px;" position="@load(vm.window_position)" closable="true"
+        onClose="spaceOwner.detach()"
+        viewModel="@id('vm') @init('com.sunjet.vm.admin.ScheduleJobFormVM')"
+        validationMessages="@id('vmsgs')"
+        form="@id('fx') @load(vm.scheduleJob) @save(vm.scheduleJob, before='submit')">
+    <borderlayout>
+        <north sclass="c-north" style="border-bottom:1px solid #cccccc">
+            <hlayout>
+                <label value="定时任务信息" style="font-weight:700"/>
+                <label value="   -   " style="color:#ccc"/>
+                <label value="@load(fx.jobName)" style="color:#ccc"/>
+            </hlayout>
+        </north>
+        <center sclass="c-center" style="border-bottom:1px solid #cccccc">
+            <grid oddRowSclass="none" hflex="1" sclass="form-grid">
+                <columns>
+                    <column hflex="1"></column>
+                    <column hflex="2"></column>
+                    <column hflex="1"></column>
+                    <column hflex="2"></column>
+                </columns>
+                <rows style="line-height:40px">
+                    <row>
+                        <label value="任务名称"/>
+                        <textbox constraint="no empty" value="@bind(fx.jobName)" tabindex="1"/>
+                        <label value="任务组"/>
+                        <textbox value="@bind(fx.jobGroup)" tabindex="2"/>
+                    </row>
+                    <row style="border:none;height:50px" spans="1,3">
+                        <label value="时间表达式"/>
+                        <textbox constraint="no empty" value="@bind(fx.cronExpression)" tabindex="2"/>
+                    </row>
+                    <row style="border:none;height:50px" spans="1,3">
+                        <label value="任务描述"/>
+                        <textbox value="@load(fx.jobDesc)" style="color:#ccc;" width="382px"/>
+                    </row>
+                    <row style="border:none;height:50px" spans="1,3">
+                        <label value="状态"/>
+                        <checkbox checked="@bind(fx.enabled)" tabindex="3" label="启用"/>
+                    </row>
+                    <row style="border:none;height:50px" spans="4">
+                        <label style="color:rgb(155,0,0)" visible="@load(empty vmsgs)"
+                               value="@load(empty vmsgs ? 'Form successfully submitted!' : '', before='submit')"/>
+                    </row>
+                </rows>
+            </grid>
+        </center>
+        <south sclass="c-south" style="height:55px;">
+            <div align="center" style="margin-top:10px;margin-bottom:20px">
+                <hlayout spacing="10px">
+                    <button label="保存" iconSclass="@load(iconVariable.icon_save)" tabindex="7"
+                            sclass="btn-success c-button"
+                            onClick="@command('submit')"/>
+                    <button label="关闭" iconSclass="@load(iconVariable.icon_close)" tabindex="9"
+                            sclass="btn-warning c-button"
+                            onClick="spaceOwner.detach();"/>
+                </hlayout>
+            </div>
+        </south>
+    </borderlayout>
+</window>

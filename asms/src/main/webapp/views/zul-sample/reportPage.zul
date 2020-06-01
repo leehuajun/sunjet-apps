@@ -1,0 +1,103 @@
+<?page title="ReportPage" contentType="text/html;charset=UTF-8"?>
+<?script src="http://localhost:8081/ActuateBIRTViewer/jsapi" ?>
+<zk>
+    <style>
+        .block_image {
+        display: block;
+        }
+        .bttn:hover {
+        cursor: pointer;
+        background-color: #c3c3c3;
+        }
+        .bttn {
+        padding: 5px 4px;
+        }
+
+    </style>
+    <script>
+        zk.afterMount(function() {
+        init();
+        });
+    </script>
+    <n:script xmlns:n="native">
+        <![CDATA[
+
+		function init(){
+			actuate.load("viewer");
+			actuate.initialize("http://localhost:8081/ActuateBIRTViewer", null, null, null, null);
+		}
+		function runReportI(jsonElements)    {
+			var countOfElements = jsonElements.elements.length;
+     	    for (var i = 0; i < countOfElements; i++) {
+		        var year = jsonElements.elements[i].year;
+		    }
+			var viewer = new actuate.Viewer("viewer1");
+			viewer.setReportName("/salesDashboard.rptdesign");
+			viewer.setParameters({Year:year});
+			var options2 = new actuate.viewer.UIOptions( );
+				options2.enableToolBar(true);
+				options2.enableMainMenu(false);
+				viewer.setUIOptions( options2 );
+			viewer.setSize(1100,800);
+			viewer.submit();
+		}
+
+		function runReportXLS() {
+			var viewer = new actuate.Viewer("viewer1");
+			viewer.downloadReport("xls", null, null);
+		}
+
+		function runReportPDF() {
+			var viewer = new actuate.Viewer("viewer1");
+			viewer.downloadReport("pdf", null, null);
+		}
+
+		function printReport() {
+			var viewer = new actuate.Viewer("viewer1");
+			viewer.showPrintDialog( );
+		}
+
+]]>
+    </n:script>
+    <window width="100%" height="100%" apply="org.zkoss.bind.BindComposer"
+            viewModel="@id('vm') @init('com.sunjet.vm.report.ReportPageVM')">
+        <borderlayout>
+            <north style="width:100%">
+                <div sclass="ctoolbars">
+                    <div sclass="ctoolbar">
+                        <button iconSclass="@load(iconVariable.icon_add)" sclass="btn-success c-button" label="新增"
+                                onClick="@command('editEntity',model=null)"/>
+                        <!--<button iconSclass="z-icon-minus" style="width:80px;height:25px;" sclass="btn-warning c-button" label="删除"-->
+                        <!--onClick="alert(self.sclass)"-->
+                        <!--disabled="true"/>-->
+                        <button iconSclass="@load(iconVariable.icon_refresh)" sclass="btn-info c-button" label="刷新"
+                                onClick="@command('refreshData')"/>
+                        <button iconSclass="@load(iconVariable.icon_export)" sclass="btn-info c-button" label="导入PDF"
+                                xmlns:w="client"
+                                w:onClick="runReportPDF()"/>
+                        <button iconSclass="@load(iconVariable.icon_export)" sclass="btn-info c-button" label="导入EXCEL"
+                                xmlns:w="client"
+                                w:onClick="runReportXLS()"/>
+                        <button iconSclass="@load(iconVariable.icon_export)" sclass="btn-info c-button" label="打印"
+                                xmlns:w="client"
+                                w:onClick="printReport()"/>
+                        <!--<button style="width:100px;height:30px;" sclass="btn-info" label="修改" image="images/toolbar/${vm.getThemeName()}/edit.png" onClick="alert(self.sclass)"/>-->
+                        <!--<button style="width:100px;height:30px;" sclass="btn-danger" label="帮助" image="images/toolbar/${vm.getThemeName()}/help.png" onClick="alert(self.sclass)"/>-->
+                        <!--<button style="width:100px;height:30px;" sclass="btn-inverse" label="导出" image="images/toolbar/${vm.getThemeName()}/excel.png" onClick="alert(self.sclass)"/>-->
+                        <!--<button style="width:100px;height:30px;" sclass="btn-pink" label="审核" image="images/toolbar/${vm.getThemeName()}/audit.png" onClick="alert(self.sclass)"/>-->
+                        <!--<button style="width:100px;height:30px;" sclass="btn-warning" label="审核" image="images/toolbar/${vm.getThemeName()}/audit.png" onClick="alert(self.sclass)"/>-->
+                    </div>
+
+                </div>
+            </north>
+            <center autoscroll="true">
+                <html>
+                    <![CDATA[
+                        <div id="viewer1">
+                        </div>
+                    ]]>
+                </html>
+            </center>
+        </borderlayout>
+    </window>
+</zk>

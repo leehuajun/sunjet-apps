@@ -1,0 +1,76 @@
+<!--
+基础管理 >>配件目录表单
+-->
+<window xmlns:c="client" title="配件目录编辑" border="normal" width="550px" height="300px" sizable="false"
+        position="@load(vm.window_position)" closable="true" onClose="spaceOwner.detach();"
+        apply="org.zkoss.bind.BindComposer"
+        viewModel="@id('vm') @init('com.sunjet.vm.basic.PartFormVM')"
+        validationMessages="@id('vmsgs')" form="@id('fx')">
+    <borderlayout width="100%" height="100%" style="border:none;background-color:rgb(255,255,255);padding:0px;">
+        <north sclass="c-north" style="margin-left:5px">
+            <grid oddRowSclass="none" sclass="form-grid">
+                <columns>
+                    <column hflex="1"></column>
+                    <column hflex="2"></column>
+                    <column hflex="1"></column>
+                    <column hflex="2"></column>
+                </columns>
+                <rows>
+                    <row style="border:none">
+                        <label value="配件号:"/>
+                        <textbox hflex="2" value="@bind(vm.partEntity.code)"/>
+                        <label value="配件名称:"/>
+                        <textbox hflex="2" value="@bind(vm.partEntity.name)"/>
+
+                    </row>
+                    <row style="border:none">
+                        <label value="计量单位:"/>
+                        <textbox hflex="2" value="@bind(vm.partEntity.unit)"/>
+                        <label value="三包时间:"/>
+                        <textbox hflex="2" value="@bind(vm.partEntity.warrantyTime)"/>
+
+                    </row>
+                    <row style="border:none">
+                        <label value="三包里程:"/>
+                        <textbox hflex="2" value="@bind(vm.partEntity.warrantyMileage)"/>
+                        <label value="价格:"/>
+                        <textbox hflex="2" value="@bind(vm.partEntity.price)"/>
+                    </row>
+                    <row style="border:none">
+                        <!--<label value="配件属性:"/>-->
+                        <!--<textbox  hflex="2" readonly="true" value=""/>-->
+                        <label value="物料类型:"/>
+                        <textbox hflex="2" value="@bind(vm.partEntity.partType)"/>
+                        <label value="是否启用:"/>
+                        <!--<textbox  hflex="2" readonly="true" value="@bind(vm.partEntity.enabled)"/>-->
+                        <div>
+                            <listbox mold="select"
+                                     model="@load(vm.enableds)"
+                                     hflex="1"
+                                     selectedItem="@bind(vm.selectEnabled)">
+                                <template name="model">
+                                    <listitem label="@load(each)"
+                                              value="@load(each)" selected="@load(vm.selectEnabled eq each)"></listitem>
+                                </template>
+                            </listbox>
+                            <!--<textbox hflex="1" value="@bind(vm.dealer.serviceManager.name)"/>-->
+                        </div>
+                    </row>
+                    <row>
+                        <label value="配件分类:"></label>
+                        <textbox hflex="2" value="@bind(vm.partEntity.partClassify)"/>
+                    </row>
+                </rows>
+            </grid>
+        </north>
+        <south size="60px" border="0" sclass="c-south">
+            <div hflex="true" sclass="ctoolbars" style="margin-top:none" align="center">
+                <space width="50px"></space>
+                <button iconSclass="@load(iconVariable.icon_close" sclass="btn-info c-button" label="保存配件"
+                        onClick="@command('savePart')"/>
+                <button iconSclass="@load(iconVariable.icon_close" sclass="btn-info c-button" label="关闭"
+                        onClick="spaceOwner.detach();"/>
+            </div>
+        </south>
+    </borderlayout>
+</window>

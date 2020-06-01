@@ -1,0 +1,23 @@
+<div sclass="ctoolbars" style="padding-top:2px">
+    <div sclass="ctoolbar">
+        <button iconSclass="@load(iconVariable.icon_add)" sclass="btn-success c-button" label="新增"
+                onClick="@command('openDialog',entity=null,url=vm.formUrl)"/>
+        <!--<button iconSclass="z-icon-minus" style="width:80px;height:25px;" sclass="btn-warning c-button" label="删除"-->
+        <!--onClick="alert(self.sclass)"-->
+        <!--disabled="true"/>-->
+        <button iconSclass="@load(iconVariable.icon_refresh)" sclass="btn-info c-button" label="刷新"
+                onClick="@command('refreshData')"/>
+    </div>
+    <!--<button iconSclass="z-icon-refresh" sclass="btn-info c-button" label="打印"></button>-->
+    <div sclass="ctoolbar" style="float:right">
+        <button sclass="btn-success c-button" label="生成调拨单"
+                onClick="@command('generateSupplyNotice')"
+                visible="@load(vm.entity.getClass().getSimpleName() eq 'WarrantyMaintenanceEntity')"></button>
+        <button sclass="btn-success c-button" label="生成故障件返回通知单"
+                onClick="@command('generateRecycleNotice')"
+                visible="@load(vm.entity.getClass().getSimpleName() eq 'WarrantyMaintenanceEntity')"></button>
+        <button sclass="btn-success c-button" label="审核记录"
+                onClick="@command('showFlowImage')"
+                visible="@load(vm.entity.status eq 1 or vm.entity.status eq -1)"></button>
+    </div>
+</div>

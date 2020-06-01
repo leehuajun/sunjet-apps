@@ -1,0 +1,7 @@
+<?link rel="stylesheet" type="text/css" href="/gantt/dhtmlxgantt.css"?>
+<?script type="text/javascript" src="/gantt/dhtmlxgantt.js"?>
+<zk>
+    <window title="Dhtml Gantt Integration" border="normal" vflex="1">
+        <div id="gantt"/>
+    </window>
+</zk>

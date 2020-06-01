@@ -1,0 +1,126 @@
+<!-- 故障件待返回清单 列表 -->
+<borderlayout width="100%" height="100%"
+              apply="org.zkoss.bind.BindComposer"
+              viewModel="@id('vm') @init('com.sunjet.vm.asm.RecycleNoticePendingVM')">
+    <north sclass="c-north">
+        <vlayout>
+            <grid oddRowSclass="none" hflex="1" sclass="form-grid" style="margin-top:10px">
+                <columns>
+                    <column width="90px"></column>
+                    <column hflex="1"></column>
+                    <column width="70px"></column>
+                    <column hflex="1"></column>
+                    <column width="70px"></column>
+                    <column hflex="1"></column>
+                    <column width="70px"></column>
+                    <column hflex="1"></column>
+                </columns>
+                <rows>
+                    <row style="border:none;height:30px">
+                        <label value="配件号"/>
+                        <textbox value="@bind(vm.recycleNoticePart.partCode)" hflex="1"/>
+                        <label value="配件名称"/>
+                        <textbox value="@bind(vm.recycleNoticePart.partName)" hflex="1"/>
+                        <label value="服务站编号"></label>
+                        <bandbox mold="rounded" autodrop="false" hflex="1" readonly="true"
+                                 value="@load(vm.dealer.code)">
+                            <bandpopup width="300px" height="300px">
+                                <vlayout hflex="1" vflex="1">
+                                    <hlayout>
+                                        <textbox value="@bind(vm.keyword)" hflex="1"
+                                                 placeholder="输入关键字..按Enter键搜索"
+                                                 sclass="input-prepend"
+                                                 onOK="@command('searchDealers',model=vm.keyword)"
+                                                 style="margin-bottom:2px"/>
+                                        <button label="清除" sclass="btn-warning"
+                                                onClick="@command('clearSelectedDealer')"/>
+                                    </hlayout>
+                                    <grid style="border:none" vflex="1" model="@load(vm.dealers)"
+                                          emptyMessage="没有数据">
+                                        <columns>
+                                            <column hflex="1" label="服务站编号"/>
+                                            <column hflex="2" label="服务站名称"/>
+                                        </columns>
+                                        <template name="model">
+                                            <row onClick="@command('selectDealer',model=each)">
+                                                <label value="@load(each.code)"/>
+                                                <label value="@load(each.name)"/>
+                                            </row>
+                                        </template>
+                                    </grid>
+                                </vlayout>
+                            </bandpopup>
+                        </bandbox>
+                        <label value="服务站名称"></label>
+                        <textbox value="@bind(vm.dealer.name)" hflex="1" readonly="true"/>
+
+                    </row>
+                    <row style="border:none;height:30px">
+                        <label value="通知单号"/>
+                        <textbox value="@bind(vm.recycleNoticePart.recycleNotice.docNo)" hflex="1"/>
+                        <label value="服务单号"/>
+                        <textbox value="@bind(vm.recycleNoticePart.recycleNotice.srcDocNo)" hflex="1"/>
+                        <label value="创建时间从"/>
+                        <datebox hflex="1" format="medium" value="@bind(vm.startDate)" readonly="true"/>
+                        <label value="至"/>
+                        <datebox hflex="1" format="medium" value="@bind(vm.endDate)" readonly="true"/>
+                    </row>
+                </rows>
+            </grid>
+            <include src="/views/macros/flow_list_toolbar.zul"/>
+        </vlayout>
+    </north>
+    <center sclass="c-center">
+        <vlayout width="100%" height="100%">
+            <grid hflex="true" vflex="true" sclass="list-grid" model="@load(vm.resultDTO.pageContent)">
+                <columns sizable="true">
+                    <column width="30px" align="center">
+                        <checkbox onCheck="@command('checkAll',chk=self.checked)" checked="@load(vm.choice)"/>
+                    </column>
+                    <column width="30px" label="序号" align="center"/>
+                    <column width="130px" label="通知单号" align="center"/>
+                    <column width="140px" label="服务单号" align="center"/>
+                    <column hflex="2" label="配件号" align="left"/>
+                    <column hflex="2" label="配件名称" align="left"/>
+                    <column width="80px" label="应发数量" align="center"/>
+                    <column width="80px" label="已返回数量" align="center"/>
+                    <column width="80px" label="未返回数量" align="center"/>
+                    <column width="80px" label="服务站编号" align="center"/>
+                    <column hflex="2" label="服务站名称" align="left"/>
+                    <column width="120px" label="规定返回日期" align="center"/>
+                </columns>
+                <template name="model">
+                    <row>
+                        <checkbox onCheck="@command('selectRecycleNoticePending',model=each,check=self.checked)"
+                                  checked="@load(vm.chkIsExist(each))"></checkbox>
+                        <label value="${forEachStatus.index+1}" sclass="label-index"/>
+                        <label hflex="1" value="@load(each.recycleNotice.docNo)"
+                               tooltiptext="@load(each.recycleNotice.docNo)"/>
+                        <label hflex="1" value="@load(each.recycleNotice.srcDocNo)"
+                               tooltiptext="@load(each.recycleNotice.srcDocNo)"/>
+                        <label hflex="1" value="@load(each.partCode)" tooltiptext="@load(each.partCode)"/>
+                        <label hflex="1" value="@load(each.partName)" tooltiptext="@load(each.partName)"/>
+                        <label hflex="1" value="@load(each.amount)" tooltiptext="@load(each.amount)"/>
+                        <label hflex="1" value="@load(each.backAmount)" tooltiptext="@load(each.backAmount)"/>
+                        <label hflex="1" value="@load(each.currentAmount)" tooltiptext="@load(each.currentAmount)"/>
+                        <label hflex="1" value="@load(each.recycleNotice.dealerCode)"
+                               tooltiptext="@load(each.recycleNotice.dealerCode)"/>
+                        <label hflex="1" value="@load(each.recycleNotice.dealerName)"
+                               tooltiptext="@load(each.recycleNotice.dealerName)"/>
+                        <label hflex="1" value="@load(each.recycleNotice.returnDate)"
+                               tooltiptext="@load(each.recycleNotice.returnDate)"/>
+                    </row>
+                </template>
+            </grid>
+            <paging
+                    pageSize="@bind(vm.resultDTO.pageSize)"
+                    totalSize="@bind(vm.resultDTO.total)"
+                    pageIncrement="1"
+                    detailed="true"
+                    activePage="@bind(vm.currentPageNo)"
+                    onPaging="@command('gotoPageNo',e=event)"
+                    style="border:0px"
+            />
+        </vlayout>
+    </center>
+</borderlayout>

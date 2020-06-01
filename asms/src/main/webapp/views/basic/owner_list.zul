@@ -1,0 +1,67 @@
+<!--
+基础管理 >>车主信息列表
+-->
+<borderlayout width="100%" height="100%" apply="org.zkoss.bind.BindComposer"
+              viewModel="@id('vm') @init('com.sunjet.vm.basic.OwnerListVM')"
+              style="background-color:rgb(255,255,255);padding:0px;">
+
+    <north sclass="c-north" style="padding-top:5px;">
+        <vlayout>
+            <grid oddRowSclass="none" hflex="1" sclass="form-grid" style="margin-top:10px">
+                <columns>
+                    <column width="60px"></column>
+                    <column hflex="1"></column>
+                    <column width="60px"></column>
+                    <column hflex="1"></column>
+                    <column width="60px"></column>
+                    <column hflex="1"></column>
+                    <column width="60px"></column>
+                    <column hflex="1"></column>
+                </columns>
+                <rows>
+                    <row style="border:none;height:30px">
+                        <label value="车主姓名"/>
+                        <textbox value="@bind(vm.name)" hflex="1" tabindex="1"/>
+                        <label value="手机号码"/>
+                        <textbox value="@bind(vm.mobile)" hflex="1" tabindex="1"/>
+                        <label value="固定电话"/>
+                        <textbox value="@bind(vm.phone)" hflex="1" tabindex="1"/>
+                        <label value="电子邮件"/>
+                        <textbox value="@bind(vm.email)" hflex="1" tabindex="1"/>
+                    </row>
+                </rows>
+            </grid>
+            <include src="/views/macros/basic_list_toolbar.zul"/>
+        </vlayout>
+    </north>
+    <center sclass="c-center">
+        <vlayout width="100%" height="100%" style="padding-bottom:0px">
+            <grid hflex="true" vflex="true" sclass="list-grid" oddRowSclass="none"
+                  model="@load(vm.resultDTO.pageContent)">
+                <columns sizable="true">
+                    <column width="200px" label="姓名" align="left"></column>
+                    <column hflex="1" label="详细地址" align="left"></column>
+                    <column width="100px" label="固定电话" align="center"></column>
+                    <column width="100px" label="手机" align="center"></column>
+                    <column width="150px" label="电子邮件" align="center"></column>
+                </columns>
+                <template name="model">
+                    <row>
+                        <label value="@load(each.name)"/>
+                        <label value="@load(each.address)"/>
+                        <label value="@load(each.phone)"/>
+                        <label value="@load(each.mobile)"/>
+                        <label value="@load(each.email)"/>
+                    </row>
+                </template>
+            </grid>
+            <paging pageSize="20"
+                    totalSize="120"
+                    pageIncrement="1"
+                    detailed="true"
+                    activePage="0"
+                    onPaging="@command('gotoPageNo',e=event)"
+                    style="border:0px"/>
+        </vlayout>
+    </center>
+</borderlayout>

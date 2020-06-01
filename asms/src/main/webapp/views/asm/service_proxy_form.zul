@@ -1,0 +1,236 @@
+<!-- 服务委托表单 -->
+<!--<window title="编辑质量速报" border="normal" width="900px" height="600px" sizable="true"-->
+<!--style="padding-top:0px;padding-left:0px;" position="@load(vm.window_position)" closable="true"-->
+<!--onClose="spaceOwner.detach();" maximizable="true"-->
+<!--viewModel="@id('vm') @init('com.sunjet.vm.asm.QualityReportFormVM')"-->
+<!--validationMessages="@id('vmsgs')">-->
+<borderlayout viewModel="@id('vm') @init('com.sunjet.vm.asm.ServiceProxyFormVM')"
+              validationMessages="@id('vmsgs')">
+    <north sclass="c-north" style="border-bottom:1px solid rgb(227,227,227)">
+        <div sclass="ctoolbars" style="padding-top:2px">
+            <div sclass="ctoolbar">
+                <button iconSclass="@load(iconVariable.icon_refresh)" sclass="btn-info c-button"
+                        label="保存"
+                        onClick="@command('saveActivity')"/>
+                <button iconSclass="@load(iconVariable.icon_refresh)" sclass="btn-info c-button"
+                        label="提交"
+                        onClick="@command('refreshData')"/>
+                <button iconSclass="@load(iconVariable.icon_refresh)" sclass="btn-info c-button"
+                        label="审核"
+                        onClick="@command('refreshData')"/>
+            </div>
+            <div sclass="ctoolbar" style="float:right">
+                <button iconSclass="@load(iconVariable.icon_refresh)" sclass="btn-info c-button"
+                        label="生成首保服务单" width="120px"
+                        onClick="@command('refreshData')"/>
+                <button iconSclass="@load(iconVariable.icon_refresh)" sclass="btn-info c-button"
+                        label="生成服务活动单" width="120px"
+                        onClick="@command('refreshData')"/>
+                <button iconSclass="@load(iconVariable.icon_refresh)" sclass="btn-info c-button"
+                        label="生成三包服务单" width="120px"
+                        onClick="@command('refreshData')"/>
+            </div>
+        </div>
+    </north>
+    <center sclass="c-center" hflex="true" vflex="true" autoscroll="true">
+        <vlayout hflex="true" vflex="true">
+            <grid oddRowSclass="none" hflex="1" sclass="form-grid" style="margin:0;padding:0">
+                <columns>
+                    <column width="90px"></column>
+                    <column hflex="1"></column>
+                    <column width="90px"></column>
+                    <column hflex="1"></column>
+                    <column width="90px"></column>
+                    <column hflex="1"></column>
+                    <column width="90px"></column>
+                    <column hflex="1"></column>
+                </columns>
+                <rows>
+                    <row>
+                        <cell colspan="8">
+                            <label value="-== 基本信息 ==-" style="color:green;font-weight:700"/>
+                        </cell>
+                    </row>
+                    <row>
+                        <label value="申请单编号"/>
+                        <textbox value="@bind(vm.serviceProxyRequest.docNo)" hflex="1"/>
+                        <label value="服务站编号"/>
+                        <textbox value="" hflex="1" tabindex="2" readonly="true"/>
+                        <label value="服务站名称"/>
+                        <textbox value="" hflex="1" tabindex="3" readonly="true"/>
+                        <label value="服务经理"/>
+                        <textbox value="" hflex="1" tabindex="4" readonly="true"/>
+                    </row>
+                    <row>
+                        <label value="速报级别"/>
+                        <textbox value="" hflex="1" tabindex="5" readonly="true"/>
+                        <label value="联系人"/>
+                        <textbox value="" hflex="1" tabindex="6" readonly="true"/>
+                        <label value="电话"/>
+                        <textbox value="" hflex="1" tabindex="7" readonly="true"/>
+                        <label value="服务经理电话"/>
+                        <textbox value="" hflex="1" tabindex="8" readonly="true"/>
+                    </row>
+                    <row>
+                        <cell colspan="8">
+                            <label value="-== 故障信息 ==-" style="color:green;font-weight:700" hflex="1"/>
+                        </cell>
+                    </row>
+                    <row>
+                        <label value="故障描述"/>
+                        <cell colspan="3">
+                            <textbox value="" hflex="1" tabindex="9" readonly="true"/>
+                        </cell>
+                        <label value="故障时行驶状态"/>
+                        <cell colspan="3">
+                            <textbox value="" hflex="1" tabindex="10" readonly="true"/>
+                        </cell>
+                    </row>
+                    <row>
+                        <label value="故障时路面情况"/>
+                        <cell colspan="3">
+                            <textbox value="" hflex="1" tabindex="11" readonly="true"/>
+                        </cell>
+                        <label value="故障发生地点"/>
+                        <cell colspan="3">
+                            <textbox value="" hflex="1" tabindex="12" readonly="true"/>
+                        </cell>
+                    </row>
+                    <row>
+                        <label value="初步原因分析"/>
+                        <cell colspan="3">
+                            <textbox value="" hflex="1" tabindex="13" readonly="true"/>
+                        </cell>
+                        <label value="处置意见"/>
+                        <cell colspan="3">
+                            <textbox value="" hflex="1" tabindex="14" readonly="true"/>
+                        </cell>
+                    </row>
+                    <row>
+                        <label value="上传附件"/>
+                        <cell colspan="7">
+                            <textbox value="" hflex="1" tabindex="15" readonly="true"/>
+                        </cell>
+                    </row>
+                </rows>
+            </grid>
+            <tabbox sclass="ntabbox" vflex="true" hflex="true">
+                <!--<tabs id="rtabs">-->
+                <tabs sclass="rtabs">
+                    <tab label="车辆信息" onClick="@command('checkTab',type='vehicle')"/>
+                    <tab label="检查结果" onClick="@command('checkTab',type='result')"/>
+                </tabs>
+                <toolbar sclass="nav_toolbar">
+                    <toolbarbutton style="color: green;font-size:14px" tooltiptext="增加"
+                                   onClick="@command('selectObject')"
+                                   iconSclass="@load(iconVariable.icon_add)"/>
+                    <toolbarbutton style="color: #DD5A43;font-size:14px" tooltiptext="删除"
+                                   onClick="@command('deleter')"
+                                   iconSclass="@load(iconVariable.icon_delete)"/>
+                </toolbar>
+                <tabpanels style="border-bottom:1px solid green">
+                    <tabpanel style="padding:0">
+                        <grid hflex="true" vflex="true" sclass="list-grid"
+                              oddRowSclass="none" style="margin:0;padding:0"
+                              model="@bind(vm.activityVehicles)">
+                            <!--<auxhead>-->
+                            <!--<auxheader label="车辆信息" colspan="3"/>-->
+                            <!--<auxheader colspan="8">-->
+                            <!--<div sclass="ctoolbars" align="right" style="float:right;margin-top:none">-->
+                            <!--<div sclass="ctoolbar">-->
+                            <!--<button iconSclass="@load(iconVariable.icon_refresh)" sclass="btn-info c-button"-->
+                            <!--label="新增"-->
+                            <!--onClick="@command('refreshData')"/>-->
+                            <!--<button iconSclass="@load(iconVariable.icon_refresh)" sclass="btn-info c-button"-->
+                            <!--label="删除"-->
+                            <!--onClick="@command('refreshData')"/>-->
+
+                            <!--</div>-->
+                            <!--</div>-->
+                            <!--</auxheader>-->
+                            <!--</auxhead>-->
+                            <columns sizable="true">
+                                <column hflex="1" label="选择" align="left"/>
+                                <column hflex="3" label="VIN" align="left"/>
+                                <column hflex="3" label="车型型号" align="left"/>
+                                <column hflex="2" label="用户名称" align="left"/>
+                                <column hflex="1" label="联系人" align="left"/>
+                                <column hflex="2" label="联系人电话" align="right"/>
+                                <column hflex="1" label="用户地址" align="right"/>
+                                <column hflex="1" label="购车日期" align="right"/>
+                                <column hflex="1" label="行驶里程" align="right"/>
+                                <column hflex="1" label="保修日期" align="right"/>
+                                <column hflex="1" label="其他" align="right"/>
+                            </columns>
+                            <template name="model">
+                                <row>
+                                    <checkbox label=""
+                                              value=""
+                                              onCheck='self.value= self.isChecked()? "是" : "否"'
+                                              onClick="@command('deletereport',name=each,check=self.value)"
+                                    ></checkbox>
+                                    <label value="@load(each.vin)"/>
+                                    <label value=""/>
+                                    <label value=""/>
+                                    <label value=""/>
+                                    <label value=""/>
+                                    <label value=""/>
+                                    <label value=""/>
+                                    <label value=""/>
+                                    <label value=""/>
+                                    <label value=""/>
+                                </row>
+                            </template>
+                        </grid>
+                    </tabpanel>
+                    <tabpanel style="padding:0">
+                        <grid hflex="true" vflex="true" sclass="list-grid" oddRowSclass="none"
+                              style="margin:0;padding:0"
+                              model="@bind(vm.qrPartlist)">
+                            <!--<auxhead>-->
+                            <!--<auxheader label="检查结果" colspan="2"/>-->
+                            <!--<auxheader colspan="4">-->
+                            <!--<div sclass="ctoolbars" align="right" style="float:right;margin-top:none">-->
+                            <!--<div sclass="ctoolbar">-->
+                            <!--<button iconSclass="@load(iconVariable.icon_refresh)" sclass="btn-info c-button"-->
+                            <!--label="新增"-->
+                            <!--onClick="@command('refreshData')"/>-->
+                            <!--<button iconSclass="@load(iconVariable.icon_refresh)" sclass="btn-info c-button"-->
+                            <!--label="删除"-->
+                            <!--onClick="@command('refreshData')"/>-->
+
+                            <!--</div>-->
+                            <!--</div>-->
+                            <!--</auxheader>-->
+                            <!--</auxhead>-->
+                            <columns sizable="true">
+                                <column hflex="1" label="选择" align="left"/>
+                                <column hflex="3" label="零件件号" align="left"/>
+                                <column hflex="3" label="零件名称" align="left"/>
+                                <column hflex="2" label="数量" align="left"/>
+                                <column hflex="1" label="故障模式" align="left"/>
+                                <column hflex="2" label="备注" align="right"/>
+
+                            </columns>
+                            <template name="model">
+                                <row>
+                                    <checkbox label=""
+                                              value=""
+                                              onCheck='self.value= self.isChecked()? "是" : "否"'
+                                              onClick="@command('deletereports',name=each,check=self.value)"
+                                    ></checkbox>
+                                    <label value="@load(each.code)"/>
+                                    <label value=""/>
+                                    <label value=""/>
+                                    <label value=""/>
+                                    <label value=""/>
+                                </row>
+                            </template>
+                        </grid>
+                    </tabpanel>
+                </tabpanels>
+            </tabbox>
+        </vlayout>
+    </center>
+</borderlayout>
+        <!--</window>-->

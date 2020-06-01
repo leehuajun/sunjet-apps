@@ -1,0 +1,132 @@
+<!-- 用户列表 -->
+<!--<window xmlns:w="client">-->
+<borderlayout width="100%" height="100%"
+              apply="org.zkoss.bind.BindComposer"
+              viewModel="@id('vm') @init('com.sunjet.vm.project.BugVM')"
+              style="background-color:rgb(255,255,255);padding:0px;"
+>
+    <north sclass="c-north">
+        <div sclass="ctoolbars">
+            <div sclass="ctoolbar">
+                <button iconSclass="z-icon-plus" sclass="btn-success c-button" label="新增"
+                        onClick="@command('editEntity',model=null)"/>
+                <!--<button iconSclass="z-icon-minus" style="width:80px;height:25px;" sclass="btn-warning c-button" label="删除"-->
+                <!--onClick="alert(self.sclass)"-->
+                <!--disabled="true"/>-->
+                <button id="btnRefreshUser" iconSclass="z-icon-refresh" sclass="btn-info c-button" label="刷新"
+                        onClick="@command('refreshData')"/>
+                <button iconSclass="z-icon-refresh" sclass="btn-info c-button" label="test" disabled="true"
+                        onClick="@command('testData')"/>
+                <!--<button label="测试" w:onClick="zk.startProcessing(1000);"  forward="onSearchMail"></button>-->
+                <!--<button style="width:100px;height:30px;" sclass="btn-info" label="修改" image="images/toolbar/${vm.getThemeName()}/edit.png" onClick="alert(self.sclass)"/>-->
+                <!--<button style="width:100px;height:30px;" sclass="btn-danger" label="帮助" image="images/toolbar/${vm.getThemeName()}/help.png" onClick="alert(self.sclass)"/>-->
+                <!--<button style="width:100px;height:30px;" sclass="btn-inverse" label="导出" image="images/toolbar/${vm.getThemeName()}/excel.png" onClick="alert(self.sclass)"/>-->
+                <!--<button style="width:100px;height:30px;" sclass="btn-pink" label="审核" image="images/toolbar/${vm.getThemeName()}/audit.png" onClick="alert(self.sclass)"/>-->
+                <!--<button style="width:100px;height:30px;" sclass="btn-warning" label="审核" image="images/toolbar/${vm.getThemeName()}/audit.png" onClick="alert(self.sclass)"/>-->
+            </div>
+            <!-- Search input-->
+            <div sclass="nav-search">
+                <bandbox value="@bind(vm.keyword)" placeholder="输入关键字..回车搜索" sclass="input-prepend"
+                         onOK="@command('filterList')"/>
+            </div>
+        </div>
+    </north>
+    <center autoscroll="true" sclass="c-center">
+        <vlayout width="100%" height="100%" style="padding-bottom:0px">
+            <grid hflex="true" vflex="true" sclass="list-grid" oddRowSclass="none"
+                  model="@load(vm.resultDTO.pageContent)">
+                <!--                <auxhead>
+                                    <auxheader colspan="4">
+                                        <hlayout>
+                                            <label value="员工信息"/>
+                                            <separator spacing="20px"/>
+                                            <textbox value="@bind(vm.keyword)" placeholder="请输入关键字"/>
+                                            <button image="/images/icon/search.png" onClick='alert("search")'/>
+                                        </hlayout>
+                                    </auxheader>
+                                </auxhead>-->
+                <columns>
+                    <column hflex="1" label="标识" visible="false"/>
+                    <column hflex="1" label="姓名" align="left"/>
+                    <column hflex="1" label="登录名" align="left"/>
+                    <column hflex="2" label="电话" align="left"/>
+                    <column hflex="5" label="角色" align="left"/>
+                    <column hflex="1" label="状态" align="right"/>
+                    <column hflex="1" label="操作" align="right"/>
+                </columns>
+                <template name="model">
+                    <row onDoubleClick="@command('editEntity',model=each)">
+                        <label value="@load(each.objId)" style="border-right:solid 1px rgb(233,233,233)"/>
+                        <label value="@load(each.name)" style="color:rgb(78,116,149);font-weight:700"/>
+                        <label value="@load(each.logId)"/>
+                        <label value="@load(each.phone)"/>
+                        <label value="@load(each.rolesDesc)" tooltiptext="@load(each.rolesDesc)"/>
+                        <label value="@load(each.enabled eq true ? '启用':'禁用' )"
+                               style="@load(each.enabled eq true ? 'color:green':'color:red' )"/>
+                        <div align="right" width="100%">
+                            <hlayout>
+                                <button iconSclass="@load(iconVariable.icon_edit)" sclass="btn-success inner-button"
+                                        label=""
+                                        tooltiptext="修改"
+                                        onClick="@command('editEntity',model=each)"
+                                        style="padding-left:5px;font-weight:700;font-size:14px;"/>
+                                <!--<separator spacing="2px"/>-->
+                                <button iconSclass="@load(iconVariable.icon_delete)" sclass="btn-warning inner-button"
+                                        label=""
+                                        tooltiptext="删除"
+                                        onClick="@command('deleteEntity',model=each)"
+                                        style="padding-left:5px;font-weight:700;font-size:14px;"/>
+                                <!--<span style="color:green;font-size:16px" class="z-icon-edit" tooltiptext="编辑"-->
+                                <!--onClick="@command('editEntity',model=each)"/>-->
+                                <!--<separator spacing="5px"/>-->
+                                <!--<span  style="color:red;font-size:16px" class="z-icon-trash-o"-->
+                                <!--tooltiptext="删除" onClick="@command('deleteEntity',model=each)"/>-->
+                            </hlayout>
+                            <!--<a style="color:green" id="update_${each.objId}" iconSclass="z-icon-edit" tooltiptext="编辑" href="#" onClick='alert(self.iconSclass)'/>-->
+                            <!--<a style="color:red" id="delete_${each.objId}" iconSclass="z-icon-trash-o" tooltiptext="删除" href="#" onClick='alert(self.id)'/>-->
+                            <!--<image src="images/toolbar/${vm.themeName}/edit.png" onClick='alert(self.src)'/>-->
+                            <!--<image src="images/toolbar/${vm.themeName}/delete.png" onClick='alert(self.src)'/>-->
+                        </div>
+                    </row>
+                </template>
+
+                <!--<foot style="padding:0px 0px;" height="18px">-->
+                <!--<footer span="4" style="margin:0px 0px;padding:0px 0px;height:18px">-->
+                <!--<label value="共有用户数:"/>-->
+                <!--<label value="@load(vm.userVoList.size())"/>-->
+                <!--</footer>-->
+                <!--</foot>-->
+
+            </grid>
+            <paging
+                    pageSize="@bind(vm.resultDTO.pageSize)"
+                    totalSize="@bind(vm.resultDTO.total)"
+                    pageIncrement="1"
+                    detailed="true"
+                    activePage="@bind(vm.currentPageNo)"
+                    onPaging="@command('gotoPageNo',e=event)"
+                    style="border:0px"
+            />
+            <!--<label value="测试一下页脚"/>-->
+            <!--            <listbox hflex="1" vflex="true" model="@bind(vm.userVoList)" rows="20">
+                            <auxhead>
+                                <auxheader colspan="3">员工信息列表</auxheader>
+                            </auxhead>
+                            <listhead>
+                                <listheader hflex="1" label="登录名" sort="auto"/>
+                                <listheader hflex="2" label="姓名" align="center" sort="auto"/>
+                                <listheader hflex="1" label="性别" align="center"/>
+                            </listhead>
+                            <template name="model">
+                                <listitem>
+                                    <listcell label="${each.objId}"/>
+                                    <listcell label="${each.name}"/>
+                                    <listcell label="${each.sex}"/>
+                                </listitem>
+                            </template>
+                        </listbox>-->
+            <!--<vbox></vbox>-->
+        </vlayout>
+    </center>
+</borderlayout>
+        <!--</window>-->

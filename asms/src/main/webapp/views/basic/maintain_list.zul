@@ -1,0 +1,70 @@
+<!--
+基础管理 >>维修项目及工时定额列表
+-->
+<borderlayout width="100%" height="100%" apply="org.zkoss.bind.BindComposer"
+              viewModel="@id('vm') @init('com.sunjet.vm.basic.MaintainListVM')"
+              style="background-color:rgb(255,255,255);padding:0px;">
+    <north sclass="c-north" style="padding-top:5px;padding-bottom:5px;">
+        <vlayout>
+            <grid oddRowSclass="none" hflex="1" sclass="form-grid" style="margin-top:10px">
+                <columns>
+                    <column width="70px"></column>
+                    <column hflex="1"></column>
+                    <column width="70px"></column>
+                    <column hflex="1"></column>
+                    <column width="70px"></column>
+                    <column hflex="1"></column>
+                    <column width="70px"></column>
+                    <column hflex="1"></column>
+                </columns>
+                <rows>
+                    <row style="border:none;height:30px">
+                        <label value="项目编号"/>
+                        <textbox value="@bind(vm.maintainCode)" hflex="1" tabindex="1"/>
+                        <label value="项目名称"/>
+                        <textbox value="@bind(vm.maintainName)" hflex="1" tabindex="1"/>
+                    </row>
+                </rows>
+            </grid>
+            <include src="/views/macros/basic_list_toolbar.zul"/>
+        </vlayout>
+    </north>
+    <center sclass="c-center">
+        <vlayout width="100%" height="100%">
+            <grid hflex="true" vflex="true" sclass="list-grid"
+                  model="@load(vm.resultDTO.pageContent)">
+                <columns>
+                    <column width="30px" label="序号" align="center"></column>
+                    <column width="120px" label="项目编号" align="center"></column>
+                    <column width="250px" label="项目名称" align="center"></column>
+                    <column width="120px" label="工时定额" align="center"></column>
+                    <column width="60px" label="是否索赔" align="center"></column>
+                    <column hflex="1" label="备注" align="center"></column>
+                    <column width="60px" label="操作" align="center"></column>
+                </columns>
+                <template name="model">
+                    <row onDoubleClick="@command('openDialog',url=vm.formUrl,entity=each)">
+                        <label value="${forEachStatus.index+1}" sclass="label-index"/>
+                        <label value="@load(each.code)"/>
+                        <div align="left">
+                            <label value="@load(each.name)"/>
+                        </div>
+                        <label value="@load(each.workTime)"/>
+                        <label value="@load(each.claim eq true?'是':'否')"/>
+                        <label value="@load(each.comment)"/>
+                        <include src="/views/macros/grid_toolbar.zul"/>
+                    </row>
+                </template>
+            </grid>
+            <paging
+                    pageSize="@bind(vm.resultDTO.pageSize)"
+                    totalSize="@bind(vm.resultDTO.total)"
+                    pageIncrement="1"
+                    detailed="true"
+                    activePage="@bind(vm.currentPageNo)"
+                    onPaging="@command('gotoPageNo',e=event)"
+                    style="border:0px"
+            />
+        </vlayout>
+    </center>
+</borderlayout>

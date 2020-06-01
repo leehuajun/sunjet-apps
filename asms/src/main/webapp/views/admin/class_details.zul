@@ -1,0 +1,96 @@
+<!-- 用户列表 -->
+<borderlayout width="100%" height="100%"
+              apply="org.zkoss.bind.BindComposer"
+              viewModel="@id('vm') @init('com.sunjet.vm.admin.ScheduleJobVM')"
+              style="background-color:rgb(255,255,255);padding:0px;"
+>
+    <north sclass="c-north">
+        <div sclass="ctoolbars">
+            <div sclass="ctoolbar">
+                <button iconSclass="@load(iconVariable.icon_run_all)" style="width:100px" sclass="btn-info c-button"
+                        label="启动所有"
+                        onClick="@command('runAll')"/>
+                <button iconSclass="@load(iconVariable.icon_refresh)" sclass="btn-info c-button" label="刷新"
+                        onClick="@command('refreshData')"/>
+            </div>
+            <!-- Search input-->
+            <div sclass="nav-search">
+                <bandbox value="@bind(vm.keyword)" placeholder="输入关键字..回车搜索" sclass="input-prepend"
+                         onOK="@command('filterList')"/>
+            </div>
+        </div>
+    </north>
+    <center autoscroll="true" sclass="c-center">
+        <vlayout width="100%" height="100%" style="padding-bottom:0px">
+            <grid hflex="true" vflex="true" sclass="list-grid" oddRowSclass="none"
+                  model="@load(vm.resultDTO.pageContent)">
+                <!--                <auxhead>
+                                    <auxheader colspan="4">
+                                        <hlayout>
+                                            <label value="员工信息"/>
+                                            <separator spacing="20px"/>
+                                            <textbox value="@bind(vm.keyword)" placeholder="请输入关键字"/>
+                                            <button image="/images/icon/search.png" onClick='alert("search")'/>
+                                        </hlayout>
+                                    </auxheader>
+                                </auxhead>-->
+                <columns>
+                    <column hflex="2" label="任务名" align="left"/>
+                    <column hflex="2" label="任务组" align="left"/>
+                    <column hflex="3" label="时间表达式" align="left"/>
+                    <column hflex="1" label="状态" align="center"/>
+                    <column hflex="5" label="任务描述" align="left"/>
+                    <column hflex="5" label="操作" align="right"/>
+                </columns>
+                <template name="model">
+                    <row>
+                        <label value="@load(each.jobName)" style="color:rgb(78,116,149);font-weight:700"/>
+                        <label value="@load(each.jobGroup)" style="color:rgb(78,116,149);font-weight:700"/>
+                        <label value="@load(each.cronExpression)"/>
+                        <label value="@load(each.jobStatus)"/>
+                        <label value="@load(each.jobDesc)" tooltiptext="@load(each.jobDesc)"/>
+                        <div align="right" width="100%">
+                            <hlayout>
+                                <button iconSclass="@load(iconVariable.icon_run)" sclass="btn-success inner-button"
+                                        label=""
+                                        tooltiptext="启动"
+                                        onClick="@command('run',job=each)"
+                                        style="padding-left:5px;font-size:8px;"/>
+                                <button iconSclass="@load(iconVariable.icon_pause)" sclass="btn-success inner-button"
+                                        label=""
+                                        tooltiptext="暂停"
+                                        onClick="@command('pause',job=each)"
+                                        style="padding-left:5px;font-size:8px;"/>
+                                <!--<separator spacing="2px"/>-->
+                                <button iconSclass="@load(iconVariable.icon_delete)" sclass="btn-warning inner-button"
+                                        label=""
+                                        tooltiptext="删除"
+                                        onClick="@command('delete',job=each)"
+                                        style="padding-left:5px;font-size:8px;"/>
+                                <button iconSclass="@load(iconVariable.icon_edit)" sclass="btn-warning inner-button"
+                                        label=""
+                                        tooltiptext="修改表达式"
+                                        onClick="@command('edit',job=each)"
+                                        style="padding-left:5px;font-weight:700;font-size:8px;"/>
+                                <button iconSclass="@load(iconVariable.icon_run_single)"
+                                        sclass="btn-warning inner-button" label=""
+                                        tooltiptext="立即运行一次"
+                                        onClick="@command('runSingle',job=each)"
+                                        style="padding-left:5px;font-weight:700;font-size:8px;"/>
+                            </hlayout>
+                        </div>
+                    </row>
+                </template>
+            </grid>
+            <paging
+                    pageSize="@bind(vm.resultDTO.pageSize)"
+                    totalSize="@bind(vm.resultDTO.total)"
+                    pageIncrement="1"
+                    detailed="true"
+                    activePage="@bind(vm.currentPageNo)"
+                    onPaging="@command('gotoPageNo',e=event)"
+                    style="border:0px"
+            />
+        </vlayout>
+    </center>
+</borderlayout>

@@ -1,0 +1,99 @@
+.z-paging {
+    height: 32px;
+    border: 1px solid rgb(227, 227, 227);
+    padding: 1px 1px;
+    margin: 0px;
+    background: rgb(227, 227, 227);
+    position: relative
+}
+
+.z-paging .z-paging-icon {
+    font-size: 17px;
+    font-weight: 700;
+    color: rgb(89, 137, 169)
+}
+
+.z-paging-button {
+    font-family: "Open Sans", Arial, Sans-serif;
+    border-radius: 0px;
+    font-size: 11px;
+    font-weight: 700;
+    font-style: normal;
+    color: #bababa;
+    display: inline-block;
+    min-width: 24px;
+    height: 26px;
+    border: 1px solid transparent;
+    margin-right: 6px;
+    padding: 3px;
+    line-height: 20px;
+    background: #fff;
+    text-align: center;
+    vertical-align: top;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer
+}
+
+.z-paging-input {
+    font-family: "Open Sans", Arial, Sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    font-style: normal;
+    color: #555;
+    height: 26px;
+    border: 1px solid #e3e3e3;
+    padding: 3px;
+    line-height: 24px;
+    vertical-align: baseline
+}
+
+.z-paging-text {
+    font-family: "Open Sans", Arial, Sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    font-style: normal;
+    color: #555;
+    margin-right: 8px
+}
+
+.z-paging-info {
+    font-family: "Open Sans", Arial, Sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    font-style: normal;
+    color: #555;
+    display: inline-block;
+    width: auto;
+    /*height: 26px;*/
+    /*line-height: 24px;*/
+    position: absolute;
+    right: 5px;
+    /*vertical-align: baseline;*/
+}
+
+.z-paging-button[disabled] .z-paging-icon, .z-paging-button[disabled] .z-paging-icon:hover {
+    color: #bababa;
+}
+
+.z-paging-button:hover {
+    border: 1px solid rgb(89, 137, 169);
+    background: rgb(89, 137, 169);
+    /*color: #ffffff;*/
+    box-shadow: none;
+    border-bottom: 1px solid rgb(56, 88, 120);
+}
+
+.z-paging-button:hover .z-paging-icon {
+    /*border: 1px solid rgb(89,137,169);*/
+    /*background: rgb(89,137,169);*/
+    color: #ffffff;
+
+    /*box-shadow: none;*/
+}
+
+.z-paging .z-paging-icon {
+    font-size: 17px;
+    font-weight: 700;
+    color: rgb(89, 137, 169)
+}

@@ -1,0 +1,40 @@
+<!-- 用户项编辑页面 -->
+<window title="选择修改内容" border="normal" width="250px" height="400px"
+        sizable="false"
+        style="margin:20px;padding-top:0px;padding-left:0px;" position="@load(vm.window_position)" closable="true"
+        onClose="spaceOwner.detach();"
+        viewModel="@id('vm') @init('com.sunjet.vm.agency.SelectRowFormVM')"
+        validationMessages="@id('vmsgs')">
+    <borderlayout>
+        <north sclass="c-north" style="border-bottom:1px solid #cccccc">
+            <label value="选择修改内容" style="font-weight:700"/>
+        </north>
+        <center sclass="c-center" style="border-bottom:1px solid #cccccc">
+            <listbox tabindex="6" style="width:180px;border:none"
+                     model="@load(vm.entityWrappers)"
+                     multiple="true"
+                     checkmark="true"
+                     hflex="1"
+                     vflex="1"
+                     selectedItems="@bind(vm.selectedEntityWrappers)">
+                <template name="model">
+                    <listitem label="@load(each.entity.name)"
+                              value="@load(each.entity)"
+                              selected="@load(each.selected)">
+                    </listitem>
+                </template>
+            </listbox>
+        </center>
+        <south sclass="c-south" style="height:55px;">
+            <div align="center" style="margin-top:10px;margin-bottom:20px">
+                <hlayout spacing="10px">
+                    <button label="确定" iconSclass="@load(iconVariable.icon_save)" tabindex="7"
+                            sclass="btn-success c-button"
+                            onClick="@global-command('checkSelectRows',models=vm.selectedEntityWrappers)"/>
+                    <button label="关闭" iconSclass="@load(iconVariable.icon_close)" tabindex="9"
+                            sclass="btn-warning c-button" onClick="spaceOwner.detach();"/>
+                </hlayout>
+            </div>
+        </south>
+    </borderlayout>
+</window>

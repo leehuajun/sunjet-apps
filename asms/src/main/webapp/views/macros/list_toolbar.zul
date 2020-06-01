@@ -1,0 +1,12 @@
+<div sclass="ctoolbars">
+    <div sclass="ctoolbar">
+        <button iconSclass="@load(iconVariable.icon_add)" sclass="btn-success c-button" label="新增"
+                onClick="@command('openDialog',entity=null,url=vm.formUrl)" visible="@load(vm.enableAdd)"/>
+        <button iconSclass="@load(iconVariable.icon_refresh)" sclass="btn-info c-button" label="刷新"
+                onClick="@command('refreshData')" visible="@load(vm.enableRefresh)"/>
+    </div>
+    <div sclass="nav-search" visible="@load(vm.enableSearch)">
+        <bandbox value="@bind(vm.keyword)" placeholder="输入关键字..回车搜索" sclass="input-prepend"
+                 onOK="@command('filterList')"/>
+    </div>
+</div>

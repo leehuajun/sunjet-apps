@@ -1,0 +1,98 @@
+<!--
+基础管理 >>配件合作商 列表
+-->
+<borderlayout width="100%" height="100%" apply="org.zkoss.bind.BindComposer"
+              viewModel="@id('vm') @init('com.sunjet.vm.basic.AgencyListVM')"
+              style="background-color:rgb(255,255,255);padding:0px;">
+
+    <north sclass="c-north" style="padding-top:5px;padding-bottom:5px;">
+        <vlayout>
+            <grid oddRowSclass="none" hflex="1" sclass="form-grid" style="margin-top:10px">
+                <columns>
+                    <column width="70px"></column>
+                    <column hflex="1"></column>
+                    <column width="70px"></column>
+                    <column hflex="1"></column>
+                    <column width="50px"></column>
+                    <column hflex="1"></column>
+                    <column width="30px"></column>
+                    <column hflex="1"></column>
+                </columns>
+                <rows>
+                    <row>
+                        <label value="合作商编码"/>
+                        <textbox value="@bind(vm.agencyCode)" hflex="1" tabindex="1"/>
+                        <label value="合作商名称"/>
+                        <textbox value="@bind(vm.agencyName)" hflex="1" tabindex="1"/>
+                        <label value="省份"/>
+                        <listbox hflex="1"
+                                 mold="select"
+                                 model="@load(vm.provinceEntities)"
+                                 selectedItem="@bind(vm.selectedProvince)"
+                                 onSelect="@command('selectProvince')">
+                            <template name="model">
+                                <listitem left="1" label="@load(each)" value="@load(each)"
+                                          selected="@load(each.name eq vm.selectedProvince.name?true:false)"></listitem>
+                            </template>
+                        </listbox>
+                        <label value="市"/>
+                        <listbox hflex="1"
+                                 mold="select"
+                                 model="@load(vm.cityEntities)"
+                                 selectedItem="@bind(vm.selectedCity)">
+                            <template name="model">
+                                <listitem left="1" label="@load(each)" value="@load(each)"
+                                          selected="@load(each.name eq vm.selectedCity.name?true:false)">
+                                </listitem>
+                            </template>
+                        </listbox>
+                    </row>
+                </rows>
+            </grid>
+            <include src="/views/macros/basic_list_toolbar.zul"/>
+        </vlayout>
+    </north>
+    <center sclass="c-center">
+        <vlayout width="100%" height="100%">
+            <grid hflex="true" vflex="true" sclass="list-grid" oddRowSclass="none"
+                  model="@load(vm.resultDTO.pageContent)">
+                <columns sizable="true">
+                    <column width="30px" label="序号" align="center"></column>
+                    <column width="80px" label="合作商编码" align="left"></column>
+                    <column hflex="1" label="合作商名称" align="left"></column>
+                    <column width="60px" label="省份" align="center"></column>
+                    <column width="60px" label="城市" align="center"></column>
+                    <column width="60px" label="县/区" align="center"></column>
+                    <column width="120px" label="准入日期" align="center"></column>
+                    <column width="100px" label="电话" align="center"></column>
+                    <column width="60px" label="法人" align="center"></column>
+                    <column width="60px" label="店长" align="center"></column>
+                    <column width="40px" label="状态" align="center"></column>
+                </columns>
+                <template name="model">
+                    <row onDoubleClick="@command('openDialog',url=vm.formUrl,entity=each)">
+                        <label value="${forEachStatus.index+1}" sclass="label-index"/>
+                        <label value="@load(each.code)"/>
+                        <label value="@load(each.name)"/>
+                        <label value="@load(each.province.name)"/>
+                        <label value="@load(each.city.name)"/>
+                        <label value="@load(each.county.name)"/>
+                        <label value="@load(each.modifiedTime)"/>
+                        <label value="@load(each.phone)"/>
+                        <label value="@load(each.legalPerson)"/>
+                        <label value="@load(each.shopManager)"/>
+                        <label hflex="1" value="@load(each.enabled eq true ? '启用':'禁用' )"
+                               style="@load(each.enabled eq true ? 'color:green':'color:red' )"/>
+                    </row>
+                </template>
+            </grid>
+            <paging pageSize="@bind(vm.resultDTO.pageSize)"
+                    totalSize="@bind(vm.resultDTO.total)"
+                    pageIncrement="1"
+                    detailed="true"
+                    activePage="@bind(vm.currentPageNo)"
+                    onPaging="@command('gotoPageNo',e=event)"
+                    style="border:0px"/>
+        </vlayout>
+    </center>
+</borderlayout>

@@ -1,0 +1,69 @@
+<!-- 请假申请单Form -->
+<!--下面两行效果一样-->
+<!--<?component name="comments" macro-uri="/views/Comment/comments.zul" inline="true"?>-->
+<!--<?component name="comments" macroURI="/views/macros/comments.zul" inline="true"?>-->
+<!--<?component name="leavebill" macroURI="/views/macros/leavebill_form.zul" inline="true"?>-->
+<!--<zk>-->
+<!--<window id="winModifyPassword" visible="false" border="normal" title="密码修改"-->
+<!--width="300px" height="300px" mode="modal">-->
+<!--<vbox>-->
+<!--<hbox>-->
+<!--<label value="用户名"/>-->
+<!--<textbox/>-->
+<!--</hbox>-->
+<!--<hbox>-->
+<!--<label value="密码"/>-->
+<!--<textbox/>-->
+<!--</hbox>-->
+<!--</vbox>-->
+<!--<button label="关闭" onClick="closeModal()"/>-->
+<!--</window>-->
+<window title="任务处理窗体" border="normal" width="0px" height="0px"
+        sizable="true" style="padding-top:0px;padding-left:0px;" position="center,center" closable="true"
+        viewModel="@id('vm') @init('com.sunjet.vm.flow.EditorFormVM')"
+        validationMessages="@id('vmsgs')"
+        onClose="spaceOwner.detach();"
+        onClientInfo="@command('checkClientInfo',evt=event)">
+    <!--<borderlayout width="100%" height="100%">-->
+    <!--<center sclass="c-center" hflex="true" vflex="true" autoscroll="true" style="margin-bottom:15px;margin-right:0px">-->
+    <!--<vlayout width="100%" height="100%">-->
+    <!--<div sclass="ctoolbars">-->
+    <!--<div sclass="ctoolbar">-->
+    <!--&lt;!&ndash;<button iconSclass="@load(iconVariable.icon_add)" sclass="btn-success c-button" label="保存"&ndash;&gt;-->
+    <!--&lt;!&ndash;onClick="@command('saveFlowDocEntity',entity=vm.flowDocEntity)"&ndash;&gt;-->
+    <!--&lt;!&ndash;visible="@load(!(vm.saveFlowDocEntity.status eq 0))"/>&ndash;&gt;-->
+    <!--<button iconSclass="@load(iconVariable.icon_add)" sclass="btn-success c-button" label="审批"-->
+    <!--onClick="@command('showHandleForm')"/>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<include src="@load(vm.formPath)"/>-->
+    <!--</vlayout>-->
+    <!--</center>-->
+    <!--</borderlayout>-->
+
+    <borderlayout>
+        <north sclass="c-north" height="30px"
+               style="padding-top:15px;border-bottom:1px solid rgb(227,227,227);padding-bottom:10px">
+            <div sclass="ctoolbars" style="padding-top:2px">
+                <div sclass="ctoolbar">
+                    <div sclass="ctoolbar">
+                        <button sclass="btn-success c-button" label="任务办理"
+                                onClick="@command('showHandleForm')"/>
+                        <!--<button iconSclass="@load(iconVariable.icon_add)" sclass="btn-success c-button" label="编辑"-->
+                        <!--onClick="" visible="@load(!vm.readonly)"/>-->
+                    </div>
+                    <!--<button iconSclass="z-icon-refresh" sclass="btn-info c-button" label="打印"></button>-->
+                </div>
+                <div sclass="ctoolbar" style="float:right">
+                    <button sclass="btn-success c-button" label="审核记录"
+                            onClick="@command('showFlowImage')"></button>
+                </div>
+            </div>
+        </north>
+        <center sclass="c-center" hflex="true" vflex="true" autoscroll="true"
+                style="margin-bottom:15px;margin-right:0px">
+            <include src="@load(vm.formUrl)"/>
+        </center>
+    </borderlayout>
+</window>
+        <!--</zk>-->

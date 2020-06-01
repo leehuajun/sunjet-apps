@@ -1,0 +1,208 @@
+<window title="活动通知单" border="normal" width="800px" height="600px"
+        sizable="true" style="padding-top:0px;padding-left:0px;" position="center,center" closable="true"
+        viewModel="@id('vm') @init('com.sunjet.vm.report.VehicleMaintainanceVM')"
+        validationMessages="@id('vmsgs')" onClose="spaceOwner.detach();">
+    <borderlayout>
+        <north sclass="c-north">
+            <grid oddRowSclass="none" hflex="1" sclass="form-grid" style="margin-top:10px">
+                <columns>
+                    <column width="70px"></column>
+                    <column hflex="1"></column>
+                    <column width="70px"></column>
+                    <column hflex="1"></column>
+                    <column width="70px"></column>
+                    <column hflex="1"></column>
+                    <column width="70px"></column>
+                    <column hflex="1"></column>
+                    <column width="70px"></column>
+                    <column hflex="1"></column>
+                </columns>
+                <rows>
+                    <row style="border:none;height:30px">
+                        <label value="VIN"/>
+                        <bandbox mold="rounded" autodrop="false" hflex="1" readonly="true"
+                                 value="@load(vm.vehicleEntity.vin)">
+                            <bandpopup width="300px" height="300px">
+                                <vlayout hflex="1" vflex="1">
+                                    <hlayout>
+                                        <textbox value="@bind(vm.keyword)" hflex="1"
+                                                 placeholder="输入关键字..按Enter键搜索"
+                                                 sclass="input-prepend"
+                                                 onOK="@command('searchVehicleMaintainance')"
+                                                 style="margin-bottom:2px"/>
+                                        <button label="清除" sclass="btn-warning"
+                                                onClick="@command('clearVehicleMaintainance')"/>
+                                    </hlayout>
+                                    <grid style="border:none" vflex="1" model="@load(vm.vehicleEntities)"
+                                          emptyMessage="没有数据">
+                                        <columns>
+                                            <column hflex="1" label="vin"/>
+                                        </columns>
+                                        <template name="model">
+                                            <row onClick="@command('selectVehicleMaintainance',model=each)">
+                                                <label value="@load(each.vin)"/>
+                                            </row>
+                                        </template>
+                                    </grid>
+                                </vlayout>
+                            </bandpopup>
+                        </bandbox>
+                        <label value="首保时间"/>
+                        <textbox value="@load(vm.vehicleEntity.fmDate)" hflex="1"/>
+                        <label value="首保单号"/>
+                        <textbox value="@load(vm.warrantyMaintenanceEntity.docNo)" hflex="1"/>
+                        <label value="服务站编号"/>
+                        <textbox value="@load(vm.activityMaintenanceEntity.dealerCode)" hflex="1"/>
+                        <label value="服务站名称"/>
+                        <textbox value="@load(vm.activityMaintenanceEntity.dealerName)" hflex="1"/>
+                    </row>
+                </rows>
+            </grid>
+        </north>
+        <center sclass="c-center" vflex="1" style="padding-bottom:15px">
+            <hlayout height="100%">
+                <vlayout vflex="1" hflex="1">
+                    <label value="三包维修记录"></label>
+                    <grid sclass="list-grid" vflex="1" hflex="1"
+                          model="@load(vm.warrantyMaintenanceEntity.commissionParts)">
+                        <columns>
+                            <column width="30px" label="序号" align="center"/>
+                            <column width="80px" label="零件类型" align="center"/>
+                            <column hflex="1" label="单号" align="center"/>
+                            <column hflex="1" label="服务站" align="center"/>
+                            <column hflex="1" label="报修日期" align="center"/>
+                        </columns>
+
+                        <template name="model">
+                            <row onDoubleClick="@command('selectWarrantyMaintenance',entity=each)">
+                                <label value="${forEachStatus.index+1}" sclass="label-index"/>
+                                <label value="@load(each.partType)"/>
+                                <label value="@load(each.partCode)"/>
+                                <label value="@load(vm.activityMaintenanceEntity.dealerCode)"/>
+                                <label value="@load(vm.activityMaintenanceEntity.repairDate)"/>
+                            </row>
+                        </template>
+
+                    </grid>
+                    <label value="活动参加记录"></label>
+                    <grid sclass="list-grid" vflex="1"
+                          model="@load(vm.activityMaintenanceEntity.activityDistribution.activityNotice.activityParts)">
+                        <columns>
+                            <column width="30px" label="序号" align="center"/>
+                            <column width="80px" label="物料类型" align="center"/>
+                            <column hflex="1" label="物料编号" align="center"/>
+                            <column hflex="1" label="服务站" align="center"/>
+                            <column hflex="1" label="报修日期" align="center"/>
+                        </columns>
+
+                        <template name="model">
+                            <row onDoubleClick="@command('selectActivityMaintenance',entity=each)">
+                                <label value="${forEachStatus.index+1}" sclass="label-index"/>
+                                <label value="@load(each.part.partType)"/>
+                                <label value="@load(each.part.code)"/>
+                                <label value="@load(vm.activityMaintenanceEntity.dealerCode)"/>
+                                <label value="@load(vm.activityMaintenanceEntity.repairDate)"/>
+                            </row>
+                        </template>
+
+                    </grid>
+                </vlayout>
+                <vlayout hflex="1" vflex="1">
+                    <label value="配件明细"></label>
+
+                    <grid sclass="list-grid" vflex="1" visible="@bind(vm.warranty)">
+                        <columns>
+                            <column hflex="1" label="字段名" align="center"/>
+                            <column hflex="1" label="值" align="center"/>
+                            <column hflex="1" label="字段名" align="center"/>
+                            <column hflex="1" label="值" align="center"/>
+                        </columns>
+                        <rows>
+                            <row>
+                                <label value="行号"/>
+                                <label value="@load(vm.commissionPartEntity.rowNum)"/>
+                                <label value="供货方式"/>
+                                <label value="@load(vm.commissionPartEntity.partSupplyType)"/>
+                            </row>
+                            <row>
+                                <label value="编号"/>
+                                <label value="@load(vm.commissionPartEntity.partCode)"/>
+                                <label value="名称"/>
+                                <label value="@load(vm.commissionPartEntity.partName)"/>
+                            </row>
+                            <row>
+                                <label value="零件类型"/>
+                                <label value="@load(vm.commissionPartEntity.partType)"/>
+                                <label value="故障模式"/>
+                                <label value="@load(vm.commissionPartEntity.pattern)"/>
+                            </row>
+                            <row>
+                                <label value="换件原因"/>
+                                <label value="@load(vm.commissionPartEntity.reason)"/>
+                                <label value="单价"/>
+                                <label value="@load(vm.commissionPartEntity.price)"/>
+                            </row>
+                            <row>
+                                <label value="数量"/>
+                                <label value="@load(vm.commissionPartEntity.amount)"/>
+                                <label value="合计"/>
+                                <label value="@load(vm.commissionPartEntity.total)"/>
+                            </row>
+                            <row>
+                                <label value="结算合计"/>
+                                <label value="@load(vm.commissionPartEntity.settlementTotal)"/>
+                                <label value="收费方式"/>
+                                <label value="@load(vm.commissionPartEntity.chargeMode)"/>
+                            </row>
+                            <row>
+                                <label value="备注"/>
+                                <label value="@load(vm.commissionPartEntity.comment)"/>
+                                <label value="是否回收"/>
+                                <label value="@load(vm.commissionPartEntity.recycle eq 'true'?'是':'否')"/>
+                            </row>
+                        </rows>
+                    </grid>
+
+                    <grid sclass="list-grid" vflex="1" visible="@bind(vm.activity)"
+                          model="@load(vm.activityNoticeEntity.activityParts)">
+                        <columns>
+                            <column hflex="1" label="字段名" align="center"/>
+                            <column hflex="1" label="值" align="center"/>
+                            <column hflex="1" label="字段名" align="center"/>
+                            <column hflex="1" label="值" align="center"/>
+                            <column hflex="1" label="操作" align="center"/>
+                        </columns>
+                        <template name="model">
+                            <row>
+                                <label value="物料编号"/>
+                                <label value="@load(each.part.code)"/>
+                                <label value="物料名称"/>
+                                <label value="@load(each.part.name)"/>
+                                <button label="删除" onClick="@command('deletePart',model=each)"
+                                        sclass="btn-success"></button>
+                            </row>
+                            <!--<row>-->
+                            <!--<label value="价格"/>-->
+                            <!--<label value="@load(vm.activityNoticePartEntity.part.price)"/>-->
+                            <!--<label value="计量单位"/>-->
+                            <!--<label value="@load(vm.activityNoticePartEntity.part.unit)"/>-->
+                            <!--</row>-->
+                            <!--<row>-->
+                            <!--<label value="物料类型"/>-->
+                            <!--<label value="@load(vm.activityNoticePartEntity.part.partType)"/>-->
+                            <!--<label value="三包时间"/>-->
+                            <!--<label value="@load(vm.activityNoticePartEntity.part.warrantyTime)"/>-->
+                            <!--</row>-->
+                            <!--<row>-->
+                            <!--<label value="三包里程"/>-->
+                            <!--<label value="@load(vm.activityNoticePartEntity.part.warrantyMileage)"/>-->
+                            <!--<label value="备注"/>-->
+                            <!--<label value="@load(vm.activityNoticePartEntity.part.comment)"/>-->
+                            <!--</row>-->
+                        </template>
+                    </grid>
+                </vlayout>
+            </hlayout>
+        </center>
+    </borderlayout>
+</window>

@@ -1,0 +1,250 @@
+<!-- 服务活动 服务 表单 -->
+<window title="服务活动" border="normal" width="900px" height="600px"
+        sizable="true" style="padding-top:0px;padding-left:0px;" position="@load(vm.window_position)" closable="true"
+        onClose="spaceOwner.detach();"
+        viewModel="@id('vm') @init('com.sunjet.vm.asm.ActivityFormVM')"
+        validationMessages="@id('vmsgs')"
+>
+    <borderlayout>
+        <north sclass="c-north" style="border-bottom:1px solid rgb(227,227,227)">
+            <div sclass="ctoolbars" style="padding-top:2px">
+                <div sclass="ctoolbar">
+                    <button iconSclass="@load(iconVariable.icon_refresh)" sclass="btn-info c-button"
+                            label="保存"
+                            onClick="@command('saveActivity')"/>
+                    <button iconSclass="@load(iconVariable.icon_refresh)" sclass="btn-info c-button"
+                            label="提交"
+                            onClick="@command('refreshData')"/>
+                    <button iconSclass="@load(iconVariable.icon_refresh)" sclass="btn-info c-button"
+                            label="审核"
+                            onClick="@command('refreshData')"/>
+                    <button iconSclass="@load(iconVariable.icon_refresh)" sclass="btn-info c-button"
+                            label="退回"
+                            onClick="@command('refreshData')"/>
+                    <button iconSclass="@load(iconVariable.icon_refresh)" sclass="btn-info c-button"
+                            label="打印"
+                            onClick="@command('refreshData')"/>
+                </div>
+            </div>
+        </north>
+        <center sclass="c-center" autoscroll="true">
+            <vlayout width="100%" height="100%">
+                <grid hflex="true" sclass="form-grid" oddRowSclass="none" style="margin-bottom:25px">
+                    <columns>
+                        <column width="90px"></column>
+                        <column hflex="1"></column>
+                        <column width="90px"></column>
+                        <column hflex="1"></column>
+                        <column width="100px"></column>
+                        <column hflex="1"></column>
+                        <column width="90px"></column>
+                        <column hflex="1"></column>
+                    </columns>
+                    <rows>
+                        <row>
+                            <cell colspan="8">
+                                <label value="=== 基本信息 ===" style="color:green;font-weight:700"/>
+                            </cell>
+                        </row>
+                        <row>
+                            <label value="单据类型"/>
+                            <textbox value="@bind(vm.activityRequest.docNo)" hflex="1"/>
+                            <label value="省份"/>
+                            <textbox value="" hflex="1" tabindex="2" readonly="true"/>
+                            <label value="报修日期"/>
+                            <datebox hflex="1" tabindex="3" value="@bind(vm.activityRequest.repairDate)"
+                                     readonly="true"/>
+                            <label value="进站时间"/>
+                            <timebox hflex="1" tabindex="4" value="@bind(vm.activityRequest.pullInDate)"
+                                     readonly="true"/>
+                        </row>
+                        <row>
+                            <label value="单据编号"/>
+                            <textbox value="@bind(vm.activityRequest.docNo)" hflex="1" tabindex="5" readonly="true"/>
+                            <label value="经办人"/>
+                            <textbox value="@bind(vm.activityRequest.operator)" hflex="1" tabindex="6" readonly="true"/>
+                            <label value="电话"/>
+                            <textbox value="@bind(vm.activityRequest.operatorPhone)" hflex="1" tabindex="7"
+                                     readonly="true"/>
+                            <label value="出站时间"/>
+                            <timebox hflex="1" value="@bind(vm.activityRequest.pullOutDate)" tabindex="8"
+                                     readonly="true"/>
+                        </row>
+                        <row>
+                            <label value="服务站编码"/>
+                            <textbox value="@bind(vm.activityRequest.dealerCode)" hflex="1" tabindex="5"
+                                     readonly="true"/>
+                            <label value="服务站名称"/>
+                            <textbox value="@bind(vm.activityRequest.dealerName)" hflex="1" tabindex="6"
+                                     readonly="true"/>
+                            <label value="服务经理"/>
+                            <textbox value="@bind(vm.activityRequest.serviceManager)" hflex="1" tabindex="7"
+                                     readonly="true"/>
+                            <label value="申请时间"/>
+                            <timebox hflex="1" value="@bind(vm.activityRequest.requestDate)" tabindex="8"
+                                     readonly="true"/>
+                        </row>
+                        <row>
+                            <cell colspan="8">
+                                <label value="=== 费用信息 ===" style="color:green;font-weight:700" hflex="1"/>
+                            </cell>
+                        </row>
+                        <row>
+                            <label value="工时费用标准/台"/>
+                            <textbox value="" hflex="1" tabindex="5" readonly="true"/>
+                            <label value="台辆"/>
+                            <textbox value="" hflex="1" tabindex="6" readonly="true"/>
+                            <label value="工时费用"/>
+                            <textbox value="" hflex="1" tabindex="7" readonly="true"/>
+                            <label value="外出费用合计"/>
+                            <textbox value="" hflex="1" tabindex="8" readonly="true"/>
+                        </row>
+                        <row>
+                            <label value="费用总计"/>
+                            <textbox value="" hflex="1" tabindex="5" readonly="true"/>
+                            <label value="服务活动申请单编号"/>
+                            <textbox value="" hflex="1" tabindex="6" readonly="true"/>
+                        </row>
+                        <row>
+                            <cell colspan="8">
+                                <label value="=== 维修信息 ===" style="color:green;font-weight:700" hflex="1"/>
+                            </cell>
+                        </row>
+                        <row>
+                            <label value="送修人"/>
+                            <textbox value="" hflex="1" tabindex="5" readonly="true"/>
+                            <label value="送修人电话"/>
+                            <textbox value="" hflex="1" tabindex="6" readonly="true"/>
+                            <label value="开工日期"/>
+                            <datebox hflex="1" tabindex="7" readonly="true"/>
+                            <label value="修理类别"/>
+                            <textbox value="" hflex="1" tabindex="8" readonly="true"/>
+                        </row>
+                        <row>
+                            <label value="主修工"/>
+                            <textbox value="" hflex="1" tabindex="5" readonly="true"/>
+                            <label value="完工日期"/>
+                            <datebox hflex="1" tabindex="6" readonly="true"/>
+                            <label value="故障描述"/>
+                            <textbox value="" hflex="1" tabindex="7" readonly="true"/>
+                            <label value="带走旧件"/>
+                            <textbox value="" hflex="1" tabindex="8" readonly="true"/>
+                        </row>
+                        <row>
+                            <label value="洗车"/>
+                            <textbox value="" hflex="1" tabindex="5" readonly="true"/>
+                            <label value="索赔公费"/>
+                            <textbox value="" hflex="1" tabindex="6" readonly="true"/>
+                            <label value="预计工时费"/>
+                            <textbox value="" hflex="1" tabindex="7" readonly="true"/>
+                            <label value="工时优惠"/>
+                            <textbox value="" hflex="1" tabindex="8" readonly="true"/>
+                        </row>
+                        <row>
+                            <label value="索赔材料"/>
+                            <textbox value="" hflex="1" tabindex="5" readonly="true"/>
+                            <label value="预估材料费"/>
+                            <textbox value="" hflex="1" tabindex="6" readonly="true"/>
+                            <label value="材料优惠"/>
+                            <textbox value="" hflex="1" tabindex="7" readonly="true"/>
+                        </row>
+                        <row>
+                            <cell colspan="8">
+                                <label value="=== 车辆车主信息 ===" style="color:green;font-weight:700" hflex="1"/>
+                            </cell>
+                        </row>
+                        <row>
+                            <label value="VIN"/>
+                            <textbox value="" hflex="1" tabindex="5" readonly="true"/>
+                            <label value="VSN"/>
+                            <textbox value="" hflex="1" tabindex="6" readonly="true"/>
+                            <label value="经销商"/>
+                            <textbox value="" hflex="1" tabindex="7" readonly="true"/>
+                            <label value="车型平台"/>
+                            <textbox value="" hflex="1" tabindex="8" readonly="true"/>
+                        </row>
+                        <row>
+                            <label value="生产日期"/>
+                            <datebox hflex="1" tabindex="5" readonly="true"/>
+                            <label value="购买日期"/>
+                            <datebox hflex="1" tabindex="6" readonly="true"/>
+                            <label value="发动机型号"/>
+                            <textbox value="" hflex="1" tabindex="7" readonly="true"/>
+                            <label value="出厂日期"/>
+                            <datebox hflex="1" tabindex="8" readonly="true"/>
+                        </row>
+                        <row>
+                            <label value="行驶里程"/>
+                            <textbox value="" hflex="1" tabindex="5" readonly="true"/>
+                            <label value="发动机/电动机号"/>
+                            <textbox value="" hflex="1" tabindex="6" readonly="true"/>
+                            <label value="车牌号"/>
+                            <textbox value="" hflex="1" tabindex="7" readonly="true"/>
+                            <label value="车主"/>
+                            <textbox value="" hflex="1" tabindex="8" readonly="true"/>
+                        </row>
+                        <row>
+                            <label value="详细地址"/>
+                            <textbox value="" hflex="1" tabindex="5" readonly="true"/>
+                            <label value="电话"/>
+                            <textbox value="" hflex="1" tabindex="6" readonly="true"/>
+                        </row>
+                    </rows>
+                </grid>
+
+                <cell colspan="8">
+                    <label value="-== 外出信息 ==-" style="color:green;font-weight:700" hflex="1"/>
+                </cell>
+
+                <toolbar sclass="nav_toolbar">
+                    <toolbarbutton style="color: green;font-size:14px" tooltiptext="增加"
+                                   iconSclass="@load(iconVariable.icon_add)"
+                                   onClick="@command('ActivitySelectVehicle')"
+                    />
+                    <toolbarbutton style="color: #DD5A43;font-size:14px" tooltiptext="删除"
+                                   iconSclass="@load(iconVariable.icon_delete)"
+                                   onClick="@command('delete')"
+                    />
+                </toolbar>
+                <grid hflex="true" vflex="true" sclass="list-grid" model="@load(vm.activityRequest.goOuts)">
+                    <columns sizable="true">
+                        <column>
+                            <checkbox checked="true" label="外出地点"/>
+                        </column>
+                        <column hflex="1" label="单向里程" align="left"/>
+                        <column hflex="1" label="交通费用" align="left"/>
+                        <column hflex="1" label="拖车里程" align="left"/>
+                        <column hflex="1" label="拖车费用" align="right"/>
+                        <column hflex="1" label="外出人数" align="right"/>
+                        <column hflex="1" label="外出天数" align="right"/>
+                        <column hflex="1" label="人员补贴" align="right"/>
+                        <column hflex="1" label="住宿补贴" align="right"/>
+                        <column hflex="2" label="外出工时补贴" align="right"/>
+                        <column hflex="2" label="外出补贴费用" align="right"/>
+                        <column hflex="1" label="外出费用" align="right"/>
+                    </columns>
+                    <template name="model">
+                        <row>
+                            <checkbox label=""
+                                      value=""
+                                      onCheck='self.value= self.isChecked()? "是" : "否"'
+                                      onClick="@command('deletereport',name=each,check=self.value)"
+                            ></checkbox>
+                            <label value="555"/>
+                            <label value="5655"/>
+                            <label value=""/>
+                            <label value=""/>
+                            <label value=""/>
+                            <label value=""/>
+                            <label value=""/>
+                            <label value=""/>
+                            <label value=""/>
+                            <label value=""/>
+                            <label value=""/>
+                        </row>
+                    </template>
+                </grid>
+            </vlayout>
+        </center>
+    </borderlayout>
+</window>

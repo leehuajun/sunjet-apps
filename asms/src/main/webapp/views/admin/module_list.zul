@@ -1,0 +1,81 @@
+<!-- 系统模块列表 -->
+<borderlayout width="100%" height="100%"
+              apply="org.zkoss.bind.BindComposer"
+              viewModel="@id('vm') @init('com.sunjet.vm.admin.ModuleListVM')"
+              style="background-color:rgb(255,255,255);padding:0px;">
+    <north sclass="c-north">
+        <div sclass="ctoolbars">
+            <div sclass="ctoolbar">
+                <button iconSclass="@load(iconVariable.icon_add)" sclass="btn-success c-button" label="新增"
+                        onClick="@command('editEntity',model=null,action='create')"/>
+                <button iconSclass="z-icon-refresh" sclass="btn-info c-button" label="刷新"
+                        onClick="@command('refreshData')"/>
+            </div>
+            <!-- Search input-->
+            <div sclass="nav-search">
+                <bandbox value="@bind(vm.keyword)" placeholder="输入关键字..回车搜索" sclass="input-prepend"
+                         onOK="@command('filterList')"/>
+            </div>
+        </div>
+    </north>
+    <center autoscroll="true" sclass="c-center">
+        <vlayout width="100%" height="100%">
+            <grid hflex="true" vflex="true" sclass="list-grid"
+                  model="@bind(vm.resultDTO.pageContent)"
+                  emptyMessage="@load(vm.emptyMessage)">
+                <columns>
+                    <column hflex="2" label="模块名称" align="left"/>
+                    <column hflex="1" label="图标" align="left"/>
+                    <column hflex="6" label="资源列表" align="left"/>
+                    <column hflex="1" label="排序号" align="left"/>
+                    <column hflex="1" label="启用状态" align="left"/>
+                    <column hflex="1" label="操作" align="right"/>
+                </columns>
+                <template name="model">
+                    <row onDoubleClick="@command('editEntity',model=each)">
+                        <label value="@bind(each.name)" style="color:rgb(78,116,149);font-weight:700"/>
+                        <label value="@bind(each.icon)"/>
+                        <label value="@bind(each.resourceEntityList)"/>
+                        <label value="@bind(each.seq)"/>
+                        <label value="@load(each.enabled eq true ? '启用':'禁用' )"
+                               style="@load(each.enabled eq true ? 'color:green':'color:red' )"/>
+                        <!--<div align="right" width="100%">-->
+                        <!--<hbox>-->
+                        <!--<span style="color:green;font-size:16px" class="z-icon-edit" tooltiptext="编辑"-->
+                        <!--onClick="@command('editEntity',model=each,action='save')"/>-->
+                        <!--<separator spacing="5px"/>-->
+                        <!--<span  style="color:red;font-size:16px" class="z-icon-trash-o"-->
+                        <!--tooltiptext="删除" onClick="@command('deleteEntity',model=each)"/>-->
+                        <!--</hbox>-->
+                        <!--</div>-->
+                        <hlayout>
+                            <button iconSclass="z-icon-pencil" sclass="btn-success inner-button" label=""
+                                    tooltiptext="修改"
+                                    onClick="@command('editEntity',model=each,action='update')"
+                                    style="padding-left:5px;font-weight:700;font-size:14px;"/>
+                            <!--<separator spacing="2px"/>-->
+                            <button iconSclass="z-icon-times" sclass="btn-warning inner-button" label=""
+                                    tooltiptext="删除"
+                                    onClick="@command('deleteEntity',model=each)"
+                                    style="padding-left:5px;font-weight:700;font-size:14px;"/>
+                            <!--<span style="color:green;font-size:16px" class="z-icon-edit" tooltiptext="编辑"-->
+                            <!--onClick="@command('editEntity',model=each)"/>-->
+                            <!--<separator spacing="5px"/>-->
+                            <!--<span  style="color:red;font-size:16px" class="z-icon-trash-o"-->
+                            <!--tooltiptext="删除" onClick="@command('deleteEntity',model=each)"/>-->
+                        </hlayout>
+                    </row>
+                </template>
+            </grid>
+            <paging
+                    pageSize="@bind(vm.resultDTO.pageSize)"
+                    totalSize="@bind(vm.resultDTO.total)"
+                    pageIncrement="1"
+                    detailed="true"
+                    activePage="@bind(vm.currentPageNo)"
+                    onPaging="@command('gotoPageNo',e=event)"
+                    style="border:0px"
+            />
+        </vlayout>
+    </center>
+</borderlayout>

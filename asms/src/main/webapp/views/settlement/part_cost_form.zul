@@ -1,0 +1,193 @@
+<!-- 合作商配件结算单 表单 -->
+<window title="配件结算单" border="normal" width="0px" height="0px"
+        sizable="true" style="padding-top:0px;padding-left:0px;" position="center,center" closable="true"
+        viewModel="@id('vm') @init('com.sunjet.vm.settlement.PartCostFormVM')"
+        validationMessages="@id('vmsgs')"
+        onClose="spaceOwner.detach();"
+        onClientInfo="@command('checkClientInfo',evt=event)"
+>
+    <borderlayout>
+        <north sclass="c-north" height="30px"
+               style="padding-top:15px;border-bottom:1px solid rgb(227,227,227);padding-bottom:10px">
+            <include src="/views/macros/flow_form_toolbar.zul"/>
+        </north>
+        <center sclass="c-center" hflex="true" vflex="true" autoscroll="true">
+            <borderlayout>
+                <north sclass="c-north" style="margin:0;padding-top:5px;padding-left:0;padding-right:0">
+                    <vlayout vflex="true">
+                        <groupbox>
+                            <caption>基本信息</caption>
+                            <grid oddRowSclass="none" sclass="form-grid" style="margin:0;padding:0">
+                                <columns>
+                                    <column hflex="1"></column>
+                                    <column hflex="2"></column>
+                                    <column hflex="1"></column>
+                                    <column hflex="2"></column>
+                                    <column hflex="1"></column>
+                                    <column hflex="2"></column>
+                                    <column hflex="1"></column>
+                                    <column hflex="2"></column>
+                                </columns>
+                                <rows>
+                                    <row style="border:none;height:30px">
+                                        <label value="单据编号"/>
+                                        <textbox value="@bind(vm.agencySettlement.docNo)" hflex="1" readonly="true"/>
+                                        <label value="申请日期"/>
+                                        <datebox hflex="1" value="@bind(vm.agencySettlement.requestDate)"
+                                                 readonly="true" buttonVisible="@load(!vm.readonly)"></datebox>
+                                        <label value="经办人"/>
+                                        <textbox value="@bind(vm.agencySettlement.operator)" hflex="1" tabindex="1"
+                                                 readonly="true"/>
+                                        <label value="状态"/>
+                                        <textbox value="@bind(vm.getStatusName(vm.agencySettlement.status))" hflex="1"
+                                                 tabindex="4"
+                                                 readonly="true"/>
+
+                                    </row>
+                                    <row style="border:none;height:30px">
+                                        <label value="经销商编号"/>
+                                        <bandbox mold="rounded" autodrop="false" hflex="1" readonly="true"
+                                                 value="@load(vm.agency.code)" buttonVisible="@load(!vm.readonly)">
+                                            <bandpopup width="300px" height="300px">
+                                                <vlayout hflex="1" vflex="1">
+                                                    <hlayout>
+                                                        <textbox value="@bind(vm.keyword)" hflex="1"
+                                                                 placeholder="输入关键字..按Enter键搜索"
+                                                                 sclass="input-prepend"
+                                                                 onOK="@command('searchAgencies',model=vm.keyword)"
+                                                                 style="margin-bottom:2px"/>
+                                                        <button label="清除" sclass="btn-warning"
+                                                                onClick="@command('clearSelectedAgency')"/>
+                                                    </hlayout>
+                                                    <grid style="border:none" vflex="1" model="@load(vm.agencies)"
+                                                          emptyMessage="没有数据">
+                                                        <columns>
+                                                            <column hflex="1" label="合作商编号"/>
+                                                            <column hflex="2" label="合作商名称"/>
+                                                        </columns>
+                                                        <template name="model">
+                                                            <row onClick="@command('selectAgency',model=each)">
+                                                                <label value="@load(each.code)"/>
+                                                                <label value="@load(each.name)"/>
+                                                            </row>
+                                                        </template>
+                                                    </grid>
+                                                </vlayout>
+                                            </bandpopup>
+                                        </bandbox>
+                                        <label value="经销商名称"/>
+                                        <textbox value="@bind(vm.agency.name)" hflex="1" tabindex="1" readonly="true"/>
+                                        <label value="省份"/>
+                                        <textbox value="@bind(vm.agencySettlement.provinceName)" hflex="1" tabindex="1"
+                                                 readonly="true"/>
+                                        <label value="电话"/>
+                                        <textbox value="@bind(vm.agencySettlement.operatorPhone)" hflex="1"
+                                                 tabindex="1"/>
+
+                                    </row>
+                                </rows>
+                            </grid>
+                        </groupbox>
+                        <groupbox>
+                            <caption>费用合计</caption>
+                            <grid oddRowSclass="none" sclass="form-grid" style="margin:0;padding:0">
+                                <columns>
+                                    <column hflex="1"></column>
+                                    <column hflex="2"></column>
+                                    <column hflex="1"></column>
+                                    <column hflex="2"></column>
+                                    <column hflex="1"></column>
+                                    <column hflex="2"></column>
+                                    <column hflex="1"></column>
+                                    <column hflex="2"></column>
+                                </columns>
+                                <rows>
+                                    <row style="border:none;height:30px">
+                                        <label value="配件费用"/>
+                                        <decimalbox format="####.##" value="@bind(vm.agencySettlement.partExpense)"
+                                                    hflex="1" readonly="true"/>
+                                        <label value="运输费用"/>
+                                        <decimalbox format="####.##" value="@bind(vm.agencySettlement.freight)"
+                                                    hflex="1" readonly="true"/>
+                                        <label value="奖励费用"/>
+                                        <decimalbox format="####.##" value="@bind(vm.agencySettlement.rewardExpense)"
+                                                    onChange="@command('changeExpense')"
+                                                    readonly="@load(!vm.agencySettlement.canEditAssess)" hflex="1"/>
+                                        <label value="惩罚费用"/>
+                                        <decimalbox format="####.##"
+                                                    value="@bind(vm.agencySettlement.punishmentExpense)"
+                                                    onChange="@command('changeExpense')"
+                                                    readonly="@load(!vm.agencySettlement.canEditAssess)" hflex="1"/>
+                                    </row>
+                                    <row style="border:none;height:30px">
+
+                                        <label value="其他费用"/>
+                                        <decimalbox format="####.##" value="@bind(vm.agencySettlement.otherExpense)"
+                                                    onChange="@command('changeExpense')" readonly="true" hflex="1"/>
+                                        <label value="总金额"/>
+                                        <decimalbox format="####.##" value="@bind(vm.agencySettlement.expenseTotal)"
+                                                    hflex="1" readonly="true"/>
+                                    </row>
+
+                                </rows>
+                            </grid>
+                        </groupbox>
+                    </vlayout>
+                </north>
+
+                <center sclass="c-center" hflex="true" vflex="true" autoscroll="true"
+                        style="margin:0;padding:0">
+                    <vlayout vflex="true">
+                        <toolbar sclass="nav_toolbar">
+                            <hlayout hflex="true">
+                                <label value="单据时间"/>
+                                <datebox hflex="1" value="@bind(vm.agencySettlement.startDate)"
+                                         readonly="true"></datebox>
+                                <label value="到"/>
+                                <datebox hflex="1" value="@bind(vm.agencySettlement.endDate)"
+                                         readonly="true"></datebox>
+                                <button sclass="btn-info c-button"
+                                        label="调取费用单据" onClick="@command('ReadItem')" visible="@load(!vm.readonly)"/>
+                                <button sclass="btn-info c-button" label="打印结算明细"
+                                        onClick="@command('printDetail')"></button>
+                            </hlayout>
+                        </toolbar>
+                        <grid hflex="true" vflex="true" sclass="list-grid" mold="paging"
+                              style="margin:0;padding:0"
+                              pageSize="20"
+                              model="@bind(vm.agencySettlement.items)">
+                            <columns sizable="true">
+                                <column width="35px" label="序号" align="center"/>
+                                <column width="120px" label="来源类型" align="center"/>
+                                <column width="160px" label="来源单号" align="center"/>
+                                <!--<column width="80px" label="工时费用" align="center"/>-->
+                                <column width="80px" label="配件费用" align="center"/>
+                                <column width="80px" label="运输费用" align="center"/>
+                                <column width="80px" label="其他费用" align="center"/>
+                                <column width="80px" label="费用合计" align="center"/>
+                                <column hflex="2" label="备注" align="center"/>
+                                <column width="60px" label="操作" align="center"/>
+                            </columns>
+                            <template name="model">
+                                <row>
+                                    <label value="${(forEachStatus.index+1)*1}"/>
+                                    <textbox hflex="1" value="@bind(each.srcDocType)" readonly="true"/>
+                                    <textbox hflex="1" value="@bind(each.srcDocNo)" readonly="true"/>
+                                    <!--<decimalbox width="76px" value="@load(each.workingExpense)" readonly="true"/>-->
+                                    <decimalbox width="76px" value="@load(each.partExpense)" readonly="true"/>
+                                    <decimalbox width="76px" value="@load(each.freightExpense)" readonly="true"/>
+                                    <decimalbox width="76px" value="@load(each.otherExpense)" readonly="true"/>
+                                    <decimalbox width="76px" value="@load(each.expenseTotal)" readonly="true"/>
+                                    <textbox hflex="2" value="@bind(each.comment)"/>
+                                    <button label="删除" onClick="@command('deleteItem',model=each)"
+                                            sclass="btn-success" visible="@load(!vm.readonly)"></button>
+                                </row>
+                            </template>
+                        </grid>
+                    </vlayout>
+                </center>
+            </borderlayout>
+        </center>
+    </borderlayout>
+
+</window>

@@ -1,0 +1,92 @@
+<!-- 模块项编辑页面 -->
+<window title="@load(vm.entity eq null?'创建模块':'修改模块')" border="normal" width="350px" sizable="true"
+        style="padding-top:0px;padding-left:0px;" position="@load(vm.window_position)" closable="true"
+        onClose="@command('closeDialog')"
+        viewModel="@id('vm') @init('com.sunjet.vm.admin.ModuleFormVM')"
+        validationMessages="@id('vmsgs')"
+        form="@id('fx') @load(vm.moduleEntity) @save(vm.moduleEntity, before='submit')">
+    <style>
+        .water-mark {
+        color: gray; font-style: italic;
+        }
+        .form {
+        border: 0px solid #E1E1E1;
+        background: url('../widgets/effects/form_effect/img/bg.png');
+        padding: 20px 20px;
+        -webkit-border-radius:4px;
+        -moz-border-radius:4px;
+        border-radius:4px;
+        }
+        .form .name {
+        display: block;
+        width: 100px;
+        text-align: center;
+        color:black;
+        }
+        .z-listbox-body {
+        border-bottom:1px solid rgb(220, 220, 220);
+
+        }
+        .z-listhead-bar{
+
+        border: 0px solid #dddddd;
+        }
+        .z-listitem {
+        line-height:12px;
+        }
+        .z-listcell-content {
+        padding: 2px 5px;
+        line-height: 15px;
+        }
+    </style>
+    <vlayout>
+        <vlayout spacing="10px" style="margin-top:5px;" class="form">
+            <!--<label value="On-line Shopping Info" style="font-size:16px;font-weight:bold;color:gray;" />-->
+            <hlayout spacing="7px">
+                <label class="name" value="模块名称 :"/>
+                <textbox constraint="no empty" value="@bind(fx.name)"
+                         width="150px" tabindex="1"/>
+            </hlayout>
+
+            <hlayout spacing="7px">
+                <label class="name" value="图标 :"/>
+                <textbox constraint="no empty" value="@bind(fx.icon)"
+                         width="150px" tabindex="2"/>
+            </hlayout>
+            <hlayout spacing="7px">
+                <label class="name" value="排序号 :"/>
+                <textbox constraint="no empty" value="@bind(fx.seq)"
+                         width="150px" tabindex="2"/>
+            </hlayout>
+            <hlayout spacing="7px">
+                <label class="name" value="状态 :"/>
+                <checkbox checked="@bind(fx.enabled)" tabindex="3" style="color:darkblue"/>
+                <label style="color:rgb(78,116,149);font-weight:700;cursor:hand" value="启用"/>
+
+            </hlayout>
+            <hlayout spacing="7px">
+                <label class="name" value="资源清单 :"/>
+                <textbox constraint="no empty" value="@load(vm.getResources())"
+                         width="150px" tabindex="2" height="50px" readonly="true"/>
+            </hlayout>
+
+        </vlayout>
+
+        <label style="color:rgb(155,0,0)" visible="@load(empty vmsgs)"
+               value="@load(empty vmsgs ? 'Form successfully submitted!' : '', before='submit')"/>
+        <div align="center" style="margin-top:20px;margin-bottom:20px">
+            <hlayout spacing="10px">
+                <button label="保存" iconSclass="@load(iconVariable.icon_save)" tabindex="7"
+                        sclass="btn-success c-button"
+                        onClick="@command('submit') @global-command('saveModuleEntity',model=vm.moduleEntity,action=vm.action)"/>
+                <!--<button label="重置" iconSclass="z-icon-refresh" style="width:80px;height:25px;" tabindex="8"-->
+                <!--sclass="btn-info c-button"-->
+                <!--onClick="alert(self.sclass)"/>-->
+                <button label="关闭" iconSclass="@load(iconVariable.icon_close)" tabindex="9"
+                        sclass="btn-warning c-button"
+                        onClick="spaceOwner.detach();"/>
+
+            </hlayout>
+        </div>
+    </vlayout>
+</window>

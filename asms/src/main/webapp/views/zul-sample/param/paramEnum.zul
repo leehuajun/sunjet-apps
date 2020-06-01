@@ -1,0 +1,62 @@
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<zk>
+    <window width="100%" apply="org.zkoss.bind.BindComposer" height="100%"
+            viewModel="@id('vm') @init('com.kjlink.uaas.ctrl.ParamEnumCtrl')" validationMessages="@id('vmsgs')">
+        <hbox width="100%" hflex="true">
+            <textbox id="paramType" value="${arg.type }" visible="false"/><!-- 隐藏不同枚举类参数类型变量  代码无用，仅供以后参考 -->
+            <groupbox width="40%" height="100%" hflex="true" closable="true" mold="3d" vflex="true">
+                <caption label="参数列表">
+                    <button label="新建" onClick="@command('newParam')"/>
+                </caption>
+                <grid model="@load(vm.paramList)" width="100%" height="400px" hflex="true" vflex="true">
+                    <auxhead>
+                        <auxheader label="序号" width="10%"/>
+                        <auxheader label="名称" width="80%"/>
+                        <auxheader label="排序" width="10%"/>
+                    </auxhead>
+                    <template name="model">
+                        <row onClick="@command('editParam',paramId=each.id)">
+                            <label value="${forEachStatus.index+1}"/>
+                            <label value="${each.text }"/>
+                            <label value="${each.sortNo }"/>
+                        </row>
+                    </template>
+                </grid>
+            </groupbox>
+            <groupbox width="40%" hflex="true" closable="true" mold="3d"
+                      form="@id('fx') @load(vm.paramEnum) @save(vm.paramEnum, before='submit') @validator(vm.validator)">
+                <caption label="编辑参数"/>
+                <textbox value="@bind(fx.id)" visible="false"/>
+                <grid width="100%" hflex="true">
+                    <columns>
+                        <column width="80px" align="right"></column>
+                        <column></column>
+                    </columns>
+                    <rows>
+                        <row>
+                            名称：
+                            <vlayout>
+                                <textbox id="organName" value="@bind(fx.text)" width="98%"/>
+                                <label value="@load(vmsgs['text'])" style="color:red"/>
+                            </vlayout>
+                        </row>
+                        <row>
+                            序号:
+                            <vlayout>
+                                <intbox value="@bind(fx.sortNo)" width="98%"/>
+                                <label value="@load(vmsgs['sortNo'])" style="color:red"/>
+                            </vlayout>
+                        </row>
+                        <row spans="2">
+                            <hlayout width="100%">
+                                <button id="btn_submit" label="提交" onClick="@command('submit')"/>
+                                <button id="btn_reset" label="删除" onClick="@command('delete')"
+                                        visible="@load(not empty fx.id)"/>
+                            </hlayout>
+                        </row>
+                    </rows>
+                </grid>
+            </groupbox>
+        </hbox>
+    </window>
+</zk>

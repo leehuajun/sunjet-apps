@@ -1,0 +1,32 @@
+<!--
+基础数据管理 >> 运输方式对照表
+-->
+<borderlayout width="100%" height="100%"
+              apply="org.zkoss.bind.BindComposer"
+              viewModel="@id('vm') @init('com.sunjet.vm.poms.TransportTypeVM')"
+              style="background-color:rgb(255,255,255);padding:0px;">
+    <center autoscroll="true"
+            sclass="c-center">
+        <!--<vbox></vbox>-->
+        <!--mold="paging" pageSize="15"-->
+        <!--pagingPosition: both , top , bottom-->
+        <!--autopaging="true"-->
+        <!--<div height="100%" width="100%" style="background-color: #FFFFFF;margin:0px 0px;border:none">-->
+        <!-- atlantic 主题,使用 #198bc9   sapphire 使用 #8FB9D0  silvergray 使用 #CFCFCF-->
+        <!--style="background-color: #FFFFFF;margin:0px 0px;border:1px solid #198bc9">-->
+        <tabbox sclass="ntab" height="100%" width="100%">
+            <tabs id="tabs">
+                <tab id="A" label="运输方式维护"/>
+                <tab id="B" label="订单类型-运输方式"/>
+            </tabs>
+            <tabpanels style="color:black">
+                <tabpanel>
+                    <include src="/views/base/transport_type_config.zul"/>
+                </tabpanel>
+                <tabpanel>
+                    <include src="/views/base/order_type_transport_type.zul"/>
+                </tabpanel>
+            </tabpanels>
+        </tabbox>
+    </center>
+</borderlayout>

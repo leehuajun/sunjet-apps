@@ -1,0 +1,122 @@
+<!--
+基础管理 >>车辆信息表单
+-->
+<window title="车辆信息" border="normal" width="800px" height="500px"
+        sizable="true" style="padding-top:0px;padding-left:0px;" position="center,center" closable="true"
+        viewModel="@id('vm') @init('com.sunjet.vm.basic.VehicleFormVM')"
+        onClose="spaceOwner.detach();">
+    <borderlayout>
+        <center sclass="c-center" hflex="true" vflex="true" autoscroll="true">
+            <vlayout height="100%">
+                <groupbox>
+                    <caption>车辆基础信息</caption>
+
+                    <grid oddRowSclass="none" hflex="1" sclass="form-grid" style="margin-top:10px">
+                        <!--<auxhead>-->
+                        <!--<auxheader label="基本信息" colspan="6" style="color:green"></auxheader>-->
+                        <!--</auxhead>-->
+                        <columns>
+                            <column width="70px"></column>
+                            <column hflex="1"></column>
+                            <column width="70px"></column>
+                            <column hflex="1"></column>
+                            <column width="70px"></column>
+                            <column hflex="1"></column>
+
+                        </columns>
+                        <rows>
+                            <row>
+                                <label value="VIN"/>
+                                <textbox value="@load(vm.vehicle.vin)" hflex="1" tabindex="1" readonly="true"/>
+                                <label value="VSN"/>
+                                <textbox value="@load(vm.vehicle.vsn)" hflex="1" tabindex="1" readonly="true"/>
+                                <label value="出厂日期"/>
+                                <textbox value="@load(vm.vehicle.productDate)" hflex="1" tabindex="1" readonly="true"/>
+                                <!--<datebox hflex="1" tabindex="1" readonly="true"/>-->
+                            </row>
+                            <row>
+                                <label value="车型型号"/>
+                                <textbox value="@load(vm.vehicle.vehicleModel)" hflex="1" tabindex="1" readonly="true"/>
+                                <label value="车牌号"/>
+                                <textbox value="@load(vm.vehicle.plate)" hflex="1" tabindex="1" readonly="true"/>
+                                <label value="经销商"/>
+                                <textbox value="@load(vm.vehicle.seller)" hflex="1" tabindex="1" readonly="true"/>
+                            </row>
+                            <row>
+                                <label value="发动机型号"/>
+                                <textbox value="@load(vm.vehicle.engineModel)" hflex="1" tabindex="1" readonly="true"/>
+                                <label value="生产日期"/>
+                                <textbox value="@load(vm.vehicle.manufactureDate)" hflex="1" tabindex="1"
+                                         readonly="true"/>
+                                <label value="购买日期"/>
+                                <textbox value="@load(vm.vehicle.purchaseDate)" hflex="1" tabindex="1" readonly="true"/>
+                            </row>
+                            <row>
+                                <label value="发动机号"/>
+                                <textbox value="@load(vm.vehicle.engineNo)" hflex="1" tabindex="1" readonly="true"/>
+                                <label value="里程"/>
+                                <textbox value="@load(vm.vehicle.vmt)" hflex="1" tabindex="1" readonly="true"/>
+                                <label value="行驶里程"/>
+                                <textbox value="@load(vm.vehicle.mileage)" hflex="1" tabindex="1" readonly="true"/>
+                            </row>
+                            <row>
+                                <label value="服务站名称"/>
+                                <textbox value="@load(vm.vehicle.dealerName)" hflex="1" tabindex="1" readonly="true"/>
+                                <label value="服务经理"/>
+                                <textbox value="@load(vm.vehicle.serviceManager)" hflex="1" tabindex="1"
+                                         readonly="true"/>
+                                <label value=""/>
+                                <label value=""/>
+                                <label value=""/>
+                            </row>
+                        </rows>
+                    </grid>
+                </groupbox>
+                <groupbox>
+                    <caption>车主信息</caption>
+
+                    <grid oddRowSclass="none" hflex="1" sclass="form-grid" style="margin-top:10px">
+                        <!--<auxhead>-->
+                        <!--<auxheader label="基本信息" colspan="6" style="color:green"></auxheader>-->
+                        <!--</auxhead>-->
+                        <columns>
+                            <column width="70px"></column>
+                            <column hflex="1"></column>
+                            <column width="70px"></column>
+                            <column hflex="1"></column>
+                            <column width="70px"></column>
+                            <column hflex="1"></column>
+
+                        </columns>
+                        <rows>
+                            <row>
+                                <label value="车主姓名"/>
+                                <textbox value="@load(vm.vehicle.ownerName)" hflex="1" tabindex="1" readonly="true"/>
+                                <label value="详细地址"/>
+                                <cell colspan="3">
+                                    <textbox value="@load(vm.vehicle.address)" hflex="1" tabindex="1" readonly="true"/>
+                                </cell>
+                            </row>
+                            <row>
+                                <label value="性别"/>
+                                <textbox value="@load(vm.vehicle.sex)" hflex="1" tabindex="1" readonly="true"/>
+                                <label value="固定电话"/>
+                                <textbox value="@load(vm.vehicle.phone)" hflex="1" tabindex="1" readonly="true"/>
+                                <label value="手机"/>
+                                <textbox value="@load(vm.vehicle.mobile)" hflex="1" tabindex="1" readonly="true"/>
+                            </row>
+                            <row>
+                                <label value="电子邮件"/>
+                                <textbox value="@load(vm.vehicle.email)" hflex="1" tabindex="1" readonly="true"/>
+                                <label value="邮政编码"/>
+                                <textbox value="@load(vm.vehicle.postcode)" hflex="1" tabindex="1" readonly="true"/>
+                                <label value=""/>
+                                <label value=""/>
+                            </row>
+                        </rows>
+                    </grid>
+                </groupbox>
+            </vlayout>
+        </center>
+    </borderlayout>
+</window>

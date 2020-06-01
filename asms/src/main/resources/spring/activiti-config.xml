@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+    <!--<context:component-scan core-package="org.activiti">-->
+    <!--<context:exclude-fillAllByKeyword type="annotation" expression="org.springframework.stereotype.Controller"/>-->
+    <!--</context:component-scan>-->
+
+    <!--&lt;!&ndash; 单例json对象 &ndash;&gt;-->
+    <!--<bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper"/>-->
+
+    <!--&lt;!&ndash; 引擎内部提供的UUID生成器，依赖fastxml的java-uuid-generator模块 &ndash;&gt;-->
+    <!--&lt;!&ndash;<bean id="uuidGenerator" class="org.activiti.engine.impl.persistence.StrongUuidGenerator" />&ndash;&gt;-->
+    <!--<bean id="uuidGenerator" class="org.activiti.engine.impl.persistence.StrongUuidGenerator" />-->
+
+    <!--&lt;!&ndash; Activiti begin &ndash;&gt;-->
+    <!--<bean id="processEngineConfiguration" class="org.activiti.spring.SpringProcessEngineConfiguration">-->
+    <!--<property name="dataSource" ref="dataSource"/>-->
+    <!--<property name="transactionManager" ref="transactionManager"/>-->
+    <!--<property name="databaseSchemaUpdate" value="true"/>-->
+    <!--<property name="jobExecutorActivate" value="true"/>-->
+    <!--&lt;!&ndash;<property name="history" value="full"/>&ndash;&gt;-->
+    <!--<property name="processDefinitionCacheLimit" value="10"/>-->
+
+    <!--&lt;!&ndash; mail &ndash;&gt;-->
+    <!--&lt;!&ndash;<property name="mailServerHost" value="localhost"/>&ndash;&gt;-->
+    <!--&lt;!&ndash;<property name="mailServerUsername" value="kafeitu"/>&ndash;&gt;-->
+    <!--&lt;!&ndash;<property name="mailServerPassword" value="000000"/>&ndash;&gt;-->
+    <!--&lt;!&ndash;<property name="mailServerPort" value="2025"/>&ndash;&gt;-->
+
+    <!--&lt;!&ndash; UUID作为主键生成策略 &ndash;&gt;-->
+    <!--<property name="idGenerator" ref="uuidGenerator" />-->
+
+
+    <!--&lt;!&ndash; 生成流程图的字体 &ndash;&gt;-->
+    <!--&lt;!&ndash;<property name="activityFontName" value="${diagram.activityFontName}"/>&ndash;&gt;-->
+    <!--&lt;!&ndash;<property name="labelFontName" value="${diagram.labelFontName}"/>&ndash;&gt;-->
+
+    <!--&lt;!&ndash; 缓存支持-->
+    <!--<property name="processDefinitionCache">-->
+    <!--<bean class="me.kafeitu.demo.activiti.util.cache.DistributedCache" />-->
+    <!--</property>&ndash;&gt;-->
+
+    <!--&lt;!&ndash; 自动部署 &ndash;&gt;-->
+    <!--&lt;!&ndash;<property name="deploymentResources">&ndash;&gt;-->
+    <!--&lt;!&ndash;<list>&ndash;&gt;-->
+    <!--&lt;!&ndash;<value>classpath*:/deployments/*</value>&ndash;&gt;-->
+    <!--&lt;!&ndash;</list>&ndash;&gt;-->
+    <!--&lt;!&ndash;</property>&ndash;&gt;-->
+
+    <!--&lt;!&ndash; 自定义表单字段类型 &ndash;&gt;-->
+    <!--&lt;!&ndash;<property name="customFormTypes">&ndash;&gt;-->
+    <!--&lt;!&ndash;<list>&ndash;&gt;-->
+    <!--&lt;!&ndash;<bean class="me.kafeitu.demo.activiti.activiti.form.UsersFormType"/>&ndash;&gt;-->
+    <!--&lt;!&ndash;</list>&ndash;&gt;-->
+    <!--&lt;!&ndash;</property>&ndash;&gt;-->
+
+    <!--&lt;!&ndash; JPA &ndash;&gt;-->
+    <!--<property name="jpaEntityManagerFactory" ref="entityManagerFactory" />-->
+    <!--<property name="jpaHandleTransaction" value="false" />-->
+    <!--<property name="jpaCloseEntityManager" value="false" />-->
+
+    <!--&lt;!&ndash; 全局事件 &ndash;&gt;-->
+    <!--&lt;!&ndash;<property name="typedEventListeners">&ndash;&gt;-->
+    <!--&lt;!&ndash;<map>&ndash;&gt;-->
+    <!--&lt;!&ndash;<entry key="VARIABLE_CREATED" >&ndash;&gt;-->
+    <!--&lt;!&ndash;<list>&ndash;&gt;-->
+    <!--&lt;!&ndash;<ref bean="variableCreateListener"/>&ndash;&gt;-->
+    <!--&lt;!&ndash;</list>&ndash;&gt;-->
+    <!--&lt;!&ndash;</entry>&ndash;&gt;-->
+    <!--&lt;!&ndash;</map>&ndash;&gt;-->
+    <!--&lt;!&ndash;</property>&ndash;&gt;-->
+    <!--</bean>-->
+
+    <!--<bean id="processEngine" class="org.activiti.spring.ProcessEngineFactoryBean">-->
+    <!--<property name="processEngineConfiguration" ref="processEngineConfiguration"/>-->
+    <!--</bean>-->
+
+    <!--&lt;!&ndash; 7大接口 &ndash;&gt;-->
+    <!--<bean id="repositoryService" factory-bean="processEngine" factory-method="getRepositoryService"/>-->
+    <!--<bean id="runtimeService" factory-bean="processEngine" factory-method="getRuntimeService"/>-->
+    <!--<bean id="formService" factory-bean="processEngine" factory-method="getFormService"/>-->
+    <!--<bean id="identityService" factory-bean="processEngine" factory-method="getIdentityService"/>-->
+    <!--<bean id="taskService" factory-bean="processEngine" factory-method="getTaskService"/>-->
+    <!--<bean id="historyService" factory-bean="processEngine" factory-method="getHistoryService"/>-->
+    <!--<bean id="managementService" factory-bean="processEngine" factory-method="getManagementService"/>-->
+
+    <!-- 集成REST服务需要的bean -->
+    <!--<bean id="restResponseFactory" class="org.activiti.rest.service.api.RestResponseFactory" />-->
+    <!--<bean id="contentTypeResolver" class="org.activiti.rest.common.application.DefaultContentTypeResolver" />-->
+
+</beans>

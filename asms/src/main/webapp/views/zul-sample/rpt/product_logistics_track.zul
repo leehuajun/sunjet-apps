@@ -1,0 +1,65 @@
+<!--
+统计报表>>配件物流跟踪报表
+-->
+<borderlayout width="100%" height="100%"
+              apply="org.zkoss.bind.BindComposer"
+              viewModel="@id('vm') @init('com.sunjet.vm.poms.PartItemVM')"
+              style="background-color:rgb(255,255,255);padding:0px;">
+    <north style="width:100%">
+        <div class="container" style="padding:5px;color:rgb(85,85,85)">
+            <div class="col-lg-3 col-md-4 col-sm-6" style="background-color:#eeeeee">
+                <label value="配件号:" style="width:30px;align:left"/>
+                <textbox/>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6" style="background-color:#eeeeee">
+                <label value="配件名称:" style="width:30px;align:left"/>
+                <textbox/>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6" style="background-color:#eeeeee">
+                <label value="零件功能分类:" style="width:30px;align:left"/>
+                <combobox/>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6" style="background-color:#eeeeee">
+                <label value="配件属性:" style="width:30px;align:left"/>
+                <combobox/>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6" style="background-color:#eeeeee">
+                <label value="物料类型" style="width:30px;align:left"/>
+                <combobox/>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6" style="background-color:#eeeeee">
+                <label value="供应商:" style="width:30px;align:left"/>
+                <combobox/>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6" style="background-color:#eeeeee">
+                <label value="库点:" style="width:30px;align:left"/>
+                <combobox/>
+            </div>
+        </div>
+    </north>
+    <center autoscroll="true" style="border:none;padding-left:20px;padding-right:20px;padding-bottom:10px;">
+        <vlayout width="100%" height="100%">
+            <div sclass="ctoolbars" style="float:right">
+                <div sclass="ctoolbar">
+                    <button iconSclass="z-icon-plus" sclass="btn-success c-button" label="新增"/>
+                    <!--<button iconSclass="z-icon-minus" style="width:80px;height:25px;" sclass="btn-warning c-button" label="删除"-->
+                    <!--onClick="alert(self.sclass)"-->
+                    <!--disabled="true"/>-->
+                    <button iconSclass="z-icon-refresh" sclass="btn-info c-button" label="刷新"/>
+                    <button iconSclass="z-icon-refresh" sclass="btn-info c-button" label="test"/>
+                    <!--<button style="width:100px;height:30px;" sclass="btn-info" label="修改" image="images/toolbar/${vm.getThemeName()}/edit.png" onClick="alert(self.sclass)"/>-->
+                    <!--<button style="width:100px;height:30px;" sclass="btn-danger" label="帮助" image="images/toolbar/${vm.getThemeName()}/help.png" onClick="alert(self.sclass)"/>-->
+                    <!--<button style="width:100px;height:30px;" sclass="btn-inverse" label="导出" image="images/toolbar/${vm.getThemeName()}/excel.png" onClick="alert(self.sclass)"/>-->
+                    <!--<button style="width:100px;height:30px;" sclass="btn-pink" label="审核" image="images/toolbar/${vm.getThemeName()}/audit.png" onClick="alert(self.sclass)"/>-->
+                    <!--<button style="width:100px;height:30px;" sclass="btn-warning" label="审核" image="images/toolbar/${vm.getThemeName()}/audit.png" onClick="alert(self.sclass)"/>-->
+                </div>
+
+            </div>
+            <!--<vbox></vbox>-->
+            <!--mold="paging" pageSize="15"-->
+            <!--pagingPosition: both , top , bottom-->
+            <!--autopaging="true"-->
+
+        </vlayout>
+    </center>
+</borderlayout>

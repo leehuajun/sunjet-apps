@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+          http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!-- 1. 定义工作bean -->
+    <bean id="sampleJob" class="com.sunjet.quartz.SampleJob"/>
+    <bean id="activityMaintenanceSettlementHandleJob" class="com.sunjet.quartz.ActivityMaintenanceSettlementHandleJob"/>
+    <bean id="firstMaintenanceSettlementHandleJob" class="com.sunjet.quartz.FirstMaintenanceSettlementHandleJob"/>
+    <bean id="freightSettlementHandleJob" class="com.sunjet.quartz.FreightSettlementHandleJob"/>
+    <bean id="partSettlementHandleJob" class="com.sunjet.quartz.PartSettlementHandleJob"/>
+    <bean id="warrantyMaintenanceSettlementHandleJob" class="com.sunjet.quartz.WarrantyMaintenanceSettlementHandleJob"/>
+    <bean id="warrantyCheckStatusJob" class="com.sunjet.quartz.WarrantyCheckStatusJob"/>
+    <bean id="checkBillStatusJob" class="com.sunjet.quartz.CheckBillStatusJob"/>
+
+
+    <!-- 2. 定义工作JobDetail -->
+    <bean id="sampleJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject">
+            <ref bean="sampleJob"/>
+        </property>
+        <property name="targetMethod">
+            <value>doExecute</value>
+        </property>
+    </bean>
+    <bean id="activityMaintenanceSettlementHandleJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject">
+            <ref bean="activityMaintenanceSettlementHandleJob"/>
+        </property>
+        <property name="targetMethod">
+            <value>doExecute</value>
+        </property>
+    </bean>
+    <bean id="firstMaintenanceSettlementHandleJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject">
+            <ref bean="firstMaintenanceSettlementHandleJob"/>
+        </property>
+        <property name="targetMethod">
+            <value>doExecute</value>
+        </property>
+    </bean>
+    <bean id="freightSettlementHandleJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject">
+            <ref bean="freightSettlementHandleJob"/>
+        </property>
+        <property name="targetMethod">
+            <value>doExecute</value>
+        </property>
+    </bean>
+    <bean id="partSettlementHandleJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject">
+            <ref bean="partSettlementHandleJob"/>
+        </property>
+        <property name="targetMethod">
+            <value>doExecute</value>
+        </property>
+    </bean>
+    <bean id="warrantyMaintenanceSettlementHandleJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject">
+            <ref bean="warrantyMaintenanceSettlementHandleJob"/>
+        </property>
+        <property name="targetMethod">
+            <value>doExecute</value>
+        </property>
+    </bean>
+    <bean id="warrantyCheckStatusJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject">
+            <ref bean="warrantyCheckStatusJob"/>
+        </property>
+        <property name="targetMethod">
+            <value>doExecute</value>
+        </property>
+    </bean>
+    <bean id="checkBillStatusJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject">
+            <ref bean="checkBillStatusJob"/>
+        </property>
+        <property name="targetMethod">
+            <value>doExecute</value>
+        </property>
+    </bean>
+
+    <!-- 3. 定义工作Job的触发器 -->
+    <bean id="sampleJobTrigger"
+          class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail">
+            <ref bean="sampleJobDetail"/>
+        </property>
+        <property name="cronExpression">
+            <value>0 0/10 7-23 * * ?</value>
+        </property>
+    </bean>
+    <bean id="activityMaintenanceSettlementHandleJobTrigger"
+          class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail">
+            <ref bean="activityMaintenanceSettlementHandleJobDetail"/>
+        </property>
+        <property name="cronExpression">
+            <value>0 1/10 7-23 * * ?</value>
+        </property>
+    </bean>
+    <bean id="firstMaintenanceSettlementHandleJobTrigger"
+          class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail">
+            <ref bean="firstMaintenanceSettlementHandleJobDetail"/>
+        </property>
+        <property name="cronExpression">
+            <value>0 2/10 7-23 * * ?</value>
+        </property>
+    </bean>
+    <bean id="freightSettlementHandleJobTrigger"
+          class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail">
+            <ref bean="freightSettlementHandleJobDetail"/>
+        </property>
+        <property name="cronExpression">
+            <value>0 3/10 7-23 * * ?</value>
+        </property>
+    </bean>
+    <bean id="partSettlementHandleJobTrigger"
+          class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail">
+            <ref bean="partSettlementHandleJobDetail"/>
+        </property>
+        <property name="cronExpression">
+            <value>0 4/10 7-23 * * ?</value>
+        </property>
+    </bean>
+    <bean id="warrantyMaintenanceSettlementHandleJobTrigger"
+          class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail">
+            <ref bean="warrantyMaintenanceSettlementHandleJobDetail"/>
+        </property>
+        <property name="cronExpression">
+            <value>0 5/10 7-23 * * ?</value>
+        </property>
+    </bean>
+    <bean id="warrantyCheckStatusJobTrigger"
+          class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail">
+            <ref bean="warrantyCheckStatusJobDetail"/>
+        </property>
+        <property name="cronExpression">
+            <value>0 6/10 7-23 * * ?</value>
+        </property>
+    </bean>
+    <bean id="checkBillStatusJobTrigger"
+          class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail">
+            <ref bean="checkBillStatusJobDetail"/>
+        </property>
+        <property name="cronExpression">
+            <value>0 0/3 7-23 * * ?</value>
+        </property>
+    </bean>
+
+    <!-- 4. 启动触发器的配置 -->
+    <bean name="startQuartz" lazy-init="false" autowire="no"
+          class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <!--<ref bean="sampleJobTrigger"/>-->
+                <!--<ref bean="activityMaintenanceSettlementHandleJobTrigger"/>-->
+                <!--<ref bean="firstMaintenanceSettlementHandleJobTrigger"/>-->
+                <!--<ref bean="freightSettlementHandleJobTrigger"/>-->
+                <!--<ref bean="partSettlementHandleJobTrigger"/>-->
+                <!--<ref bean="warrantyMaintenanceSettlementHandleJobTrigger"/>-->
+                <!--<ref bean="warrantyCheckStatusJobTrigger"/>-->
+                <!--<ref bean="checkBillStatusJobTrigger"/>-->
+            </list>
+        </property>
+    </bean>
+
+    <!--<bean id="schedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">-->
+    <!--<property name="jobFactory">-->
+    <!--<bean class="com.sunjet.utils.quartz.CustomJobFactory"/>-->
+    <!--</property>-->
+    <!--</bean>-->
+</beans>

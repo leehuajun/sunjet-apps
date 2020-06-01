@@ -1,0 +1,179 @@
+@import "base";
+
+.z-grid {
+  border-top: 2px solid $baseBorderColor;
+  border-bottom: 1px solid $baseBorderColor2;
+  margin-bottom: 0px;
+}
+
+.z-column {
+  /* 设置下面属性,标识回行*/
+  //white-space:pre-wrap;
+}
+
+//.z-row{
+//  line-height: $gridLineHeight;
+//}
+.z-row > .z-row-inner {
+  pading-top: $basePadding;
+  pading-bottom: $basePadding;
+  padding-right: 5px;
+  white-space: nowrap;
+}
+
+.z-row:hover > .z-row-inner {
+  position: relative;
+}
+
+.z-column-content, .z-row-content, .z-group-content, .z-groupfoot-content, .z-footer-content {
+  font-family: $baseFontFamily;
+  font-size: $gridFontSize;
+  color: $baseColor;
+  padding: $gridCellPadding;
+  /*padding:0px 0px;*/
+  line-height: $gridContentHeight;
+  overflow: hidden;
+}
+
+.z-row-content > .z-label {
+  font-family: $baseFontFamily;
+  font-size: $gridFontSize;
+}
+
+.z-row-index {
+  width: 60px;
+}
+
+.z-grid {
+  border-left: 1px solid $gridBorderColor;
+  border-right: 1px solid $gridBorderColor;
+
+}
+
+.z-grid-header {
+  height: $gridHeaderHeight;
+}
+
+.z-grid-header > .z-row-content {
+  padding: $gridCellPadding;
+}
+
+.z-grid .z-row > .z-row-inner,
+.z-grid .z-row > .z-cell {
+  background-image: none;
+  border-left: 0px solid $gridBorderColor;
+  border-bottom: 1px solid $gridBorderColor;
+
+}
+
+.z-grid .z-row:hover > .z-row-inner,
+.z-grid .z-row:hover > .z-cell,
+.z-grid .z-row.z-grid-odd:hover > .z-row-inner,
+.z-grid .z-row.z-grid-odd:hover > .z-cell {
+  background-color: $baseBgColor;
+  border-bottom: 1px solid $baseBorderColor2;
+  color: $baseColor2;
+  cursor: pointer;
+}
+
+.z-grid .z-column-content {
+  padding: 0 $gridCellPadding 0 $gridCellPadding;
+}
+
+.z-grid .z-row.z-grid-odd > .z-row-inner {
+  background-color: $gridRowOddBackgroundColor;
+}
+
+.z-grid .z-grid-header,
+.z-grid .z-column {
+  background-color: $baseBgColor4;
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+}
+
+.z-grid .z-column-content {
+  font-family: $baseFontFamily;
+  font-weight: 700;
+  font-size: $gridFontSize;
+  color: $baseColor;
+}
+
+.z-grid .z-column-content [class*="z-icon-"] {
+  margin-right: 2px;
+}
+
+.list-grid.z-grid {
+  margin-bottom: 0px
+}
+
+.list-grid.z-row,
+.list-grid.z-row > .z-cell {
+  line-height: $gridLineHeight;
+  padding: 0 2px 0 2px;
+}
+
+.form-grid.z-grid {
+  border: none;
+  margin-bottom: 0px
+}
+
+.form-grid .z-row,
+.form-grid .z-row > .z-row-inner,
+.form-grid .z-row > .z-row-inner > .z-row-content,
+.form-grid .z-row > .z-cell {
+  background-image: none;
+  //border-left: 0px solid $gridBorderColor;
+  //border-bottom: 0px solid $gridBorderColor;
+  //height:25px;
+
+  border: none;
+  padding-top: 1px;
+  padding-bottom: 0px;
+  padding-left: 2px;
+  padding-right: 1px;
+}
+
+.form-grid .z-row > .z-row-inner:hover,
+.form-grid .z-row > .z-row-inner > .z-row-content:hover,
+.form-grid .z-row > .z-cell:hover {
+  background-image: none;
+  //border-left: 0px solid $gridBorderColor;
+  border-bottom: 0px solid $gridBorderColor;
+  //height:20px;
+  border: none;
+}
+
+.form-grid.z-row:hover > .z-row-inner,
+.form-grid.z-row > .z-cell > .z-label:hover {
+  position: relative;
+  cursor: auto;
+  background-color: $gridFormBackgroundColor;
+  border-bottom: 0px solid $gridFormBorderColor;
+}
+
+.form-grid .z-row:hover > .z-row-inner,
+.form-grid .z-row:hover > .z-cell,
+.form-grid .z-row:hover > .z-cell > .z-label,
+.form-grid .z-row.z-grid-odd:hover > .z-row-inner,
+.form-grid .z-row.z-grid-odd:hover > .z-cell,
+.form-grid .z-row.z-grid-odd:hover > .z-cell > .z-label {
+  position: relative;
+  cursor: auto;
+  background-color: $gridFormBackgroundColor;
+  color: $baseColor;
+  border-bottom: 0px solid $gridFormBorderColor;
+}
+
+//.form-grid>.z-row,.form-grid>.z-row>.z-cell {
+//  position: relative;
+//  cursor: auto;
+//  background-color: $gridFormBackgroundColor;
+//  border-bottom: 1px solid $gridFormBorderColor;
+//}
+
+.z-auxhead th {
+  border: none;
+}
+
+.z-auxheader-content {
+  padding: 0;
+}

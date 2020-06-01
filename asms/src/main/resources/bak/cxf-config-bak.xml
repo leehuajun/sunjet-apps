@@ -1,0 +1,10 @@
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <import resource="classpath:META-INF/cxf/cxf.xml"/>
+    <import resource="classpath:META-INF/cxf/cxf-servlet.xml"/>
+
+    <!--<jaxws:endpoint id="POMService" implementor="com.wd.rmi.ws.POMServiceImpl" address="/POMService"/>-->
+    <!--<jaxws:endpoint id="UserService" implementor="com.wd.rmi.ws.UserServiceImpl" address="/UserService"/>-->
+    <!--<jaxws:endpoint id="DealerService" implementor="com.wd.rmi.ws.DealerServiceImpl" address="/DealerService"/>-->
+</beans>

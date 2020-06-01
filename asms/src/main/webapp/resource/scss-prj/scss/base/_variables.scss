@@ -1,0 +1,668 @@
+//
+// Variables
+// --------------------------------------------------
+
+//== Colors
+//
+//## Gray and brand colors for use across Bootstrap.
+
+$gray-base: #000;
+$gray-darker: lighten($gray-base, 13.5%); // #222
+$gray-dark: lighten($gray-base, 20%); // #333
+$gray: lighten($gray-base, 33.5%); // #555
+$gray-light: lighten($gray-base, 46.7%); // #777
+$gray-lighter: lighten($gray-base, 93.5%); // #eee
+
+$brand-primary: darken(#428bca, 6.5%); // #337ab7
+$brand-success: #5cb85c;
+$brand-info: #5bc0de;
+$brand-warning: #f0ad4e;
+$brand-danger: #d9534f;
+$brand-inverse: #555555;
+$brand-pink: #D6487E;
+$brand-yellow: #FEE188;
+
+//  蓝黑色 体系
+$kashmir: #4E7495; //rgb(78,116,149);
+$kashmir-dark: darken($kashmir, 13.5%);
+$kashmir-darker: darken($kashmir, 20%);
+$kashmir-light: lighten($kashmir, 13.5%);
+$kashmir-lighter: lighten($kashmir, 20%);
+
+// 灰色体系
+
+$border-base: #e3e3e3;
+
+//** Background color for `<body>`.
+$body-bg: #fff;
+//** Global text color on `<body>`.
+$text-color: $gray-dark;
+$text-disabled-color: $gray-light;
+//** Global textual link color.
+$link-color: $brand-primary;
+//** Link hover color set via `darken()` function.
+$link-hover-color: darken($link-color, 15%);
+
+//== Typography
+//
+//## Font, line-height, and color for body text, headings, and more.
+
+$font-family-sans-serif: "Helvetica Neue", Helvetica, Arial, sans-serif;
+$font-family-serif: Georgia, "Times New Roman", Times, serif;
+//** Default monospace fonts for `<code>`, `<kbd>`, and `<pre>`.
+$font-family-monospace: Menlo, Monaco, Consolas, "Courier New", monospace;
+$font-family-base: $font-family-sans-serif;
+
+$font-size-base: 12px;
+$font-size-large: ceil(($font-size-base * 1.2)); // ~18px
+$font-size-small: ceil(($font-size-base * 0.9)); // ~12px
+
+$font-size-h1: floor(($font-size-base * 2.6)); // ~36px
+$font-size-h2: floor(($font-size-base * 2.15)); // ~30px
+$font-size-h3: ceil(($font-size-base * 1.7)); // ~24px
+$font-size-h4: ceil(($font-size-base * 1.25)); // ~18px
+$font-size-h5: $font-size-base;
+$font-size-h6: ceil(($font-size-base * 0.85)); // ~12px
+
+////** Unit-less `line-height` for use in components like buttons.
+//$line-height-core:        1.428571429; // 20/14
+////** Computed "line-height" (`font-size` * `line-height`) for use with `margin`, `padding`, etc.
+//$line-height-computed:    floor(($font-size-core * $line-height-core)); // ~20px
+
+//** By default, this inherits from the `<body>`.
+//$headings-font-family:    inherit;
+//$headings-font-weight:    500;
+//$headings-line-height:    1.1;
+//$headings-color:          inherit;
+
+//== Components
+//
+//## Define common padding and border radius sizes and more. Values based on 14px text and 1.428 line-height (~20px to start).
+
+//$padding-core-vertical:     6px;
+//$padding-core-horizontal:   12px;
+//
+//$padding-large-vertical:    10px;
+//$padding-large-horizontal:  16px;
+//
+//$padding-small-vertical:    5px;
+//$padding-small-horizontal:  10px;
+//
+//$padding-xs-vertical:       1px;
+//$padding-xs-horizontal:     5px;
+//
+//$line-height-large:         1.3333333; // extra decimals for Win 8.1 Chrome
+//$line-height-small:         1.5;
+//
+$border-radius-base: 4px;
+$border-radius-large: 6px;
+$border-radius-small: 2px;
+$border-radius-none: 0px;
+
+//** Global color for active items (e.g., navs or dropdowns).
+$component-active-color: #fff;
+//** Global background color for active items (e.g., navs or dropdowns).
+$component-active-bg: $brand-primary;
+
+//** Width of the `border` for generating carets that indicate dropdowns.
+$caret-width-base: 4px;
+//** Carets increase slightly in size for larger components.
+$caret-width-large: 5px;
+
+//== Buttons
+//
+//## For each of Bootstrap's buttons, define text, background and border color.
+
+$toolbar-height: 24px;
+
+$btn-bandbox-color: $kashmir-light;
+
+$btn-font-weight: normal;
+$btn-border-radius: $border-radius-small;
+$btn-width-short: 60px;
+$btn-width-base: 80px;
+$btn-width-long: 100px;
+
+$btn-disabled-color: darken(#fff, 20%);
+$btn-disabled-bg: lighten($brand-inverse, 20%);
+$btn-disabled-border: darken($btn-disabled-bg, 10%);
+
+$btn-default-color: #333;
+$btn-default-bg: #fff;
+$btn-default-border: #ccc;
+$btn-default-bg-hover: darken($btn-default-bg, 10%);
+$btn-default-border-hover: darken($btn-default-border, 10%);
+$btn-default-bg-active: darken($btn-default-bg, 20%);
+$btn-default-border-active: darken($btn-default-border, 20%);
+
+$btn-primary-color: #fff;
+$btn-primary-bg: $brand-primary;
+$btn-primary-border: darken($btn-primary-bg, 5%);
+$btn-primary-bg-hover: darken($btn-primary-bg, 10%);
+$btn-primary-border-hover: darken($btn-primary-border, 10%);
+$btn-primary-bg-active: darken($btn-primary-bg, 20%);
+$btn-primary-border-active: darken($btn-primary-border, 20%);
+
+$btn-success-color: #fff;
+$btn-success-bg: $brand-success;
+$btn-success-border: darken($btn-success-bg, 5%);
+$btn-success-bg-hover: darken($btn-success-bg, 10%);
+$btn-success-border-hover: darken($btn-success-border, 10%);
+$btn-success-bg-active: darken($btn-success-bg, 20%);
+$btn-success-border-active: darken($btn-success-border, 20%);
+
+$btn-info-color: #fff;
+$btn-info-bg: $brand-info;
+$btn-info-border: darken($btn-info-bg, 5%);
+$btn-info-bg-hover: darken($btn-info-bg, 10%);
+$btn-info-border-hover: darken($btn-info-border, 10%);
+$btn-info-bg-active: darken($btn-info-bg, 20%);
+$btn-info-border-active: darken($btn-info-border, 20%);
+
+$btn-warning-color: #fff;
+$btn-warning-bg: $brand-warning;
+$btn-warning-border: darken($btn-warning-bg, 5%);
+$btn-warning-bg-hover: darken($btn-warning-bg, 10%);
+$btn-warning-border-hover: darken($btn-warning-border, 10%);
+$btn-warning-bg-active: darken($btn-warning-bg, 20%);
+$btn-warning-border-active: darken($btn-warning-border, 20%);
+
+$btn-danger-color: #fff;
+$btn-danger-bg: $brand-danger;
+$btn-danger-border: darken($btn-danger-bg, 5%);
+$btn-danger-bg-hover: darken($btn-danger-bg, 10%);
+$btn-danger-border-hover: darken($btn-danger-border, 10%);
+$btn-danger-bg-active: darken($btn-danger-bg, 20%);
+$btn-danger-border-active: darken($btn-danger-border, 20%);
+
+$btn-inverse-color: #fff;
+$btn-inverse-bg: $brand-inverse;
+$btn-inverse-border: darken($btn-inverse-bg, 5%);
+$btn-inverse-bg-hover: darken($btn-inverse-bg, 10%);
+$btn-inverse-border-hover: darken($btn-inverse-border, 10%);
+$btn-inverse-bg-active: darken($btn-inverse-bg, 20%);
+$btn-inverse-border-active: darken($btn-inverse-border, 20%);
+
+$btn-pink-color: #fff;
+$btn-pink-bg: $brand-pink;
+$btn-pink-border: darken($btn-pink-bg, 5%);
+$btn-pink-bg-hover: darken($btn-pink-bg, 10%);
+$btn-pink-border-hover: darken($btn-pink-border, 10%);
+$btn-pink-bg-active: darken($btn-pink-bg, 20%);
+$btn-pink-border-active: darken($btn-pink-border, 20%);
+
+$btn-yellow-color: #996633;
+$btn-yellow-bg: $brand-yellow;
+$btn-yellow-border: darken($btn-yellow-bg, 5%);
+$btn-yellow-bg-hover: darken($btn-yellow-bg, 10%);
+$btn-yellow-border-hover: darken($btn-yellow-border, 10%);
+$btn-yellow-bg-active: darken($btn-yellow-bg, 20%);
+$btn-yellow-border-active: darken($btn-yellow-border, 20%);
+
+$btn-link-disabled-color: $gray-light;
+
+$btn-inner-width: 20px;
+$btn-inner-height: 18px;
+$btn-inner-padding: 2px 4px;
+
+// Allows for customizing button radius independently from global border radius
+$btn-border-radius-base: $border-radius-base;
+$btn-border-radius-large: $border-radius-large;
+$btn-border-radius-small: $border-radius-small;
+
+//== Forms
+//
+$input-border: #ccc;
+$input-disabled-border: lighten($gray-light, 30%);
+$input-active-border: lighten($brand-primary, 20%);
+$input-border-radius: $border-radius-small;
+
+//== Grid
+//$grid-border-core:                $border-core;
+$grid-border-top: lighten($kashmir, 10%);
+$grid-border-base: $border-base;
+$grid-color: $text-color;
+$gird-header-font-size: $font-size-base;
+$grid-font-size: $font-size-small;
+$grid-header-bg: $grid-border-base;
+$grid-row-bg: $body-bg;
+$gird-line-height: 24px;
+$gird-header-height: $gird-line-height;
+$grid-cell-padding: 1px;
+$grid-cell-margin: 0px;
+$grid-row-odd-bg: lighten($grid-border-base, 8%);
+
+$grid-row-hover-bg: $border-base;
+$grid-row-hover-border-buttom: lighten($kashmir, 10%);
+
+//== Listbox
+$listbox-border-base: $border-base;
+$listbox-border-top: lighten($kashmir, 10%);
+$listbox-color: $text-color;
+$listbox-header-font-size: $font-size-base;
+$listbox-font-size: $font-size-small;
+$listbox-header-bg: $grid-border-base;
+$listbox-row-bg: $body-bg;
+$listbox-line-height: 24px;
+$listbox-header-height: $gird-line-height;
+$listbox-cell-padding: 4px;
+$listbox-row-odd-bg: lighten($grid-border-base, 8%);
+$listbox-checkbox-border-radius: 3px;
+$listbox-checkbox-width: 14px;
+$listbox-checkbox-height: 14px;
+$listbox-checkbox-border: $gray-light;
+$listbox-checkbox-bg: $gray-lighter;
+
+//== Layout
+$layout-splitter-bg: darken($body-bg, 15%); // #F0F0F0
+$layout-splitter-width: 8px;
+$layout-splitter-height: 8px;
+$layout-region-header-font-size: $font-size-large;
+$layout-region-header-font-weight: bold;
+$layout-region-header-font-style: normal;
+$layout-region-header-color: $gray;
+$layout-region-header-height: 38px;
+$layout-region-header-border: $border-base;
+
+$layout-index-north-height: 49px;
+$layout-index-north-bg: #2C4052;
+
+//== Window
+$window-padding: 2px;
+$window-header-bg: $kashmir;
+$window-header-color: $body-bg;
+$window-header-font-size: $font-size-base;
+$window-header-padding: $window-padding;
+$window-content-padding: $window-padding;
+
+//== Loading
+$loading-image-url: "/asms/resource/images/busy_20x20.gif";
+$loading-padding: 6px;
+$loading-color: #333;
+$loading-border: #ccc;
+$loading-bg: $body-bg;
+$loading-icon-width: 20px;
+$loading-icon-height: 20px;
+$loading-icon-margin-right: 10px;
+$loading-win-height: 40px;
+$loading-win-width: 200px;
+$loading-font-size: $font-size-large;
+
+//== Navbar
+$navbar-height: 45px;
+$navbar-padding: 0;
+$navbar-margin: 0;
+$navbar-bg: $kashmir;
+$navbar-color: $body-bg;
+$navbar-brand-font-size: 20px;
+$navbar-brand-text-shadow: 2px 2px 4px #000000;
+$navbar-brand-padding-top: 15px;
+$navbar-brand-padding-bottom: 5px;
+$navbar-logo-float: left;
+$navbar-logo-width: 59px;
+$navbar-logo-height: 30px;
+$navbar-logo-margin-top: 10px;
+$navbar-logo-margin-left: 5px;
+$nav-bg: $navbar-bg;
+$nav-color: $navbar-color;
+$nav-height: $navbar-height;
+$nav-line-height: $navbar-height;
+$nav-min-width: 50px;
+$nav-padding: 8px;
+$menubar-border: #2c4052;
+$menu-text-max-width: 80px;
+$menu-text-line-height: 15px;
+$menu-text-top: 6px;
+$menu-text-color: $navbar-color;
+$menu-text-font-size: $font-size-base;
+$nav-badge-color: $navbar-color;
+$nav-badge-padding: 5px;
+$nav-border-left: $layout-index-north-bg;
+$nav-hover-bg: #2c5976;
+$nav-icon-font-size: 16px;
+$nav-icon-width: 20px;
+
+//== Paging
+$paging-height: 32px;
+$paging-border: $border-base;
+$paging-border-bottom: lighten($kashmir, 10%);
+$paging-padding: 1px;
+$paging-margin: 0;
+$paging-bg: $border-base;
+$paging-icon-size: 17px;
+$paging-icon-weight: bold;
+$paging-icon-color: darken($brand-info, 20%);
+
+$paging-button-font-size: $font-size-small;
+$paging-button-font-weight: bold;
+$paging-button-font-style: normal;
+$paging-button-color: #bababa;
+$paging-button-bg: $body-bg;
+$paging-button-min-width: 24px;
+$paging-button-height: 26px;
+$paging-button-line-height: 20px;
+
+$paging-button-margin-right: 6px;
+$paging-button-padding: 3px;
+$paging-button-bg-hover: #5989a9;
+$paging-button-border-hover: $paging-button-bg-hover;
+$paging-button-border-bottom-hover: #385878;
+$paging-button-color-hover: $body-bg;
+
+$paging-input-font-size: $font-size-base;
+$paging-input-font-weight: bold;
+$paging-input-font-style: normal;
+$paging-input-color: $gray;
+$paging-input-height: 26px;
+$paging-input-line-height: 24px;
+$paging-input-padding: 3px;
+$paging-input-border: $border-base;
+$paging-input-text-align: center;
+
+$paging-text-font-size: $font-size-base;
+$paging-text-font-weight: bold;
+$paging-text-font-style: normal;
+$paging-text-color: $paging-input-color;
+$paging-text-margin-right: 8px;
+
+$paging-info-font-size: $font-size-base;
+$paging-info-font-weight: bold;
+$paging-info-font-style: normal;
+$paging-info-color: $paging-input-color;
+$paging-info-right: 5px;
+
+//== Tabbox & Tab
+$tabbox-bg: $border-base;
+
+$tab-bg: lighten($kashmir, 5%);
+$tab-border: lighten($kashmir, 5%);
+$tab-border-left: $tab-border;
+$tab-border-right: $tab-border;
+$tab-border-top: $tab-border;
+//$tab-border:                $border-core;
+$tab-line-height: 29px;
+$tab-color: $body-bg;
+$tab-border-radius: 0px;
+$tab-bg-hover: $tab-bg;
+$tab-color-hover: $tab-color;
+$tab-icon-width: 15px;
+$tab-icon-height: 15px;
+
+$tab-hover-bg: $tab-bg;
+$tab-hover-color: lighten($kashmir, 15%);
+
+$tab-selected-bg: $body-bg;
+$tab-selected-color: $kashmir;
+$tab-selected-font-weight: bold;
+$tab-selected-border-left: $tab-selected-bg;
+$tab-selected-border-right: $tab-selected-bg;
+
+$tab-button-color: $kashmir;
+$tab-button-border-radius: 2px;
+
+$tab-icon-font-size: $font-size-base;
+$tab-icon-color: $tab-color;
+$tab-icon-border: $border-base;
+$tab-icon-bg: $tab-bg;
+$tab-icon-min-height: 28px;
+$tab-icon-line-height: $tab-icon-min-height;
+
+$tab-icon-hover-bg: $body-bg;
+$tab-icon-hover-color: $kashmir;
+$tab-selected-icon-hover-bg: $kashmir;
+$tab-selected-icon-hover-color: $body-bg;
+
+$n-tab-selected-border-left: $border-base;
+$n-tab-selected-border-right: $border-base;
+
+//== Tree
+$tree-row-height: 24px;
+$tree-bg: $body-bg;
+$tree-border: $border-base;
+
+$tree-header-bg: $tree-border;
+$tree-header-height: $tree-row-height;
+$tree-header-color: $text-color;
+$tree-header-font-size: $font-size-small;
+
+$tree-body-bg: $tree-bg;
+$tree-body-height: $tree-row-height;
+$tree-body-color: $text-color;
+$tree-body-font-size: $font-size-small;
+$tree-icon-size: 20px;
+$tree-icon-margin-right: 5px;
+
+$tree-row-hover-bg: lighten($kashmir, 15%);
+$tree-row-hover-color: $body-bg;
+$tree-row-selected-bg: $tree-row-hover-bg;
+$tree-row-selected-color: $tree-row-hover-color;
+
+$tree-sidebar-row-bg: rgb(230, 230, 230);
+$tree-sidebar-row-border: rgb(248, 248, 248);
+
+$tree-footer-border: $border-base;
+//== Pagination
+//
+//##
+
+$pagination-color: $link-color;
+$pagination-bg: #fff;
+$pagination-border: #ddd;
+
+$pagination-hover-color: $link-hover-color;
+$pagination-hover-bg: $gray-lighter;
+$pagination-hover-border: #ddd;
+
+$pagination-active-color: #fff;
+$pagination-active-bg: $brand-primary;
+$pagination-active-border: $brand-primary;
+
+$pagination-disabled-color: $gray-light;
+$pagination-disabled-bg: #fff;
+$pagination-disabled-border: #ddd;
+
+//== Pager
+//
+//##
+
+$pager-bg: $pagination-bg;
+$pager-border: $pagination-border;
+$pager-border-radius: 15px;
+
+$pager-hover-bg: $pagination-hover-bg;
+
+$pager-active-bg: $pagination-active-bg;
+$pager-active-color: $pagination-active-color;
+
+$pager-disabled-color: $pagination-disabled-color;
+
+//== Form states and alerts
+//
+//## Define colors for form feedback states and, by default, alerts.
+
+$state-success-text: #3c763d;
+$state-success-bg: #dff0d8;
+$state-success-border: darken($state-success-bg, 5%);
+
+$state-info-text: #31708f;
+$state-info-bg: #d9edf7;
+$state-info-border: darken($state-info-bg, 7%);
+
+$state-warning-text: #8a6d3b;
+$state-warning-bg: #fcf8e3;
+$state-warning-border: darken($state-warning-bg, 5%);
+
+$state-danger-text: #a94442;
+$state-danger-bg: #f2dede;
+$state-danger-border: darken($state-danger-bg, 5%);
+
+//== Tooltips
+//
+//##
+
+//** Tooltip max width
+$tooltip-max-width: 200px;
+//** Tooltip text color
+$tooltip-color: #fff;
+//** Tooltip background color
+$tooltip-bg: #000;
+$tooltip-opacity: .9;
+
+//** Tooltip arrow width
+$tooltip-arrow-width: 5px;
+//** Tooltip arrow color
+$tooltip-arrow-color: $tooltip-bg;
+
+//== Popovers
+//
+//##
+
+//** Popover body background color
+$popover-bg: #fff;
+//** Popover maximum width
+$popover-max-width: 276px;
+//** Popover border color
+$popover-border-color: rgba(0, 0, 0, .2);
+//** Popover fallback border color
+$popover-fallback-border-color: #ccc;
+
+//** Popover title background color
+$popover-title-bg: darken($popover-bg, 3%);
+
+//** Popover arrow width
+$popover-arrow-width: 10px;
+//** Popover arrow color
+$popover-arrow-color: $popover-bg;
+
+//** Popover outer arrow width
+$popover-arrow-outer-width: ($popover-arrow-width + 1);
+//** Popover outer arrow color
+$popover-arrow-outer-color: fadein($popover-border-color, 5%);
+//** Popover outer arrow fallback color
+$popover-arrow-outer-fallback-color: darken($popover-fallback-border-color, 20%);
+
+//== Labels
+//
+//##
+
+//** Default label background color
+$label-default-bg: $gray-light;
+//** Primary label background color
+$label-primary-bg: $brand-primary;
+//** Success label background color
+$label-success-bg: $brand-success;
+//** Info label background color
+$label-info-bg: $brand-info;
+//** Warning label background color
+$label-warning-bg: $brand-warning;
+//** Danger label background color
+$label-danger-bg: $brand-danger;
+
+//** Default label text color
+$label-color: #fff;
+//** Default text color of a linked label
+$label-link-hover-color: #fff;
+
+//== Alerts
+//
+//## Define alert colors, border radius, and padding.
+
+$alert-padding: 15px;
+$alert-border-radius: $border-radius-base;
+$alert-link-font-weight: bold;
+
+$alert-success-bg: $state-success-bg;
+$alert-success-text: $state-success-text;
+
+$alert-success-border: $state-success-border;
+
+$alert-info-bg: $state-info-bg;
+$alert-info-text: $state-info-text;
+$alert-info-border: $state-info-border;
+
+$alert-warning-bg: $state-warning-bg;
+$alert-warning-text: $state-warning-text;
+$alert-warning-border: $state-warning-border;
+
+$alert-danger-bg: $state-danger-bg;
+$alert-danger-text: $state-danger-text;
+$alert-danger-border: $state-danger-border;
+
+//== Progress bars
+//
+//##
+
+//** Background color of the whole progress component
+$progress-bg: #f5f5f5;
+//** Progress bar text color
+$progress-bar-color: #fff;
+//** Variable for setting rounded corners on progress bar.
+$progress-border-radius: $border-radius-base;
+
+//** Default progress bar color
+$progress-bar-bg: $brand-primary;
+//** Success progress bar color
+$progress-bar-success-bg: $brand-success;
+//** Warning progress bar color
+$progress-bar-warning-bg: $brand-warning;
+//** Danger progress bar color
+$progress-bar-danger-bg: $brand-danger;
+//** Info progress bar color
+$progress-bar-info-bg: $brand-info;
+
+//== Panels
+//
+//##
+
+$panel-bg: #fff;
+$panel-body-padding: 15px;
+$panel-heading-padding: 10px 15px;
+$panel-footer-padding: $panel-heading-padding;
+$panel-border-radius: $border-radius-base;
+
+//** Border color for elements within panels
+$panel-inner-border: #ddd;
+$panel-footer-bg: #f5f5f5;
+
+$panel-default-text: $gray-dark;
+$panel-default-border: #ddd;
+$panel-default-heading-bg: #f5f5f5;
+
+$panel-primary-text: #fff;
+$panel-primary-border: $brand-primary;
+$panel-primary-heading-bg: $brand-primary;
+
+$panel-success-text: $state-success-text;
+$panel-success-border: $state-success-border;
+$panel-success-heading-bg: $state-success-bg;
+
+$panel-info-text: $state-info-text;
+$panel-info-border: $state-info-border;
+$panel-info-heading-bg: $state-info-bg;
+
+$panel-warning-text: $state-warning-text;
+$panel-warning-border: $state-warning-border;
+$panel-warning-heading-bg: $state-warning-bg;
+
+$panel-danger-text: $state-danger-text;
+$panel-danger-border: $state-danger-border;
+$panel-danger-heading-bg: $state-danger-bg;
+
+////== Badges
+////
+////##
+//
+//$badge-color:                 #fff;
+////** Linked badge text color on hover
+//$badge-link-hover-color:      #fff;
+//$badge-bg:                    $gray-light;
+//
+////** Badge text color in active nav link
+//$badge-active-color:          $link-color;
+////** Badge background color in active nav link
+//$badge-active-bg:             #fff;
+//
+//$badge-font-weight:           bold;
+//$badge-line-height:           1;
+//$badge-border-radius:         10px;
+

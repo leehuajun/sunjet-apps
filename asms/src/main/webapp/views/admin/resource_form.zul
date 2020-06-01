@@ -1,0 +1,85 @@
+<!-- 资源项编辑页面 -->
+<window title="@load(vm.entity eq null?'创建资源':'修改资源')" border="normal" width="550px" height="350px"
+        sizable="false"
+        style="margin:20px;padding-top:0px;padding-left:0px;" position="@load(vm.window_position)" closable="true"
+        onClose="spaceOwner.detach();"
+        viewModel="@id('vm') @init('com.sunjet.vm.admin.ResourceFormVM')"
+        validationMessages="@id('vmsgs')"
+        form="@id('fx') @load(vm.resourceEntity) @save(vm.resourceEntity, before='submit')">
+    <borderlayout>
+        <north sclass="c-north" style="border-bottom:1px solid #cccccc">
+            <label value="用户信息" style="font-weight:700"/>
+        </north>
+        <center sclass="c-center" style="border-bottom:1px solid #cccccc">
+            <hlayout style="margin:15px;" vflex="true">
+                <grid oddRowSclass="none" width="300px" sclass="form-grid" style="margin-top:10px">
+                    <columns>
+                        <column hflex="1"></column>
+                        <column hflex="2"></column>
+                    </columns>
+                    <rows>
+                        <row style="border:none;height:50px">
+                            <label value="资源名称" style="text-align:left;align:center;pack:left"/>
+                            <textbox constraint="no empty" value="@bind(fx.name)"
+                                     width="150px" tabindex="1" readonly="@load(vm.readonly)"
+                                     style="align:center;pack:left"/>
+                        </row>
+                        <row style="border:none;height:50px">
+                            <label value="资源代码" style="text-align:left;align:center;pack:left"/>
+                            <textbox constraint="no empty" value="@bind(fx.code)"
+                                     width="150px" tabindex="2" readonly="@load(vm.readonly)"
+                                     style="align:center;pack:left"/>
+                        </row>
+                        <row style="border:none;height:50px">
+                            <label value="" style="text-align:left;align:center;pack:left"/>
+                            <label value="" style="text-align:left;align:center;pack:left"/>
+                        </row>
+                        <row style="border:none;height:50px">
+                            <label value="状态" style="text-align:left;align:center;pack:left"/>
+                            <!--<checkbox id="chk_enabled" checked="@bind(fx.enabled)" tabindex="4" style="color:darkblue"/>-->
+                            <!--<label  style="color:rgb(78,116,149);font-weight:700;cursor:hand" value="启用"/>-->
+                            <vlayout>
+                                <checkbox label="启用" id="chk_enabled" checked="@bind(fx.enabled)" tabindex="4"/>
+                            </vlayout>
+                        </row>
+                    </rows>
+                </grid>
+                <listbox tabindex="6" style="width:180px;"
+                         model="@load(vm.entityWrappers)"
+                         multiple="true"
+                         checkmark="true"
+                         hflex="1"
+                         vflex="1"
+                         selectedItems="@bind(vm.entityWrapperSelectedItems)">
+                    <listhead>
+                        <listheader label="可选操作" style="font-weight:700"/>
+                    </listhead>
+                    <template name="model">
+                        <listitem label="@load(each.entity.optName)"
+                                  value="@load(each.entity)"
+                                  selected="@bind(each.selected)">
+                            <!--<listcell label="@load(each.roleEntity)" />-->
+                        </listitem>
+                    </template>
+                </listbox>
+            </hlayout>
+        </center>
+        <south sclass="c-south" style="height:55px;">
+            <div align="center" style="margin-top:10px;margin-bottom:20px">
+                <hlayout spacing="10px">
+                    <!--<button label="重置密码" iconSclass="@load(iconVariable.icon_refresh)" style="width:100px" tabindex="8"-->
+                    <!--sclass="btn-inverse c-button" onClick="@command('resetPassword',model=vm.userEntity)"/>-->
+                    <!--<space spacing="50px"/>-->
+                    <button label="保存" iconSclass="@load(iconVariable.icon_save)" tabindex="7"
+                            sclass="btn-success c-button"
+                            onClick="@command('submit')"/>
+                    <!--<button label="重置" iconSclass="z-icon-refresh" style="width:80px;height:25px;" tabindex="8"-->
+                    <!--sclass="btn-info c-button"-->
+                    <!--onClick="alert(self.sclass)"/>-->
+                    <button label="关闭" iconSclass="@load(iconVariable.icon_close)" tabindex="9"
+                            sclass="btn-warning c-button" onClick="spaceOwner.detach();"/>
+                </hlayout>
+            </div>
+        </south>
+    </borderlayout>
+</window>

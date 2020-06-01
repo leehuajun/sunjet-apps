@@ -1,0 +1,80 @@
+<!--
+基础数据管理 >> 物料类型设置
+-->
+<borderlayout width="100%" height="100%"
+              apply="org.zkoss.bind.BindComposer"
+              viewModel="@id('vm') @init('com.sunjet.vm.poms.OrderItemLimitVM')"
+              style="background-color:rgb(255,255,255);padding:0px;">
+    <north sclass="c-north">
+        <div sclass="ctoolbars">
+            <div sclass="ctoolbar">
+                <button iconSclass="@load(iconVariable.icon_refresh)" sclass="btn-info c-button" label="刷新"
+                        onClick="@command('refreshData')"/>
+            </div>
+            <!-- Search input-->
+            <div sclass="nav-search">
+                <bandbox value="@bind(vm.keyword)" placeholder="输入关键字..回车搜索" sclass="input-prepend"
+                         onOK="@command('filterList')"/>
+            </div>
+        </div>
+    </north>
+    <center autoscroll="true" sclass="c-center">
+        <vlayout width="100%" height="100%">
+            <!--<vbox></vbox>-->
+            <!--mold="paging" pageSize="15"-->
+            <!--pagingPosition: both , top , bottom-->
+            <!--autopaging="true"-->
+            <grid hflex="true" vflex="true" sclass="list-grid" oddRowSclass="none"
+                  model="@load(vm.resultDTO.pageContent)">
+                <columns>
+                    <column hflex="1" label="ID" visible="false"/>
+                    <column hflex="2" label="物料类型" align="left"/>
+                    <column hflex="3" label="订单类型" align="left"/>
+                    <column hflex="3" label="最大行项" align="left"/>
+                    <column hflex="1" label="启用/禁用" align="center"/>
+                    <column hflex="1" label="操作" align="right"/>
+                </columns>
+                <template name="model">
+                    <row>
+                        <label value="@load(each.objId)" style="border-right:solid 1px rgb(233,233,233)"/>
+                        <label value="@load(each.productTypeName)" style="color:rgb(78,116,149);font-weight:700"/>
+                        <label value="@load(each.orderTypeName)" style="color:rgb(78,116,149);font-weight:700"/>
+                        <textbox value="@bind(each.orderItemLimit)"/>
+                        <label value="@load(each.enabled eq true ? '启用':'禁用' )"
+                               style="@load(each.enabled eq true ? 'color:green;font-weight:700':'color:red;font-weight:700' )"/>
+                        <hlayout>
+                            <button iconSclass="@load(iconVariable.icon_save" sclass="btn-success inner-button" label=""
+                                    tooltiptext="保存"
+                                    onClick="@command('saveOrderTypeObject',model=each)"
+                                    style="align:right;padding-left:5px;font-weight:700;font-size:14px;"/>
+                            <!--<separator spacing="2px"/>-->
+                            <!--<button iconSclass="z-icon-trash-o" sclass="btn-warning inner-button" label="" tooltiptext="删除"-->
+                            <!--onClick="@command('deleteEntity',model=each)" style="padding-left:5px;font-weight:700;font-size:14px;"/>-->
+                            <!--<span style="color:green;font-size:16px" class="z-icon-edit" tooltiptext="编辑"-->
+                            <!--onClick="@command('editEntity',model=each)"/>-->
+                            <!--<separator spacing="5px"/>-->
+                            <!--<span  style="color:red;font-size:16px" class="z-icon-trash-o"-->
+                            <!--tooltiptext="删除" onClick="@command('deleteEntity',model=each)"/>-->
+                        </hlayout>
+                    </row>
+                </template>
+
+                <!--<foot style="padding:0px 0px;" height="18px">-->
+                <!--<footer span="4" style="margin:0px 0px;padding:0px 0px;height:18px">-->
+                <!--<label value="共有用户数:"/>-->
+                <!--<label value="@load(vm.userVoList.size())"/>-->
+                <!--</footer>-->
+                <!--</foot>-->
+            </grid>
+            <paging
+                    pageSize="@bind(vm.resultDTO.pageSize)"
+                    totalSize="@bind(vm.resultDTO.total)"
+                    pageIncrement="1"
+                    detailed="true"
+                    activePage="@bind(vm.currentPageNo)"
+                    onPaging="@command('gotoPageNo',e=event)"
+                    style="border:0px"
+            />
+        </vlayout>
+    </center>
+</borderlayout>

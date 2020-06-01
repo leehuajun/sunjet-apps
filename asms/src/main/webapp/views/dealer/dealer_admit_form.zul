@@ -1,0 +1,871 @@
+<!-- 准入申请表单 -->
+<window title="服务站准入申请" border="normal" width="1000px" height="600px"
+        sizable="true" style="padding-top:0px;padding-left:0px;" position="center,center" closable="true"
+        viewModel="@id('vm') @init('com.sunjet.vm.dealer.DealerAdmitFormVM')"
+        onClose="spaceOwner.detach();">
+    <borderlayout>
+        <north sclass="c-north" height="30px"
+               style="padding-top:15px;border-bottom:1px solid rgb(227,227,227);padding-bottom:10px">
+            <include src="/views/macros/flow_form_toolbar.zul"/>
+        </north>
+        <center sclass="c-center" autoscroll="true">
+            <vlayout height="100%">
+                <groupbox>
+                    <caption>基本信息</caption>
+                    <grid hflex="true" sclass="form-grid" oddRowSclass="none" style="margin-bottom:10px">
+                        <columns>
+                            <column width="80px"/>
+                            <column hflex="1"/>
+                            <column width="80px"/>
+                            <column hflex="1"/>
+                            <column width="70px"/>
+                            <column hflex="1"/>
+                            <column width="70px"/>
+                            <column hflex="1"/>
+                        </columns>
+                        <rows>
+                            <row>
+                                <label value="服务站编号"></label>
+                                <textbox hflex="1" value="@bind(vm.dealerAdmitRequest.dealer.code)"
+                                         readonly="@load(!vm.dealerAdmitRequest.canEditCode)"/>
+                                <label value="服务站名称"></label>
+                                <textbox hflex="1" value="@bind(vm.dealerAdmitRequest.dealer.name)"
+                                         readonly="@bind(vm.readonly)" sclass="no_empty"
+                                />
+                                <label value="电话"></label>
+                                <textbox hflex="1" value="@bind(vm.dealerAdmitRequest.dealer.phone)"
+                                         readonly="@bind(vm.readonly)" sclass="no_empty"
+                                />
+                                <label value="传真"></label>
+                                <textbox hflex="1" value="@bind(vm.dealerAdmitRequest.dealer.fax)"
+                                         readonly="@bind(vm.readonly)" sclass="no_empty"
+                                />
+                            </row>
+                            <row>
+                                <label value="地址"></label>
+                                <textbox hflex="1" value="@bind(vm.dealerAdmitRequest.dealer.address)"
+                                         readonly="@bind(vm.readonly)" sclass="no_empty"
+                                />
+                                <label value="所在省"></label>
+                                <div>
+                                    <listbox hflex="1" sclass="no_empty"
+                                             mold="select"
+                                             model="@load(vm.provinceEntities)"
+                                             selectedItem="@bind(vm.dealerAdmitRequest.dealer.province)"
+                                             onSelect="@command('selectProvince')"
+                                             visible="@bind(vm.readonly eq false)"
+                                    >
+                                        <template name="model">
+                                            <listitem left="1" label="@load(each)"
+                                                      value="@load(each)"
+                                                      selected="@load(vm.dealerAdmitRequest.dealer.province.name eq each.name)"
+
+                                            ></listitem>
+                                        </template>
+                                    </listbox>
+                                    <textbox hflex="1" visible="@bind(vm.readonly eq true)" sclass="no_empty"
+                                             value="@load(vm.dealerAdmitRequest.dealer.province.name)"
+                                             readonly="@bind(vm.readonly)"></textbox>
+                                </div>
+                                <label value="市"></label>
+                                <div>
+                                    <listbox hflex="1"
+                                             mold="select" sclass="no_empty"
+                                             model="@load(vm.cityEntities)"
+                                             selectedItem="@bind(vm.dealerAdmitRequest.dealer.city)"
+                                             visible="@bind(vm.readonly eq false)">
+                                        <template name="model">
+                                            <listitem left="1"
+                                                      label="@load(each)"
+                                                      selected="@load(vm.dealerAdmitRequest.dealer.city.name eq each.name)"
+                                                      value="@load(each)">
+                                            </listitem>
+                                        </template>
+                                    </listbox>
+                                    <textbox hflex="1" visible="@bind(vm.readonly eq true)" sclass="no_empty"
+                                             value="@bind(vm.dealerAdmitRequest.dealer.city.name)"
+                                             readonly="@bind(vm.readonly)"></textbox>
+                                </div>
+                                <label value="SGMW体系"></label>
+                                <!--<combobox hflex="1" readonly="true">-->
+                                <!--<comboitem label="是"></comboitem>-->
+                                <!--<comboitem label="否"></comboitem>-->
+                                <!--</combobox>-->
+                                <!--<listbox hflex="1" selectedItem="@bind(vm.dateFormat)" mold="select" tabindex="8">-->
+                                <div>
+                                    <listbox hflex="1" sclass="no_empty"
+                                             mold="select"
+                                             visible="@bind(vm.readonly eq false)"
+                                             selectedItem="@bind(vm.dealerAdmitRequest.dealer.sgmwSystem)"
+                                    >
+                                        <listitem label="是" value="true"
+                                                  selected="@bind(vm.dealerAdmitRequest.dealer.sgmwSystem eq 'true')"/>
+                                        <listitem label="否" value="false"
+                                                  selected="@bind(vm.dealerAdmitRequest.dealer.sgmwSystem eq 'false')"/>
+                                    </listbox>
+                                    <textbox hflex="1" visible="@bind(vm.readonly eq true)" sclass="no_empty"
+                                             value="@load(vm.dealerAdmitRequest.dealer.sgmwSystem eq 'true'?'是':'否')"
+                                             readonly="@bind(vm.readonly)"></textbox>
+                                </div>
+                            </row>
+                            <row>
+                                <label value="申请等级"></label>
+                                <div>
+                                    <listbox mold="select" sclass="no_empty"
+                                             model="@load(vm.stars)"
+                                             hflex="1"
+                                             selectedItem="@bind(vm.dealerAdmitRequest.dealer.star)"
+                                             visible="@bind(vm.readonly eq false)">
+                                        <template name="model">
+                                            <listitem
+                                                    left="1"
+                                                    label="@load(each.name)"
+                                                    value="@load(each.name)"
+                                                    selected="@bind(each.name eq vm.dealerAdmitRequest.dealer.star?true:false)">
+                                            </listitem>
+                                        </template>
+                                    </listbox>
+                                    <textbox hflex="1" visible="@bind(vm.readonly eq true)" sclass="no_empty"
+                                             value="@load(vm.dealerAdmitRequest.dealer.star)"
+                                             readonly="@bind(vm.readonly)"></textbox>
+                                </div>
+                                <label value="维修资质"></label>
+                                <div>
+                                    <listbox mold="select" sclass="no_empty"
+                                             model="@load(vm.qualifications)"
+                                             hflex="1"
+                                             selectedItem="@bind(vm.dealerAdmitRequest.dealer.qualification)"
+                                             visible="@bind(vm.readonly eq false)">
+                                        <template name="model">
+                                            <listitem left="1" label="@load(each.name)"
+                                                      value="@load(each.name)"
+                                                      selected="@bind(each.name eq vm.dealerAdmitRequest.dealer.qualification?true:false)">
+                                            </listitem>
+                                        </template>
+                                    </listbox>
+                                    <textbox hflex="1" visible="@bind(vm.readonly eq true)" sclass="no_empty"
+                                             value="@load(vm.dealerAdmitRequest.dealer.qualification)"
+                                             readonly="@bind(vm.readonly)"></textbox>
+                                </div>
+                                <!--一类；二类(汽车综合小修)；三类(发动机维修)-->
+                                <label value="服务站级别"></label>
+                                <textbox hflex="1" sclass="no_empty"
+                                         value="@load(vm.dealerAdmitRequest.dealer.level)"
+                                         readonly="true"></textbox>
+                                <label value="父级服务站"></label>
+                                <bandbox mold="rounded" autodrop="false" hflex="1" readonly="true"
+                                         value="@load(vm.dealerAdmitRequest.dealer.parent.name)"
+                                         buttonVisible="@load(vm.canSelectParent)">
+                                    <bandpopup width="300px" height="300px">
+                                        <vlayout hflex="1" vflex="1">
+                                            <hlayout>
+                                                <textbox value="@bind(vm.keyword)" hflex="1"
+                                                         placeholder="输入关键字..按Enter键搜索"
+                                                         sclass="input-prepend"
+                                                         onOK="@command('searchDealers',model=vm.keyword)"
+                                                         style="margin-bottom:2px"/>
+                                                <button label="清除" sclass="btn-warning"
+                                                        onClick="@command('clearSelectedDealer')"/>
+                                            </hlayout>
+                                            <grid style="border:none" vflex="1" model="@load(vm.parentDealers)"
+                                                  emptyMessage="没有数据">
+                                                <columns>
+                                                    <column hflex="1" label="服务站编号"/>
+                                                    <column hflex="2" label="服务站名称"/>
+                                                </columns>
+                                                <template name="model">
+                                                    <row onClick="@command('selectDealer',model=each)">
+                                                        <label value="@load(each.code)"/>
+                                                        <label value="@load(each.name)"/>
+                                                    </row>
+                                                </template>
+                                            </grid>
+                                        </vlayout>
+                                    </bandpopup>
+                                </bandbox>
+                            </row>
+                            <row>
+                                <label value="组织机构代码"></label>
+                                <textbox value="@bind(vm.dealerAdmitRequest.dealer.orgCode)" hflex="1" sclass="no_empty"
+                                         readonly="@bind(vm.readonly)"></textbox>
+                                <label value="纳税人识别号"></label>
+                                <textbox value="@bind(vm.dealerAdmitRequest.dealer.taxpayerCode)" hflex="1"
+                                         sclass="no_empty"
+                                         readonly="@bind(vm.readonly)"></textbox>
+                                <label value="开户银行"></label>
+                                <textbox value="@bind(vm.dealerAdmitRequest.dealer.bank)" hflex="1" sclass="no_empty"
+                                         readonly="@bind(vm.readonly)"></textbox>
+                                <label value="银行账号"></label>
+                                <textbox value="@bind(vm.dealerAdmitRequest.dealer.bankAccount)" hflex="1"
+                                         sclass="no_empty"
+                                         readonly="@bind(vm.readonly)"></textbox>
+
+                            </row>
+                            <row>
+                                <label value="营业执照号"></label>
+                                <textbox value="@bind(vm.dealerAdmitRequest.dealer.businessLicenseCode)" hflex="1"
+                                         sclass="no_empty"
+                                         readonly="@bind(vm.readonly)"></textbox>
+                                <!--<label value="税率"></label>-->
+                                <!--<textbox value="@bind(vm.dealerAdmitRequest.dealer.taxRate)" hflex="1"-->
+                                <!--sclass="no_empty"></textbox>-->
+                                <label value="服务经理"></label>
+                                <div>
+                                    <listbox mold="select" visible="@load(vm.dealerAdmitRequest.canEditServiceManager)"
+                                             model="@load(vm.serviceManagers)"
+                                             hflex="1"
+                                             selectedItem="@bind(vm.dealerAdmitRequest.dealer.serviceManager)">
+                                        <template name="model">
+                                            <listitem label="@load(each.name)"
+                                                      value="@load(each)"
+                                                      selected="@load(each.objId eq vm.dealerAdmitRequest.dealer.serviceManager.objId)"></listitem>
+                                        </template>
+                                    </listbox>
+                                    <textbox hflex="1" value="@bind(vm.dealerAdmitRequest.dealer.serviceManager.name)"
+                                             visible="@load(!vm.dealerAdmitRequest.canEditServiceManager)"
+                                             readonly="true"/>
+                                </div>
+                                <label value="培训资料"></label>
+                                <div align="left">
+                                    <a target="_blank"
+                                       href="@load(vm.getFilePath(vm.dealerAdmitRequest.dealer.fileTrain))"
+                                       label="查看"
+                                       visible="@bind(not empty vm.dealerAdmitRequest.dealer.fileTrain)"/>
+                                    <button tooltiptext="上传文件" iconSclass="@load(iconVariable.icon_search)"
+                                            sclass="btn-warning inner-button" upload="true,maxsize=10240"
+                                            onUpload="@command('doUploadFile',event=event,t='file16')"
+                                            visible="@load(vm.dealerAdmitRequest.canUpload)"/>
+                                    <button iconSclass="@load(iconVariable.icon_delete)"
+                                            sclass="btn-warning inner-button" label=""
+                                            tooltiptext="删除" visible="@load(vm.dealerAdmitRequest.canUpload)"
+                                            onClick="@command('delUploadFile',t='file16')"
+                                            style="padding-left:5px;font-weight:700;font-size:14px;"/>
+
+                                </div>
+
+                            </row>
+                            <row>
+
+                                <label value="其他合作内容"></label>
+                                <cell colspan="3">
+                                    <bandbox value="@bind(vm.dealerAdmitRequest.dealer.otherCollaboration)"
+                                             mold="rounded" autodrop="false" hflex="1" readonly="true" sclass="no_empty"
+                                             buttonVisible="@bind(!vm.readonly)">
+                                        <bandpopup width="150px">
+                                            <listbox height="150px" width="150px" style="border:none" checkmark="true"
+                                                     multiple="true" onSelect="@command('selectCollaboration')"
+                                                     selectedItems="@bind(vm.selectedOtherCollaborations)"
+                                                     model="@load(vm.otherCollaborations)">
+                                                <listitem label="@load(each.name)" value="@load(each.name)"></listitem>
+                                            </listbox>
+                                        </bandpopup>
+                                    </bandbox>
+                                </cell>
+
+                            </row>
+                        </rows>
+                    </grid>
+                </groupbox>
+                <tabbox sclass="ntabbox" hflex="true" vflex="true"
+                        style="margin-top:20px;margin-bottom:10px;">
+                    <tabs>
+                        <tab label="人员信息"/>
+                        <tab label="场地信息(平方米)"/>
+                        <tab label="其他信息"/>
+                        <tab label="图片信息(附件)"/>
+                    </tabs>
+                    <tabpanels style="border-bottom:1px solid green">
+                        <tabpanel>
+                            <grid oddRowSclass="none" hflex="true" sclass="form-grid" style="margin:5px;padding:5px">
+                                <columns>
+                                    <column width="80px"></column>
+                                    <column hflex="1"></column>
+                                    <column width="80px"></column>
+                                    <column hflex="1"></column>
+                                    <column width="80px"></column>
+                                    <column hflex="1"></column>
+                                    <column width="80px"></column>
+                                    <column hflex="1"></column>
+                                </columns>
+                                <rows>
+                                    <row>
+                                        <label value="法人代表"></label>
+                                        <textbox hflex="1" value="@bind(vm.dealerAdmitRequest.dealer.legalPerson)"
+                                                 sclass="no_empty"
+                                                 readonly="@bind(vm.readonly)"/>
+                                        <label value="法人电话"></label>
+                                        <textbox hflex="1" value="@bind(vm.dealerAdmitRequest.dealer.legalPersonPhone)"
+                                                 sclass="no_empty"
+                                                 readonly="@bind(vm.readonly)"/>
+                                        <label value="站长"></label>
+                                        <textbox hflex="1" value="@bind(vm.dealerAdmitRequest.dealer.stationMaster)"
+                                                 sclass="no_empty"
+                                                 readonly="@bind(vm.readonly)"/>
+                                        <label value="站长电话"></label>
+                                        <textbox hflex="1"
+                                                 value="@bind(vm.dealerAdmitRequest.dealer.stationMasterPhone)"
+                                                 sclass="no_empty"
+                                                 readonly="@bind(vm.readonly)"/>
+
+                                    </row>
+                                    <row>
+                                        <label value="技术主管"></label>
+                                        <textbox hflex="1" value="@bind(vm.dealerAdmitRequest.dealer.technicalDirector)"
+                                                 sclass="no_empty"
+                                                 readonly="@bind(vm.readonly)"/>
+                                        <label value="技术主管电话"></label>
+                                        <textbox hflex="1"
+                                                 value="@bind(vm.dealerAdmitRequest.dealer.technicalDirectorPhone)"
+                                                 sclass="no_empty"
+                                                 readonly="@bind(vm.readonly)"/>
+                                        <label value="索赔主管"></label>
+                                        <textbox hflex="1" value="@bind(vm.dealerAdmitRequest.dealer.claimDirector)"
+                                                 sclass="no_empty"
+                                                 readonly="@bind(vm.readonly)"/>
+                                        <label value="索赔主管电话"></label>
+                                        <textbox hflex="1"
+                                                 value="@bind(vm.dealerAdmitRequest.dealer.claimDirectorPhone)"
+                                                 sclass="no_empty"
+                                                 readonly="@bind(vm.readonly)"/>
+
+                                    </row>
+                                    <row>
+                                        <label value="配件主管"></label>
+                                        <textbox hflex="1" value="@bind(vm.dealerAdmitRequest.dealer.partDirector)"
+                                                 sclass="no_empty"
+                                                 readonly="@bind(vm.readonly)"/>
+                                        <label value="配件主管电话"></label>
+                                        <textbox hflex="1" value="@bind(vm.dealerAdmitRequest.dealer.partDirectorPhone)"
+                                                 sclass="no_empty"
+                                                 readonly="@bind(vm.readonly)"/>
+                                        <label value="财务经理"></label>
+                                        <textbox hflex="1" value="@bind(vm.dealerAdmitRequest.dealer.financeDirector)"
+                                                 sclass="no_empty"
+                                                 readonly="@bind(vm.readonly)"/>
+                                        <label value="财务经理电话"></label>
+                                        <textbox hflex="1"
+                                                 value="@bind(vm.dealerAdmitRequest.dealer.financeDirectorPhone)"
+                                                 sclass="no_empty"
+                                                 readonly="@bind(vm.readonly)"/>
+
+                                    </row>
+                                    <row></row>
+                                    <row>
+                                        <label value="员工总数(名)"></label>
+                                        <textbox hflex="1" value="@bind(vm.dealerAdmitRequest.dealer.employeeCount)"
+                                                 sclass="no_empty"
+                                                 readonly="@bind(vm.readonly)" maxlength="10"/>
+                                        <label value="接待员(名)"></label>
+                                        <textbox hflex="1" value="@bind(vm.dealerAdmitRequest.dealer.receptionistCount)"
+                                                 sclass="no_empty"
+                                                 readonly="@bind(vm.readonly)" maxlength="10"/>
+                                        <label value="配件员(名)"></label>
+                                        <textbox hflex="1" value="@bind(vm.dealerAdmitRequest.dealer.partKeeyperCount)"
+                                                 sclass="no_empty"
+                                                 readonly="@bind(vm.readonly)" maxlength="10"/>
+                                        <label value="维修工(名)"></label>
+                                        <textbox hflex="1" value="@bind(vm.dealerAdmitRequest.dealer.maintainerCount)"
+                                                 sclass="no_empty"
+                                                 readonly="@bind(vm.readonly)" maxlength="10"/>
+                                    </row>
+                                    <row>
+                                        <label value="质检员(名)"></label>
+                                        <textbox hflex="1" value="@bind(vm.dealerAdmitRequest.dealer.qcInspectorCount)"
+                                                 sclass="no_empty"
+                                                 readonly="@bind(vm.readonly)" maxlength="10"/>
+                                        <label value="结算员(名)"></label>
+                                        <textbox hflex="1" value="@bind(vm.dealerAdmitRequest.dealer.clerkCount)"
+                                                 sclass="no_empty"
+                                                 readonly="@bind(vm.readonly)" maxlength="10"/>
+                                    </row>
+                                </rows>
+                            </grid>
+                        </tabpanel>
+                        <tabpanel>
+                            <grid oddRowSclass="none" hflex="true" sclass="form-grid" style="margin:5px;padding:5px;">
+                                <columns>
+                                    <column width="100px"></column>
+                                    <column hflex="1"></column>
+                                    <column width="100px"></column>
+                                    <column hflex="1"></column>
+                                    <column width="100px"></column>
+                                    <column hflex="1"></column>
+                                    <column width="100px"></column>
+                                    <column hflex="1"></column>
+                                </columns>
+                                <rows>
+                                    <row>
+                                        <label value="停车区面积"></label>
+                                        <textbox hflex="1" value="@bind(vm.dealerAdmitRequest.dealer.parkingArea)"
+                                                 sclass="no_empty"
+                                                 readonly="@bind(vm.readonly)"/>
+                                        <label value="接待室"></label>
+                                        <textbox hflex="1" value="@bind(vm.dealerAdmitRequest.dealer.receptionArea)"
+                                                 sclass="no_empty"
+                                                 readonly="@bind(vm.readonly)"/>
+                                        <label value="综合维修区"></label>
+                                        <textbox hflex="1" value="@bind(vm.dealerAdmitRequest.dealer.generalArea)"
+                                                 sclass="no_empty"
+                                                 readonly="@bind(vm.readonly)"/>
+                                        <label value="总成维修区"></label>
+                                        <textbox hflex="1" value="@bind(vm.dealerAdmitRequest.dealer.assemblyArea)"
+                                                 sclass="no_empty"
+                                                 readonly="@bind(vm.readonly)"/>
+                                    </row>
+                                    <row>
+                                        <label value="配件库总面积"></label>
+                                        <textbox hflex="1" value="@bind(vm.dealerAdmitRequest.dealer.storageArea)"
+                                                 sclass="no_empty"
+                                                 readonly="@bind(vm.readonly)"/>
+                                        <label value="五菱配件库面积"></label>
+                                        <textbox hflex="1" value="@bind(vm.dealerAdmitRequest.dealer.storageWulingArea)"
+                                                 sclass="no_empty"
+                                                 readonly="@bind(vm.readonly)"/>
+                                        <label value="旧件库面积"></label>
+                                        <textbox hflex="1"
+                                                 value="@bind(vm.dealerAdmitRequest.dealer.storageUserdPartArea)"
+                                                 sclass="no_empty"
+                                                 readonly="@bind(vm.readonly)"/>
+                                        <label value="五菱旧件库面积"></label>
+                                        <textbox hflex="1"
+                                                 value="@bind(vm.dealerAdmitRequest.dealer.storageWulingUserdPartArea)"
+                                                 sclass="no_empty"
+                                                 readonly="@bind(vm.readonly)"/>
+                                    </row>
+                                </rows>
+                            </grid>
+                        </tabpanel>
+                        <tabpanel>
+                            <grid oddRowSclass="none" hflex="true" sclass="form-grid" style="margin:5px;padding:5px;">
+                                <columns>
+                                    <column width="100px"></column>
+                                    <column hflex="1"></column>
+                                    <column width="100px"></column>
+                                    <column hflex="1"></column>
+                                    <column width="100px"></column>
+                                    <column hflex="1"></column>
+                                    <column width="100px"></column>
+                                    <column hflex="1"></column>
+                                </columns>
+                                <rows>
+                                    <row>
+                                        <label value="配件储备表"></label>
+                                        <div align="left">
+                                            <!--<label value="上传"/>-->
+                                            <a target="_blank"
+                                               href="@load(vm.getFilePath(vm.dealerAdmitRequest.dealer.partReport))"
+                                               label="查看"
+                                               visible="@bind(not empty vm.dealerAdmitRequest.dealer.partReport)"/>
+                                            <button tooltiptext="上传文件" iconSclass="@load(iconVariable.icon_search)"
+                                                    sclass="btn-warning inner-button" upload="true,maxsize=5120"
+                                                    onUpload="@command('doUploadFile',event=event,t='file17')"
+                                                    visible="@bind(!vm.readonly)"/>
+                                            <button iconSclass="@load(iconVariable.icon_delete)"
+                                                    sclass="btn-warning inner-button" label=""
+                                                    tooltiptext="删除" visible="@load(!vm.readonly)"
+                                                    onClick="@command('delUploadFile',t='file17')"
+                                                    style="padding-left:5px;font-weight:700;font-size:14px;"/>
+                                        </div>
+                                    </row>
+                                    <row>
+                                        <label value="其他车辆维修条件"></label>
+                                        <textbox hflex="1"
+                                                 value="@bind(vm.dealerAdmitRequest.dealer.otherMaintainCondition)"
+                                                 readonly="@bind(vm.readonly)" sclass="no_empty"
+                                        />
+                                        <label value="兼做的品牌服务"></label>
+                                        <textbox hflex="1" value="@bind(vm.dealerAdmitRequest.dealer.otherBrand)"
+                                                 readonly="@bind(vm.readonly)" sclass="no_empty"
+                                        />
+                                        <label value="拟维修我公司产品系列"></label>
+                                        <cell colspan="3">
+                                            <bandbox value="@bind(vm.dealerAdmitRequest.dealer.productsOfMaintain)"
+                                                     mold="rounded" autodrop="false" hflex="1" readonly="true"
+                                                     sclass="no_empty"
+                                                     buttonVisible="@bind(!vm.readonly)">
+                                                <bandpopup width="150px">
+                                                    <listbox height="150px" width="150px" style="border:none"
+                                                             checkmark="true"
+                                                             multiple="true"
+                                                             onSelect="@command('selectProductsOfMaintain')"
+                                                             selectedItems="@bind(vm.selectedProductsOfMaintains)"
+                                                             model="@load(vm.productsOfMaintains)">
+                                                        <listitem label="@load(each.name)"
+                                                                  value="@load(each.name)"></listitem>
+                                                        <!--<listitem label="天然气车" value="天然气车"-->
+                                                        <!--selected="@load(vm.checkProductsOfMaintainStats('天然气车'))"></listitem>-->
+                                                        <!--<listitem label="电动车" value="电动车"-->
+                                                        <!--selected="@load(vm.checkProductsOfMaintainStats('电动车'))"></listitem>-->
+                                                        <!--<listitem label="特种车辆" value="特种车辆"-->
+                                                        <!--selected="@load(vm.checkProductsOfMaintainStats('特种车辆'))"></listitem>-->
+                                                    </listbox>
+                                                </bandpopup>
+                                            </bandbox>
+                                        </cell>
+                                    </row>
+                                    <row>
+
+                                        <label value="情况说明"></label>
+                                        <cell colspan="7">
+                                            <textbox hflex="1" value="@bind(vm.dealerAdmitRequest.dealer.otherProducts)"
+                                                     readonly="@bind(vm.readonly)" sclass="no_empty" rows="2"/>
+                                        </cell>
+
+                                    </row>
+                                </rows>
+                            </grid>
+                        </tabpanel>
+                        <tabpanel>
+                            <grid oddRowSclass="none" hflex="1" sclass="list-grid">
+                                <columns>
+                                    <column width="30px" label="序号" align="center"/>
+                                    <column hflex="1" label="名称" align="left"/>
+                                    <column width="70px" label="图片" align="center"/>
+                                    <column width="30px" label="序号" align="center"/>
+                                    <column hflex="1" label="名称" align="left"/>
+                                    <column width="70px" label="图片" align="center"/>
+                                    <column width="30px" label="序号" align="center"/>
+                                    <column hflex="1" label="名称" align="left"/>
+                                    <column width="70px" label="图片" align="center"/>
+                                    <column width="30px" label="序号" align="center"/>
+                                    <column hflex="1" label="名称" align="left"/>
+                                    <column width="70px" label="图片" align="center"/>
+                                </columns>
+                                <rows>
+                                    <row style="border-bottom:1px solid rgb(240,240,240)">
+                                        <label value="1" sclass="label-index"/>
+                                        <label value="营业执照"></label>
+                                        <div align="left">
+                                            <!--<label value="上传"/>-->
+                                            <a target="_blank"
+                                               href="@load(vm.getFilePath(vm.dealerAdmitRequest.dealer.fileBusinessLicense))"
+                                               label="查看"
+                                               visible="@bind(not empty vm.dealerAdmitRequest.dealer.fileBusinessLicense)"/>
+                                            <button tooltiptext="上传文件" iconSclass="@load(iconVariable.icon_search)"
+                                                    sclass="btn-warning inner-button" upload="true,maxsize=5120"
+                                                    onUpload="@command('doUploadFile',event=event,t='file01')"
+                                                    visible="@bind(!vm.readonly)"/>
+
+                                            <button iconSclass="@load(iconVariable.icon_delete)"
+                                                    sclass="btn-warning inner-button" label=""
+                                                    tooltiptext="删除" visible="@load(!vm.readonly)"
+                                                    onClick="@command('delUploadFile',t='file01')"
+                                                    style="padding-left:5px;font-weight:700;font-size:14px;"/>
+                                        </div>
+
+                                        <!--<textbox hflex="1" value="@bind(vm.dealerAdmitRequest.dealer.fileBusinessLicense)" readonly="@bind(vm.readonly)"/>-->
+                                        <label value="5" sclass="label-index"/>
+                                        <label value="税务登记证"></label>
+                                        <div align="left">
+                                            <!--<label value="上传"/>-->
+                                            <a target="_blank"
+                                               href="@load(vm.getFilePath(vm.dealerAdmitRequest.dealer.fileTaxCertificate))"
+                                               label="查看"
+                                               visible="@bind(not empty vm.dealerAdmitRequest.dealer.fileTaxCertificate)"/>
+                                            <button tooltiptext="上传文件" iconSclass="@load(iconVariable.icon_search)"
+                                                    sclass="btn-warning inner-button" upload="true,maxsize=5120"
+                                                    onUpload="@command('doUploadFile',event=event,t='file02')"
+                                                    visible="@bind(!vm.readonly)"/>
+
+                                            <button iconSclass="@load(iconVariable.icon_delete)"
+                                                    sclass="btn-warning inner-button" label=""
+                                                    tooltiptext="删除" visible="@load(!vm.readonly)"
+                                                    onClick="@command('delUploadFile',t='file02')"
+                                                    style="padding-left:5px;font-weight:700;font-size:14px;"/>
+                                        </div>
+                                        <label value="9" sclass="label-index"/>
+                                        <!--<textbox hflex="1" value="@bind(vm.dealerAdmitRequest.dealer.fileTaxCertificate)" readonly="@bind(vm.readonly)"/>-->
+                                        <label value="银行开户许可证"></label>
+                                        <div align="left">
+                                            <!--<label value="上传"/>-->
+                                            <a target="_blank"
+                                               href="@load(vm.getFilePath(vm.dealerAdmitRequest.dealer.fileBankAccountOpeningPermit))"
+                                               label="查看"
+                                               visible="@bind(not empty vm.dealerAdmitRequest.dealer.fileBankAccountOpeningPermit)"/>
+                                            <button tooltiptext="上传文件" iconSclass="@load(iconVariable.icon_search)"
+                                                    sclass="btn-warning inner-button" upload="true,maxsize=5120"
+                                                    onUpload="@command('doUploadFile',event=event,t='file03')"
+                                                    visible="@bind(!vm.readonly)"/>
+
+                                            <button iconSclass="@load(iconVariable.icon_delete)"
+                                                    sclass="btn-warning inner-button" label=""
+                                                    tooltiptext="删除" visible="@load(!vm.readonly)"
+                                                    onClick="@command('delUploadFile',t='file03')"
+                                                    style="padding-left:5px;font-weight:700;font-size:14px;"/>
+                                        </div>
+                                        <label value="13" sclass="label-index"/>
+                                        <!--<textbox hflex="1" value="@bind(vm.dealerAdmitRequest.dealer.fileBankAccountOpeningPermit)" readonly="@bind(vm.readonly)"/>-->
+                                        <label value="人员登记证书"></label>
+                                        <div align="left">
+                                            <!--<label value="上传"/>-->
+                                            <a target="_blank"
+                                               href="@load(vm.getFilePath(vm.dealerAdmitRequest.dealer.filePersonnelCertificate))"
+                                               label="查看"
+                                               visible="@bind(not empty vm.dealerAdmitRequest.dealer.filePersonnelCertificate)"/>
+                                            <button tooltiptext="上传文件" iconSclass="@load(iconVariable.icon_search)"
+                                                    sclass="btn-warning inner-button" upload="true,maxsize=5120"
+                                                    onUpload="@command('doUploadFile',event=event,t='file04')"
+                                                    visible="@bind(!vm.readonly)"/>
+
+                                            <button iconSclass="@load(iconVariable.icon_delete)"
+                                                    sclass="btn-warning inner-button" label=""
+                                                    tooltiptext="删除" visible="@load(!vm.readonly)"
+                                                    onClick="@command('delUploadFile',t='file04')"
+                                                    style="padding-left:5px;font-weight:700;font-size:14px;"/>
+                                        </div>
+                                        <!--</row>-->
+                                        <!--<textbox hflex="1" value="@bind(vm.dealerAdmitRequest.dealer.filePersonnelCertificate)" readonly="@bind(vm.readonly)"/>-->
+                                    </row>
+                                    <row style="border-bottom:1px solid rgb(240,240,240)">
+                                        <label value="2" sclass="label-index"/>
+                                        <label value="维修资质"></label>
+                                        <div align="left">
+                                            <!--<label value="上传"/>-->
+                                            <a target="_blank"
+                                               href="@load(vm.getFilePath(vm.dealerAdmitRequest.dealer.fileQualification))"
+                                               label="查看"
+                                               visible="@bind(not empty vm.dealerAdmitRequest.dealer.fileQualification)"/>
+                                            <button tooltiptext="上传文件" iconSclass="@load(iconVariable.icon_search)"
+                                                    sclass="btn-warning inner-button" upload="true,maxsize=5120"
+                                                    onUpload="@command('doUploadFile',event=event,t='file05')"
+                                                    visible="@bind(!vm.readonly)"/>
+
+                                            <button iconSclass="@load(iconVariable.icon_delete)"
+                                                    sclass="btn-warning inner-button" label=""
+                                                    tooltiptext="删除" visible="@load(!vm.readonly)"
+                                                    onClick="@command('delUploadFile',t='file05')"
+                                                    style="padding-left:5px;font-weight:700;font-size:14px;"/>
+                                        </div>
+                                        <!--<textbox hflex="1" value="@bind(vm.dealerAdmitRequest.dealer.fileQualification)" readonly="@bind(vm.readonly)"/>-->
+
+                                        <label value="6" sclass="label-index"/>
+                                        <label value="服务站开票信息"></label>
+                                        <div align="left">
+                                            <!--<label value="上传"/>-->
+                                            <a target="_blank"
+                                               href="@load(vm.getFilePath(vm.dealerAdmitRequest.dealer.fileInvoiceInfo))"
+                                               label="查看"
+                                               visible="@bind(not empty vm.dealerAdmitRequest.dealer.fileInvoiceInfo)"/>
+                                            <button tooltiptext="上传文件" iconSclass="@load(iconVariable.icon_search)"
+                                                    sclass="btn-warning inner-button" upload="true,maxsize=5120"
+                                                    onUpload="@command('doUploadFile',event=event,t='file06')"
+                                                    visible="@bind(!vm.readonly)"/>
+
+                                            <button iconSclass="@load(iconVariable.icon_delete)"
+                                                    sclass="btn-warning inner-button" label=""
+                                                    tooltiptext="删除" visible="@load(!vm.readonly)"
+                                                    onClick="@command('delUploadFile',t='file06')"
+                                                    style="padding-left:5px;font-weight:700;font-size:14px;"/>
+                                        </div>
+                                        <!--<textbox hflex="1" value="@bind(vm.dealerAdmitRequest.dealer.fileInvoiceInfo)" readonly="@bind(vm.readonly)"/>-->
+
+                                        <label value="10" sclass="label-index"/>
+                                        <label value="道路运输营业许可证"></label>
+                                        <div align="left">
+                                            <!--<label value="上传"/>-->
+                                            <a target="_blank"
+                                               href="@load(vm.getFilePath(vm.dealerAdmitRequest.dealer.fileRoadTransportLicense))"
+                                               label="查看"
+                                               visible="@bind(not empty vm.dealerAdmitRequest.dealer.fileRoadTransportLicense)"/>
+                                            <button tooltiptext="上传文件" iconSclass="@load(iconVariable.icon_search)"
+                                                    sclass="btn-warning inner-button" upload="true,maxsize=5120"
+                                                    onUpload="@command('doUploadFile',event=event,t='file07')"
+                                                    visible="@bind(!vm.readonly)"/>
+
+                                            <button iconSclass="@load(iconVariable.icon_delete)"
+                                                    sclass="btn-warning inner-button" label=""
+                                                    tooltiptext="删除" visible="@load(!vm.readonly)"
+                                                    onClick="@command('delUploadFile',t='file07')"
+                                                    style="padding-left:5px;font-weight:700;font-size:14px;"/>
+                                        </div>
+                                        <!--<textbox hflex="1" value="@bind(vm.dealerAdmitRequest.dealer.fileRoadTransportLicense)" readonly="@bind(vm.readonly)"/>-->
+
+                                        <label value="14" sclass="label-index"/>
+                                        <label value="企业组织结构及设置书"></label>
+                                        <div align="left">
+                                            <!--<label value="上传"/>-->
+                                            <a target="_blank"
+                                               href="@load(vm.getFilePath(vm.dealerAdmitRequest.dealer.fileOrgChart))"
+                                               label="查看"
+                                               visible="@bind(not empty vm.dealerAdmitRequest.dealer.fileOrgChart)"/>
+                                            <button tooltiptext="上传文件" iconSclass="@load(iconVariable.icon_search)"
+                                                    sclass="btn-warning inner-button" upload="true,maxsize=5120"
+                                                    onUpload="@command('doUploadFile',event=event,t='file08')"
+                                                    visible="@bind(!vm.readonly)"/>
+
+                                            <button iconSclass="@load(iconVariable.icon_delete)"
+                                                    sclass="btn-warning inner-button" label=""
+                                                    tooltiptext="删除" visible="@load(!vm.readonly)"
+                                                    onClick="@command('delUploadFile',t='file08')"
+                                                    style="padding-left:5px;font-weight:700;font-size:14px;"/>
+                                        </div>
+                                        <!--<textbox hflex="1"  value="@bind(vm.dealerAdmitRequest.dealer.fileOrgChart)" readonly="@bind(vm.readonly)"/>-->
+                                    </row>
+                                    <row style="border-bottom:1px solid rgb(240,240,240)">
+                                        <label value="3" sclass="label-index"/>
+                                        <label value="设备清单"></label>
+                                        <div align="left">
+                                            <!--<label value="上传"/>-->
+                                            <a target="_blank"
+                                               href="@load(vm.getFilePath(vm.dealerAdmitRequest.dealer.fileDevice))"
+                                               label="查看"
+                                               visible="@bind(not empty vm.dealerAdmitRequest.dealer.fileDevice)"/>
+                                            <button tooltiptext="上传文件" iconSclass="@load(iconVariable.icon_search)"
+                                                    sclass="btn-warning inner-button" upload="true,maxsize=5120"
+                                                    onUpload="@command('doUploadFile',event=event,t='file09')"
+                                                    visible="@bind(!vm.readonly)"/>
+
+                                            <button iconSclass="@load(iconVariable.icon_delete)"
+                                                    sclass="btn-warning inner-button" label=""
+                                                    tooltiptext="删除" visible="@load(!vm.readonly)"
+                                                    onClick="@command('delUploadFile',t='file09')"
+                                                    style="padding-left:5px;font-weight:700;font-size:14px;"/>
+                                        </div>
+                                        <!--<textbox hflex="1" value="@bind(vm.dealerAdmitRequest.dealer.fileDevice)" readonly="@bind(vm.readonly)"/>-->
+
+                                        <label value="7" sclass="label-index"/>
+                                        <label value="接待室图片"></label>
+                                        <div align="left">
+                                            <!--<label value="上传"/>-->
+                                            <a target="_blank"
+                                               href="@load(vm.getFilePath(vm.dealerAdmitRequest.dealer.fileReceptionOffice))"
+                                               label="查看"
+                                               visible="@bind(not empty vm.dealerAdmitRequest.dealer.fileReceptionOffice)"/>
+                                            <button tooltiptext="上传文件" iconSclass="@load(iconVariable.icon_search)"
+                                                    sclass="btn-warning inner-button" upload="true,maxsize=5120"
+                                                    onUpload="@command('doUploadFile',event=event,t='file10')"
+                                                    visible="@bind(!vm.readonly)"/>
+
+                                            <button iconSclass="@load(iconVariable.icon_delete)"
+                                                    sclass="btn-warning inner-button" label=""
+                                                    tooltiptext="删除" visible="@load(!vm.readonly)"
+                                                    onClick="@command('delUploadFile',t='file10')"
+                                                    style="padding-left:5px;font-weight:700;font-size:14px;"/>
+                                        </div>
+                                        <!--<textbox hflex="1" value="@bind(vm.dealerAdmitRequest.dealer.fileReceptionOffice)" readonly="@bind(vm.readonly)"/>-->
+
+                                        <label value="11" sclass="label-index"/>
+                                        <label value="地图位置"></label>
+                                        <div align="left">
+                                            <!--<label value="上传"/>-->
+                                            <a target="_blank"
+                                               href="@load(vm.getFilePath(vm.dealerAdmitRequest.dealer.fileMap))"
+                                               label="查看"
+                                               visible="@bind(not empty vm.dealerAdmitRequest.dealer.fileMap)"/>
+                                            <button tooltiptext="上传文件" iconSclass="@load(iconVariable.icon_search)"
+                                                    sclass="btn-warning inner-button" upload="true,maxsize=5120"
+                                                    onUpload="@command('doUploadFile',event=event,t='file11')"
+                                                    visible="@bind(!vm.readonly)"/>
+
+                                            <button iconSclass="@load(iconVariable.icon_delete)"
+                                                    sclass="btn-warning inner-button" label=""
+                                                    tooltiptext="删除" visible="@load(!vm.readonly)"
+                                                    onClick="@command('delUploadFile',t='file11')"
+                                                    style="padding-left:5px;font-weight:700;font-size:14px;"/>
+                                        </div>
+                                        <!--<textbox hflex="1" value="@bind(vm.dealerAdmitRequest.dealer.fileMap)" readonly="@bind(vm.readonly)"/>-->
+                                        <label value="15" sclass="label-index"/>
+                                        <label value="服务站全貌图片"></label>
+                                        <div align="left">
+                                            <!--<label value="上传"/>-->
+                                            <a target="_blank"
+                                               href="@load(vm.getFilePath(vm.dealerAdmitRequest.dealer.fileGlobal))"
+                                               label="查看"
+                                               visible="@bind(not empty vm.dealerAdmitRequest.dealer.fileGlobal)"/>
+                                            <button tooltiptext="上传文件" iconSclass="@load(iconVariable.icon_search)"
+                                                    sclass="btn-warning inner-button" upload="true,maxsize=5120"
+                                                    onUpload="@command('doUploadFile',event=event,t='file12')"
+                                                    visible="@bind(!vm.readonly)"/>
+
+                                            <button iconSclass="@load(iconVariable.icon_delete)"
+                                                    sclass="btn-warning inner-button" label=""
+                                                    tooltiptext="删除" visible="@load(!vm.readonly)"
+                                                    onClick="@command('delUploadFile',t='file12')"
+                                                    style="padding-left:5px;font-weight:700;font-size:14px;"/>
+                                        </div>
+                                        <!--<textbox hflex="1" value="@bind(vm.dealerAdmitRequest.dealer.fileGlobal)" readonly="@bind(vm.readonly)"/>-->
+                                    </row>
+                                    <row style="border-bottom:1px solid rgb(240,240,240)">
+                                        <label value="4" sclass="label-index"/>
+                                        <label value="办公室图片"></label>
+                                        <div align="left">
+                                            <!--<label value="上传"/>-->
+                                            <a target="_blank"
+                                               href="@load(vm.getFilePath(vm.dealerAdmitRequest.dealer.fileOffice))"
+                                               label="查看"
+                                               visible="@bind(not empty vm.dealerAdmitRequest.dealer.fileOffice)"/>
+                                            <button tooltiptext="上传文件" iconSclass="@load(iconVariable.icon_search)"
+                                                    sclass="btn-warning inner-button" upload="true,maxsize=5120"
+                                                    onUpload="@command('doUploadFile',event=event,t='file13')"
+                                                    visible="@bind(!vm.readonly)"/>
+
+                                            <button iconSclass="@load(iconVariable.icon_delete)"
+                                                    sclass="btn-warning inner-button" label=""
+                                                    tooltiptext="删除" visible="@load(!vm.readonly)"
+                                                    onClick="@command('delUploadFile',t='file13')"
+                                                    style="padding-left:5px;font-weight:700;font-size:14px;"/>
+                                        </div>
+                                        <!--<textbox hflex="1" value="@bind(vm.dealerAdmitRequest.dealer.fileOffice)" readonly="@bind(vm.readonly)"/>-->
+
+                                        <label value="8" sclass="label-index"/>
+                                        <label value="配件库房图片"></label>
+                                        <div align="left">
+                                            <!--<label value="上传"/>-->
+                                            <a target="_blank"
+                                               href="@load(vm.getFilePath(vm.dealerAdmitRequest.dealer.filePartStoreage))"
+                                               label="查看"
+                                               visible="@bind(not empty vm.dealerAdmitRequest.dealer.filePartStoreage)"/>
+                                            <button tooltiptext="上传文件" iconSclass="@load(iconVariable.icon_search)"
+                                                    sclass="btn-warning inner-button" upload="true,maxsize=5120"
+                                                    onUpload="@command('doUploadFile',event=event,t='file14')"
+                                                    visible="@bind(!vm.readonly)"/>
+
+                                            <button iconSclass="@load(iconVariable.icon_delete)"
+                                                    sclass="btn-warning inner-button" label=""
+                                                    tooltiptext="删除" visible="@load(!vm.readonly)"
+                                                    onClick="@command('delUploadFile',t='file14')"
+                                                    style="padding-left:5px;font-weight:700;font-size:14px;"/>
+                                        </div>
+                                        <!--<textbox hflex="1" value="@bind(vm.dealerAdmitRequest.dealer.filePartStoreage)" readonly="@bind(vm.readonly)"/>-->
+                                        <label value="12" sclass="label-index"/>
+                                        <label value="维修车间图片"></label>
+                                        <div align="left">
+                                            <!--<label value="上传"/>-->
+                                            <a target="_blank"
+                                               href="@load(vm.getFilePath(vm.dealerAdmitRequest.dealer.fileWorkshop))"
+                                               label="查看"
+                                               visible="@bind(not empty vm.dealerAdmitRequest.dealer.fileWorkshop)"/>
+                                            <button tooltiptext="上传文件" iconSclass="@load(iconVariable.icon_search)"
+                                                    sclass="btn-warning inner-button" upload="true,maxsize=5120"
+                                                    onUpload="@command('doUploadFile',event=event,t='file15')"
+                                                    visible="@bind(!vm.readonly)"/>
+
+                                            <button iconSclass="@load(iconVariable.icon_delete)"
+                                                    sclass="btn-warning inner-button" label=""
+                                                    tooltiptext="删除" visible="@load(!vm.readonly)"
+                                                    onClick="@command('delUploadFile',t='file15')"
+                                                    style="padding-left:5px;font-weight:700;font-size:14px;"/>
+                                        </div>
+                                        <!--<textbox hflex="1" value="@bind(vm.dealerAdmitRequest.dealer.fileWorkshop)" readonly="@bind(vm.readonly)"/>-->
+                                        <!--<label value="地图位置"></label>-->
+                                        <!--<div align="right">-->
+                                        <!--&lt;!&ndash;<label value="上传"/>&ndash;&gt;-->
+                                        <!--<a target="_blank" href="@load(vm.getFilePath(vm.dealerAdmitRequest.dealer.fileMap))"-->
+                                        <!--label="查看" visible="@bind(not empty vm.dealerAdmitRequest.dealer.fileMap)"/>-->
+                                        <!--<button tooltiptext="上传文件" iconSclass="@load(iconVariable.icon_search)"-->
+                                        <!--sclass="btn-warning inner-button" upload="true,maxsize=5120"-->
+                                        <!--onUpload="@command('doUploadFile',event=event,t='file16')"-->
+                                        <!--disabled="@bind(vm.readonly)"/>-->
+                                        <!--</div>-->
+                                        <!--<textbox hflex="1" value="@bind(vm.dealerAdmitRequest.dealer.fileMap)" readonly="@bind(vm.readonly)"/>-->
+                                    </row>
+                                </rows>
+                            </grid>
+                        </tabpanel>
+                    </tabpanels>
+                </tabbox>
+                <label value="注意：蓝色边框的内容为必填字段！" style="color:red"/>
+            </vlayout>
+        </center>
+    </borderlayout>
+</window>

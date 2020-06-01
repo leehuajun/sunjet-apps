@@ -1,0 +1,23 @@
+@import "base";
+
+.logo-text {
+  color: $logoTextColor;
+  text-shadow: $logoTextShadow;
+}
+
+.label-form {
+  text-align: left;
+  width: 50px;
+}
+
+// label 做序号时的样式
+.label-index {
+  color: $orange;
+  font-weight: 700;
+}
+
+// label 做标准需要时的样式
+.label-require {
+  color: $green;
+  font-weight: 700;
+}

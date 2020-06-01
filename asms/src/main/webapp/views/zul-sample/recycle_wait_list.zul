@@ -1,0 +1,95 @@
+<!-- 待返回清单 列表 -->
+<borderlayout width="100%" height="100%"
+              apply="org.zkoss.bind.BindComposer"
+              viewModel="@id('vm') @init('com.sunjet.vm.asm.RecycleWaitListVM')">
+    <north sclass="c-north">
+        <vlayout>
+            <grid oddRowSclass="none" hflex="1" sclass="form-grid">
+                <columns>
+                    <column hflex="1"></column>
+                    <column hflex="2"></column>
+                    <column hflex="1"></column>
+                    <column hflex="2"></column>
+                    <column hflex="1"></column>
+                    <column hflex="2"></column>
+                </columns>
+                <rows>
+                    <row>
+                        <button label="故障件返回" iconSclass="@load(iconVariable.icon_refresh)"
+                                sclass="btn-info c-button"></button>
+                    </row>
+                    <row style="border:none;height:30px">
+                        <label value="三包服务单编号 :"/>
+                        <textbox value="" hflex="1" tabindex="1" readonly="true"/>
+                        <label value="配件名称 :"/>
+                        <textbox value="" hflex="1" tabindex="1" readonly="true"></textbox>
+                        <label value="配件件号 :"/>
+                        <textbox value="" hflex="1" tabindex="1" readonly="true"/>
+                    </row>
+                    <row style="border:none;height:30px">
+                        <label value="报修日期从"/>
+                        <datebox hflex="1" format="medium" readonly="true"/>
+                        <label value="至"/>
+                        <datebox hflex="1" format="medium" readonly="true"/>
+                        <label value="服务站编号 :"/>
+                        <textbox value="" hflex="1" tabindex="1" readonly="true"/>
+                    </row>
+                    <row style="border:none;height:30px">
+                        <label value="服务站名称"/>
+                        <textbox value="" hflex="1" tabindex="1" readonly="true"/>
+                        <label value="省份"/>
+                        <textbox value="" hflex="1" tabindex="1" readonly="true"/>
+                    </row>
+                </rows>
+            </grid>
+            <div align="center">
+                <hlayout>
+                    <button iconSclass="@load(iconVariable.icon_refresh)" sclass="btn-info c-button"
+                            label="查询"
+                            onClick="@command('refreshData')"/>
+                    <button iconSclass="@load(iconVariable.icon_refresh)" sclass="btn-info c-button"
+                            label="重置"
+                    />
+                </hlayout>
+            </div>
+        </vlayout>
+    </north>
+    <center sclass="c-center">
+        <vlayout width="100%" height="100%">
+
+            <grid hflex="true" vflex="true" sclass="list-grid">
+                <columns sizable="true">
+                    <column hflex="1" label="选择" align="left"/>
+                    <column hflex="3" label="单据编号" align="left"/>
+                    <column hflex="3" label="服务站名称" align="left"/>
+                    <column hflex="2" label="服务站编号" align="left"/>
+                    <column hflex="1" label="状态" align="left"/>
+                    <column hflex="2" label="申请日期" align="right"/>
+                    <column hflex="1" label="申请人" align="right"/>
+                    <column hflex="1" label="当前处理人" align="right"/>
+                </columns>
+                <template name="model">
+                    <row>
+                        <label value=""/>
+                        <label value=""/>
+                        <label value=""/>
+                        <label value=""/>
+                        <label value=""/>
+                        <label value=""/>
+                        <label value=""/>
+                        <label value=""/>
+                    </row>
+                </template>
+            </grid>
+            <paging
+                    pageSize="20"
+                    totalSize="120"
+                    pageIncrement="1"
+                    detailed="true"
+                    activePage="0"
+                    onPaging="@command('gotoPageNo',e=event)"
+                    style="border:0px"
+            />
+        </vlayout>
+    </center>
+</borderlayout>

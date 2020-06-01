@@ -1,0 +1,30 @@
+<!-- 用户列表 -->
+<window id="flowDefineWindow" title="流程定义" border="normal" sizable="true" draggable="false"
+        style="padding-top:0px;padding-left:0px;" position="center,right" closable="true"
+        onClose="spaceOwner.detach();"
+        viewModel="@id('vm') @init('com.sunjet.vm.flow.FlowDefineFormVM')"
+        validationMessages="@id('vmsgs')"
+        onClientInfo="@command('checkClientInfo',evt=event)">
+    <borderlayout width="100%" height="100%">
+        <north sclass="c-north">
+            <div sclass="ctoolbars">
+                <div sclass="ctoolbar">
+                    <button iconSclass="@load(iconVariable.icon_add)" sclass="btn-success c-button" label="新增"
+                            onClick="@command('editEntity',model=null)"/>
+                    <button id="btnRefreshUser" iconSclass="@load(iconVariable.icon_refresh)" sclass="btn-info c-button"
+                            label="刷新"
+                            onClick="@command('refreshData')"/>
+                </div>
+                <!-- Search input-->
+                <!--<div sclass="nav-search">-->
+                <!--<bandbox value="@bind(vm.keyword)" placeholder="输入关键字..回车搜索" sclass="input-prepend"-->
+                <!--onOK="@command('filterList')"/>-->
+                <!--</div>-->
+            </div>
+        </north>
+        <center autoscroll="true" sclass="c-center">
+
+        </center>
+    </borderlayout>
+</window>
+        <!--</window>-->

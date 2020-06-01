@@ -1,0 +1,78 @@
+<!--
+基础管理 >>车主信息表单
+-->
+<borderlayout viewModel="@id('vm') @init('com.sunjet.vm.basic.OwnerFormVM')"
+              validationMessages="@id('vmsgs')">
+    <north sclass="c-north" style="padding-top:15px;border-bottom:1px solid rgb(227,227,227);">
+        <div sclass="ctoolbars" style="padding-top:2px">
+            <div sclass="ctoolbar">
+                <button iconSclass="z-icon-plus" sclass="btn-success c-button"
+                        onClick="@global-command('saveAlterationRequestEntity',model=vm.dealerAlterRequestEntity,action=vm.action)"
+                        label="保存"></button>
+            </div>
+        </div>
+    </north>
+    <center sclass="c-center" hflex="true" vflex="true" autoscroll="true">
+        <grid oddRowSclass="none" sclass="form-grid" style="margin-top:10px">
+            <auxhead>
+                <auxheader label="基本信息" colspan="6" style="color:green"></auxheader>
+            </auxhead>
+            <columns>
+                <column width="70px"></column>
+                <column hflex="1"></column>
+                <column width="70px"></column>
+                <column hflex="1"></column>
+                <column width="70px"></column>
+                <column hflex="1"></column>
+            </columns>
+            <rows>
+                <row>
+                    <label value="VIN"/>
+                    <textbox value="" hflex="1" tabindex="1" readonly="true"/>
+                    <label value="手机"/>
+                    <textbox value="" hflex="1" tabindex="1" readonly="true"/>
+                    <label value="品种代码"/>
+                    <textbox value="" hflex="1" tabindex="1" readonly="true"/>
+                </row>
+                <row>
+                    <label value="车主姓名"/>
+                    <textbox value="" hflex="1" tabindex="1" readonly="true"/>
+                    <label value="电子邮件"/>
+                    <textbox value="" hflex="1" tabindex="1" readonly="true"/>
+                    <label value="订单编号"/>
+                    <textbox value="" hflex="" tabindex="1" readonly="true"/>
+                </row>
+                <row>
+                    <label value="购买时间"/>
+                    <timebox hflex="1" tabindex="1" readonly="true"/>
+                    <label value="车型型号"/>
+                    <textbox value="" hflex="1" tabindex="1" readonly="true"/>
+                    <label value="生产日期"/>
+                    <datebox hflex="1" tabindex="1" readonly="true"/>
+                </row>
+                <row>
+                    <label value="详细地址"/>
+                    <textbox value="" hflex="1" tabindex="1" readonly="true"/>
+                    <label value="发动机型号"/>
+                    <textbox value="" hflex="1" tabindex="1" readonly="true"/>
+                    <label value="出厂日期"/>
+                    <datebox hflex="1" tabindex="1" readonly="true"/>
+                </row>
+                <row>
+                    <label value="邮政编号"/>
+                    <textbox value="" hflex="1" tabindex="1" readonly="true"/>
+                    <label value="发动机号"/>
+                    <textbox value="" hflex="1" tabindex="1" readonly="true"/>
+                    <label value="经销商名称"/>
+                    <datebox hflex="1" tabindex="1" readonly="true"/>
+                </row>
+                <row>
+                    <label value="固定电话"/>
+                    <textbox value="" hflex="1" tabindex="1" readonly="true"/>
+                    <label value="VSN"/>
+                    <textbox value="" hflex="1" tabindex="1" readonly="true"/>
+                </row>
+            </rows>
+        </grid>
+    </center>
+</borderlayout>

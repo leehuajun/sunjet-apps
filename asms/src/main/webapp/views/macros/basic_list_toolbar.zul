@@ -1,0 +1,14 @@
+<div sclass="ctoolbars">
+    <div sclass="ctoolbar">
+        <button iconSclass="@load(iconVariable.icon_add)" sclass="btn-success c-button" label="新增"
+                onClick="@command('openDialog',entity=null,url=vm.formUrl)" visible="@load(vm.enableAdd)"/>
+    </div>
+    <div sclass="ctoolbar" style="float:right">
+        <button iconSclass="@load(iconVariable.icon_refresh)" sclass="btn-info c-button"
+                label="查询"
+                onClick="@command('filterList')"></button>
+        <button iconSclass="@load(iconVariable.icon_refresh)" sclass="btn-info c-button"
+                label="重置"
+                onClick="@command('reset')"></button>
+    </div>
+</div>

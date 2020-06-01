@@ -1,0 +1,11 @@
+<hlayout>
+    <button iconSclass="@load(iconVariable.icon_edit)"
+            sclass="btn-success inner-button"
+            label="" tooltiptext="修改"
+            onClick="@command('openDialog',entity=each.data,url=vm.formUrl)"
+            style="padding-left:5px;font-weight:700;font-size:14px;"/>
+    <button iconSclass="@load(iconVariable.icon_delete)"
+            sclass="btn-warning inner-button" label="" tooltiptext="删除"
+            onClick="@command('deleteEntity',model=each.data)"
+            style="padding-left:5px;font-weight:700;font-size:14px;"/>
+</hlayout>

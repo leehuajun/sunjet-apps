@@ -1,0 +1,71 @@
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<zk>
+    <window width="100%" apply="org.zkoss.bind.BindComposer" vflex="true" height="100%"
+            viewModel="@id('vm') @init('com.kjlink.uaas.ctrl.ParamTreeCtrl')" validationMessages="@id('vmsgs')">
+        <hlayout width="100%" vflex="true" height="100%" hflex="true">
+            <hbox width="50%" height="100%" hflex="true" vflex="true">
+                <groupbox mold="3d" closable="false" height="100%" width="100%" vflex="true" hflex="true">
+                    <caption label="树型参数">
+                        <textbox height="18px" value="@bind(vm.paramNameQuery)"/>
+                        <button label="搜索" onClick="@command('searchParamTree')"/>
+                        <button label="新建一级参数" onClick="@command('newParamLevel1')"/>
+                        <button id="btn_newChildParam" label="新建子参数" onClick="@command('newChildParam')"/>
+                    </caption>
+                    <hlayout height="90%" vflex="true">
+                        <tree id="paramTree" vflex="true" hflex="true" height="100%" width="100%"
+                              model="@bind(vm.paramTreeModel)" multiple="false" checkmark="false" zclass="z-tree">
+                            <treecols>
+                                <treecol hflex="3" label="参数值"/>
+                                <treecol hflex="1" label="序号"/>
+                            </treecols>
+                            <template name="model">
+                                <treeitem open="@load(each.data.open)" selected="@bind(each.data.selected)">
+                                    <treerow
+                                            onClick="@command('selectParamNode',paramId=each.data.id)">
+                                        <treecell label="${each.data.text}"/>
+                                        <treecell label="${each.data.sortNo}"/>
+                                    </treerow>
+                                </treeitem>
+                            </template>
+                        </tree>
+                    </hlayout>
+                </groupbox>
+            </hbox>
+            <vbox width="50%" height="100%" vflex="true" hflex="true">
+                <groupbox width="100%" hflex="true" height="230px" closable="false" mold="3d"
+                          form="@id('fx') @load(vm.paramForm) @save(vm.paramForm,before='submit') @validator(vm.validator)">
+                    <caption id="paramFormCaption" label="参数信息"/>
+                    <textbox value="@bind(fx.id)" visible="false"/>
+                    <grid width="100%" hflex="true">
+                        <columns>
+                            <column width="80px" align="right"></column>
+                            <column></column>
+                        </columns>
+                        <rows>
+                            <row>
+                                参数值：
+                                <vlayout>
+                                    <textbox value="@bind(fx.text)" width="98%"/>
+                                    <label value="@load(vmsgs['text'])" style="color:red"/>
+                                </vlayout>
+                            </row>
+                            <row>
+                                序号：
+                                <vlayout>
+                                    <textbox value="@bind(fx.sortNo)" width="98%"/>
+                                </vlayout>
+                            </row>
+                            <row spans="2">
+                                <hlayout width="100%">
+                                    <button id="btn_submit" label="保存" onClick="@command('submit')"/>
+                                    <button id="btn_reset" label="删除" onClick="@command('delete')"
+                                            visible="@load(not empty fx.id)"/>
+                                </hlayout>
+                            </row>
+                        </rows>
+                    </grid>
+                </groupbox>
+            </vbox>
+        </hlayout>
+    </window>
+</zk>

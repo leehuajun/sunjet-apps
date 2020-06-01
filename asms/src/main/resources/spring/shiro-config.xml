@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+          http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 自定义form认证过虑器 -->
+    <!-- 基于Form表单的身份验证过滤器，不配置将也会注册此过虑器，表单中的用户账号、密码及loginurl将采用默认值，建议配置 -->
+    <bean id="formAuthenticationFilter" class="org.apache.shiro.web.filter.authc.FormAuthenticationFilter">
+        <!-- 表单中账号的input名称 -->
+        <property name="usernameParam" value="logId"/>
+        <!-- 表单中密码的input名称 -->
+        <property name="passwordParam" value="password"/>
+        <!-- 表单中rememberMe的checkbox名称 -->
+        <property name="rememberMeParam" value="rememberMe"/>
+        <property name="failureKeyAttribute" value="loginFailure"/>
+    </bean>
+
+    <!-- web.xml中shiro的filter对应的bean -->
+    <!-- Shiro 的Web过滤器 -->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager"/>
+        <!-- loginUrl认证提交地址，如果没有认证将会请求此地址进行认证，请求此地址将由formAuthenticationFilter进行表单认证 -->
+        <property name="loginUrl" value="/login.zul"/>
+        <!-- 认证成功统一跳转到/index.do，建议不配置，shiro认证成功自动到上一个请求路径 -->
+        <property name="successUrl" value="/index.zul"/>
+        <!-- 通过unauthorizedUrl指定没有权限操作时跳转页面-->
+        <property name="unauthorizedUrl" value="/refuse.zul"/>
+        <!-- 自定义filter配置 -->
+        <property name="filters">
+            <map>
+                <!-- 将自定义的 FormAuthenticationFilter 注入 shiroFilter 中-->
+                <entry key="authc" value-ref="formAuthenticationFilter"/>
+            </map>
+        </property>
+
+        <!-- 过虑器链定义，从上向下顺序执行，一般将/**放在最下边 -->
+        <property name="filterChainDefinitions">
+            <value>
+                <!-- 对静态资源设置匿名访问 -->
+                /*.do = anon
+                /zkau/** = anon
+                /resource/** = anon
+                /images/** = anon
+                /style/** = anon
+                /less/** = anon
+                /css/** = anon
+                /bootstrap/** = anon
+                /js/** = anon
+                /fonts/** = anon
+                /assets/** = anon
+                <!--/login.zul = anon-->
+
+                <!-- 验证码，可匿名访问(取消验证码) -->
+                <!-- /validatecode.jsp = anon-->
+
+                <!-- 请求 logout.action地址，shiro去清除session-->
+                /logout.zul = logout
+                <!--商品查询需要商品查询权限 ，取消url拦截配置，使用注解授权方式 -->
+                <!-- /items/queryItems.action = perms[item:query]
+                /items/editItems.action = perms[item:edit] -->
+                <!-- 配置记住我或认证通过可以访问的地址 -->
+                <!-- /** = authc 所有url都必须认证通过才可以访问-->
+                /** = authc
+                <!-- /** = anon所有url都可以匿名访问 -->
+
+                <!--/index.zul = anon-->
+            </value>
+        </property>
+    </bean>
+
+    <!-- 凭证匹配器 CustomCredentialsMatcher-->
+    <!--<bean id="credentialsMatcher"-->
+    <!--class="com.ws.system.permission.CustomCredentialsMatcher>-->
+    <!--</bean>-->
+    <bean id="credentialsMatcher"
+          class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+        <property name="hashAlgorithmName" value="md5"/>
+        <property name="hashIterations" value="1"/>
+    </bean>
+
+    <!-- realm -->
+    <bean id="customRealm" class="com.sunjet.utils.permission.CommonRealm">
+        <!-- 将凭证匹配器设置到realm中，realm按照凭证匹配器的要求进行散列 -->
+        <property name="credentialsMatcher" ref="credentialsMatcher"/>
+        <property name="authenticationCacheName" value="shiroAuthorizationCache"/>
+    </bean>
+
+    <!-- 缓存管理器 -->
+    <!--<bean id="cacheManager" class="com.wd.utils.cache.EhCacheManager">-->
+    <!--&lt;!&ndash;<bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">&ndash;&gt;-->
+    <!--&lt;!&ndash;<property name="cacheManagerConfigFile" value="classpath:ehcache.xml"/>&ndash;&gt;-->
+    <!--&lt;!&ndash;<property name="cacheManagerConfigFile" value="classpath:shiro-ehcache.xml"/>&ndash;&gt;-->
+    <!--</bean>-->
+    <!-- 缓存管理器, 整合spring的缓存配置后,不需要单独的ehcache.xml文件,相当于使用统一的 EhCacheManager -->
+    <!-- shiro对ehcache的缓存管理直接使用spring的缓存工厂 -->
+    <bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+        <property name="cacheManager" ref="ehcacheManagerFactory"/>
+    </bean>
+
+    <bean id="sessionDAO" class="org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO">
+        <property name="activeSessionsCacheName" value="shiro-activeSessionCache"/>
+    </bean>
+    <bean id="sessionValidationScheduler"
+          class="org.apache.shiro.session.mgt.ExecutorServiceSessionValidationScheduler">
+        <property name="interval" value="5000"/>
+    </bean>
+    <!-- 会话管理器 -->
+    <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+        <!-- session的失效时长，单位毫秒 设置为1小时-->
+        <property name="globalSessionTimeout" value="3600000"/>
+        <!-- 删除失效的session -->
+        <property name="deleteInvalidSessions" value="true"/>
+        <!--<property name="sessionDAO" ref="sessionDAO"/>-->
+        <property name="sessionValidationScheduler" ref="sessionValidationScheduler"/>
+    </bean>
+
+    <!-- securityManager安全管理器 -->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="customRealm"/>
+        <!-- 注入缓存管理器 -->
+        <property name="cacheManager" ref="cacheManager"/>
+        <property name="sessionMode" value="native"/>
+        <!-- 注入session管理器 -->
+        <property name="sessionManager" ref="sessionManager"/>
+    </bean>
+</beans>

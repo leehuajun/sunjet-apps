@@ -1,0 +1,37 @@
+<div sclass="ctoolbars">
+    <div sclass="ctoolbar">
+        <button onClick="@command('handleTaskByEntity',entity=null,formUrl=vm.formUrl)"
+                iconSclass="z-icon-plus" sclass="btn-success" label="新增" visible="@load(vm.enableAdd)"></button>
+        <button onClick="@command('createRecycleDoc')"
+                iconSclass="z-icon-plus" sclass="btn-success" label="创建故障件返回单"
+                visible="@load(vm.enableAddRecycleDoc)"></button>
+        <button onClick="@command('createSupplyAllocation')"
+                iconSclass="z-icon-plus" sclass="btn-success" label="保存分配信息"
+                visible="@load(vm.enableSaveAllocation)"></button>
+        <button onClick="@command('createSupply')"
+                iconSclass="z-icon-plus" sclass="btn-success" label="创建调拨供货单"
+                visible="@load(vm.enableSaveSupply)"></button>
+        <button onClick="@command('createWarrantSettlement')"
+                iconSclass="z-icon-plus" sclass="btn-success" label="创建服务结算单"
+                visible="@load(vm.enableWarrantSettlement)"></button>
+        <button onClick="@command('createFreightSettlement')"
+                iconSclass="z-icon-plus" sclass="btn-success" label="创建运费结算单"
+                visible="@load(vm.enableFreightSettlement)"></button>
+        <button onClick="@command('createPartSettlement')"
+                iconSclass="z-icon-plus" sclass="btn-success" label="创建配件结算单"
+                visible="@load(vm.enablePartSettlement)"></button>
+        <button iconSclass="z-icon-refresh" sclass="btn-info" label="导出" visible="@load(vm.enableExport)"
+                onClick="@command('exportExcel')">
+            <!--<attribute name="onClick">-->
+            <!--Filedownload.save("/uploads/fileName", null);-->
+            <!--</attribute>-->
+        </button>
+    </div>
+
+    <div sclass="ctoolbar" style="float:right">
+        <button label="查询" sclass="btn-info c-button" onClick="@command('search')"
+                visible="@load(vm.enableSearch)"></button>
+        <button label="重置" sclass="btn-info c-button" onClick="@command('reset')"
+                visible="@load(vm.enableReset)"></button>
+    </div>
+</div>

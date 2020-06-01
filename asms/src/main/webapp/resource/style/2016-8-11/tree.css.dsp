@@ -1,0 +1,304 @@
+.z-tree {
+    border: 1px solid #cccccc;
+    overflow: hidden;
+    zoom: 1;
+}
+
+.z-tree-header {
+    width: 100%;
+    background: #ffffff;
+    position: relative;
+    overflow: hidden;
+}
+
+.z-tree-header table {
+    border-spacing: 0;
+}
+
+.z-tree-header table th,
+.z-tree-header table td {
+    background-clip: padding-box;
+    padding: 0;
+}
+
+.z-tree-header table th {
+    text-align: inherit;
+}
+
+.z-tree-header-border {
+    border-bottom: 1px solid #dddddd;
+    margin-top: -1px;
+    position: relative;
+}
+
+.z-tree-body {
+    position: relative;
+    overflow: hidden;
+}
+
+.z-tree-body table {
+    border-spacing: 0;
+}
+
+.z-tree-body table th,
+.z-tree-body table td {
+    background-clip: padding-box;
+    padding: 0;
+}
+
+.z-tree-body table th {
+    text-align: inherit;
+}
+
+.z-tree-emptybody td {
+    font-family: Arial, Sans-serif;
+    font-size: 12px;
+    font-weight: normal;
+    font-style: normal;
+    color: #333333;
+    font-style: italic;
+    text-align: center;
+    height: 1px;
+}
+
+.z-tree-footer {
+    border-top: 1px solid #cccccc;
+    background: #f5f5f5;
+    overflow: hidden;
+}
+
+.z-tree-footer table {
+    border-spacing: 0;
+}
+
+.z-tree-footer table th,
+.z-tree-footer table td {
+    background-clip: padding-box;
+    padding: 0;
+}
+
+.z-tree-footer table th {
+    text-align: inherit;
+}
+
+.z-tree-icon,
+.z-tree-line {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+    vertical-align: middle;
+}
+
+.z-tree-icon {
+    font-size: 14px;
+    color: #666666;
+    text-align: center;
+    /*text-align: left;*/
+    cursor: pointer;
+    /*visibility: hidden;*/
+
+}
+
+.z-tree-icon:hover {
+    color: #333333;
+}
+
+/* .z-treecell-text{*/
+/*color: rgb(16, 110, 171);*/
+/*}*/
+
+.z-treecols th:first-child {
+    border-left: none;
+}
+
+.z-treecols th:last-child {
+    border-right: none;
+}
+
+.z-treecols th:first-child .z-treecols-border {
+    border-left: 1px solid #dddddd;
+}
+
+.z-treecols-bar {
+    border-left: 1px solid #dddddd;
+    border-bottom: 1px solid #dddddd;
+}
+
+.z-treecol {
+    border-left: 1px solid #dddddd;
+    border-bottom: 1px solid #dddddd;
+    padding: 0;
+    background: #ffffff;
+    background-clip: padding-box;
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.z-treecol-sort {
+    cursor: pointer;
+}
+
+.z-treecol-sort:hover {
+    background: #f5f5f5;
+}
+
+.z-treecol-sort .z-treecol-sorticon {
+    color: #666666;
+    position: absolute;
+    top: -7px;
+    left: 50%;
+}
+
+.z-treecol-sizing,
+.z-treecol-sizing .z-treecol-content {
+    cursor: e-resize;
+}
+
+.z-treerow {
+    background: #ffffff;
+}
+
+.z-treerow .z-treecell {
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.z-treerow:hover > .z-treecell {
+    background: rgb(101, 139, 171);
+    color: #f5f5f5;
+    background-clip: padding-box;
+    position: relative;
+}
+
+.z-treerow:hover > .z-treecell > .z-treecell-content {
+    background: rgb(101, 139, 171);
+    color: #f5f5f5;
+}
+
+.z-treerow-checkable {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 1px solid #adadad;
+    background: #f5f5f5;
+    vertical-align: middle;
+}
+
+.z-treerow-checkable .z-treerow-radio {
+    /*${t:borderRadius('8px') };*/
+}
+
+.z-treerow-checkable .z-treerow-icon {
+    display: none;
+    cursor: default;
+}
+
+.z-treerow.z-treerow-selected > .z-treecell {
+    background: rgb(101, 139, 171);
+    background-clip: padding-box;
+    position: relative;
+}
+
+.z-treerow.z-treerow-selected > .z-treecell > .z-treecell-content {
+    color: #FEFEFE;
+}
+
+.z-treerow.z-treerow-selected:hover > .z-treecell {
+    background: rgb(101, 139, 171);
+    /*border-right: 2px solid green;*/
+    color: #FEFEFE;
+}
+
+.z-treerow.z-treerow-selected:hover > .z-treecell > .z-treecell-content {
+    color: #FEFEFE;
+}
+
+.z-treerow-selected > .z-treecell > .z-treecell-content > .z-treerow-checkable .z-treerow-icon {
+    color: #428bca;
+    display: block;
+    padding-left: 1px;
+    line-height: 14px;
+}
+
+.z-treerow-selected > .z-treecell > .z-treecell-content > .z-treerow-checkable .z-treerow-icon .z-icon-radio {
+    width: 8px;
+    height: 8px;
+    margin: 3px;
+    padding: 0;
+    background: #428bca;
+}
+
+.z-treerow.z-treerow-disabled * {
+    color: #333333 !important;
+    cursor: default !important;
+}
+
+.z-treerow.z-treerow-disabled:hover > .z-treecell {
+    background: none;
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+    position: relative;
+}
+
+.z-treecol-content,
+.z-treecell-content,
+.z-treefooter-content {
+    font-family: Arial, Sans-serif;
+    font-size: 12px;
+    font-weight: normal;
+    font-style: normal;
+    color: #555555;
+    padding: 4px 5px;
+    line-height: 20px;
+    overflow: hidden;
+}
+
+.z-treecol-content {
+    font-weight: bold;
+    padding: 4px 5px 3px;
+    position: relative;
+    /*position:absolute;*/
+}
+
+.z-treecell-content {
+    padding: 4px 2px;
+    line-height: 14px;
+}
+
+.z-treecell-text {
+    vertical-align: middle;
+}
+
+.z-tree-paging-top {
+    border-bottom: 1px solid #dddddd;
+    overflow: hidden;
+    width: 100%;
+}
+
+.z-tree-paging-bottom {
+    border-top: 1px solid #dddddd;
+    overflow: hidden;
+    width: 100%;
+}
+
+.z-tree-autopaging .z-treecell-content {
+    height: 20px;
+    overflow: hidden;
+}
+
+.z-tree-header table th {
+    background-color: rgb(227, 227, 227);
+}
+
+.sidebar .z-tree-icon {
+    visibility: hidden !important;
+}
+
+.sidebar .z-treerow.z-treerow-selected > .z-treecell div {
+    visibility: visible !important;;
+}
+
+.sidebar .z-treerow:hover > .z-treecell div {
+    visibility: visible !important;;
+}

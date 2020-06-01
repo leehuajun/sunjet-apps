@@ -1,0 +1,171 @@
+<!-- 页头导航栏 -->
+<div sclass="navbar" width="100%;height:45px">
+    <!-- Brand Logo -->
+    <image src="@load(vm.app_logo)" sclass="navbar-logo"/>
+    <label value="@load(vm.app_name)" sclass="pull-left navbar-brand"/>
+    <!-- Navbar -->
+    <hlayout sclass="nav-user pull-right" spacing="0">
+        <a id="ahome" iconSclass="z-icon-home" sclass="" onClick="@command('showIndex')">
+            <label value="首页"/>
+        </a>
+        <!--<a id="avehicle"  sclass="" onClick="@command('showVehicleMaintainance')">-->
+        <!--<label value="显示车辆维修信息"/>-->
+        <!--</a>-->
+        <!--<a id="atest"  sclass="" onClick="@command('testHourPrice')">-->
+        <!--<label value="测试工时单价"/>-->
+        <!--</a>-->
+        <!--<label value="@load(vm.currentDate)" style="align:absmiddle"/>-->
+        <!--<a id="amodule" iconSclass="z-icon-th-list" popup="modulepp, position=after_end, type=toggle" sclass="">-->
+        <!--<label value="模块"/>-->
+        <!--<label value="${vm.moduleEntityList.size()}" sclass="badge"/>-->
+        <!--<span style="margin-left:4px" class="z-icon-caret-down"/>-->
+        <!--</a>-->
+        <!--<a id="atask" iconSclass="z-icon-tasks" popup="taskpp, position=after_end, type=auto" sclass="">-->
+        <a id="atask" iconSclass="z-icon-tasks" href="#" onClick="@command('enterTaskList')" sclass="">
+            <label value="待办任务"/>
+            <label value="@load(vm.tasks.size())" sclass="badge"/>
+        </a>
+        <!--<a id="amessage" iconSclass="z-icon-tasks" href="#" onClick="@command('enterMessageList')" sclass="">-->
+        <!--<label value="消息提醒"/>-->
+        <!--<label value="@load(vm.messages.size())" sclass="badge"/>-->
+        <!--</a>-->
+        <!--<a id="anoti" iconSclass="z-icon-bell" popup="notipp, position=after_end, type=toggle" sclass="">-->
+        <!--<label value="提示"/>-->
+        <!--<label value="8" sclass="badge"/>-->
+        <!--</a>-->
+        <a id="amsg" iconSclass="z-icon-envelope" onClick="@command('enterNoticeList')" sclass="">
+            <!--<a id="amsg" iconSclass="z-icon-envelope" href="#" onClick="@command('enterNoticeList')" sclass="">-->
+            <label value="公告"/>
+            <label value="@load(vm.notices.size())" sclass="badge"/>
+        </a>
+        <a id="auser" iconSclass="z-icon-user" popup="userpp, position=after_end, type=toggle" sclass="">
+            <label value="${vm.activeUser.username}"/>
+            <span style="margin-left:4px" class="z-icon-caret-down"/>
+        </a>
+    </hlayout>
+    <!-- Popups of navbar -->
+    <popup id="userpp" sclass="menu" width="150px" onClick="self.setVisible(false)">
+        <a label="个人管理" sclass="header" iconSclass="z-icon-user" tooltip="当前用户"/>
+        <vlayout spacing="0">
+            <!--<a iconSclass="btn btn-xs no-hover btn-primary z-icon-user" href="#">-->
+            <!--<label value="个人设置"></label>-->
+            <!--<label value="+12" class="badge badge-info pull-right"/>-->
+            <!--</a>-->
+            <a iconSclass="btn btn-xs no-hover btn-primary z-icon-user" href="#" onClick="@command('showDealerInfo')"
+               visible="@load(vm.userType eq 'dealer')">
+                <label value="当前服务站信息"></label>
+                <!--<label value="+12" class="badge badge-info pull-right"/>-->
+            </a>
+            <a iconSclass="btn btn-xs no-hover btn-primary z-icon-user" href="#" onClick="@command('showAgencyInfo')"
+               visible="@load(vm.userType eq 'agency')">
+                <label value="当前合作商信息"></label>
+                <!--<label value="+12" class="badge badge-info pull-right"/>-->
+            </a>
+            <a iconSclass="btn btn-xs no-hover btn-primary z-icon-user" href="#" onClick="@command('changePassword')">
+                <label value="修改密码"></label>
+                <!--<label value="+12" class="badge badge-info pull-right"/>-->
+            </a>
+            <a iconSclass="btn btn-xs no-hover btn-primary z-icon-user" href="#" onClick="@command('logout')">
+                <label value="注销"></label>
+                <!--<label value="+12" class="badge badge-info pull-right"/>-->
+            </a>
+            <a label="个人信息" href="#">
+                <span class="z-icon-arrow-right"/>
+            </a>
+        </vlayout>
+    </popup>
+    <!--<popup id="modulepp" sclass="menu" width="240px">-->
+    <!--<a label="${vm.moduleEntityList.size()}模块" sclass="header" iconSclass="z-icon-tasks" tooltip="模块列表"/>-->
+    <!--<vlayout spacing="0">-->
+    <!--<a iconSclass="btn btn-xs no-hover btn-primary z-icon-user" href="#"-->
+    <!--forEach="${vm.moduleEntityList}"-->
+    <!--id="${each.objId}"-->
+    <!--onClick="@command('changeModule',moduleId=self.id)">-->
+    <!--<label value="${each.name}"></label>-->
+    <!--<label value="+12" class="badge badge-info pull-right"/>-->
+    <!--</a>-->
+    <!--<a label="查看所有模块" href="#">-->
+    <!--<span class="z-icon-arrow-right"/>-->
+    <!--</a>-->
+    <!--</vlayout>-->
+    <!--</popup>-->
+
+    <popup id="taskpp" sclass="menu" width="300px" onClick="self.close()">
+        <a label="待办任务列表" sclass="header" iconSclass="z-icon-exclamation-triangle"/>
+        <vlayout spacing="0">
+            <grid model="@load(vm.showTasks)" sclass="list-grid" style="border:none" emptyMessage="${vm.emptyMessage}"
+                  oddRowSclass="none">
+                <columns>
+                    <!--<column width="30px" align="left"/>-->
+                    <column hflex="1" align="left"/>
+                    <column hflex="1" align="right"/>
+                </columns>
+                <template name="model">
+                    <row onClick="@command('handleTaskByTask',task=each)" height="30px">
+                        <!--<a iconSclass="z-icon-arrow-circle-o-right"/>-->
+                        <cell align="left" hflex="1" style="padding-left:2px">
+                            <label value="${vm.mapProcessDefinition.get(each.processDefinitionId).name}"
+                                   style="color:rgb(78,116,149);font-weight:700"/>
+                        </cell>
+                        <cell align="right" hflex="1" style="padding-right:2px">
+                            <label value="${each.createTime}" class="pull-right"
+                                   style="color:rgb(200,200,200)"/>
+                        </cell>
+                    </row>
+                </template>
+            </grid>
+            <!--<a href="#" onClick="@command('taskClicked',task=self.getAttribute(&quot;obj&quot;))" forEach="${vm.tasks}">-->
+            <!--<label value="${vm.mapProcessDefinition.get(each.processDefinitionId).name}"></label>-->
+            <!--<label value="${each.createTime}" class="pull-right"/>-->
+            <!--<custom-attributes obj="${each}"/>-->
+            <!--</a>-->
+
+            <!--<button sclass="btn-primary"-->
+            <!--label="${each}"-->
+            <!--onClick="@command('commit',outcome=self.getAttribute(&quot;outcome&quot;))"-->
+            <!--forEach="${vm.outcomes}">-->
+            <!--<custom-attributes outcome="${each}"/>-->
+            <!--</button>-->
+            <!--<a iconSclass="btn btn-xs no-hover btn-primary z-icon-user" href="#">-->
+            <!--<label>Bob just signed up as an editor ...</label>-->
+            <!--</a>-->
+            <!--<a iconSclass="btn btn-xs no-hover btn-success z-icon-shopping-cart" href="#">-->
+            <!--<label>New Orders</label>-->
+            <!--<label value="+8" class="badge badge-info pull-right"/>-->
+            <!--</a>-->
+            <!--<a iconSclass="btn btn-xs no-hover btn-info z-icon-twitter" href="#">-->
+            <!--<label>Followers</label>-->
+            <!--<label value="+11" class="badge badge-info pull-right"/>-->
+            <!--</a>-->
+            <a label="进入待办任务列表" href="#" onClick="@command('enterTaskList')">
+                <span class="z-icon-arrow-right"/>
+            </a>
+        </vlayout>
+    </popup>
+    <popup id="noticepp" sclass="menu" width="300px">
+        <a label="公告列表" sclass="header" iconSclass="z-icon-exclamation-triangle"/>
+        <vlayout spacing="0">
+            <!--<a iconSclass="btn btn-xs no-hover btn-pink z-icon-comment" href="#">-->
+            <!--<label>New Comments</label>-->
+            <!--<label value="+12" class="badge badge-info pull-right"/>-->
+            <!--</a>-->
+            <grid model="@load(vm.showNotices)" sclass="list-grid" style="border:none" emptyMessage="${vm.emptyMessage}"
+                  oddRowSclass="none">
+                <columns>
+                    <!--<column width="30px" align="left"/>-->
+                    <column hflex="1" align="left"/>
+                </columns>
+                <template name="model">
+                    <row onClick="@command('noticeClicked',notice=each)" height="30px">
+                        <!--<a iconSclass="z-icon-arrow-circle-o-right"/>-->
+                        <label value="@load(each.title)"
+                               style="color:rgb(78,116,149);font-weight:700"/>
+                    </row>
+                </template>
+            </grid>
+            <a label="进入公告列表" href="#" onClick="@command('enterNoticeList')">
+                <span class="z-icon-arrow-right"/>
+            </a>
+        </vlayout>
+    </popup>
+</div>

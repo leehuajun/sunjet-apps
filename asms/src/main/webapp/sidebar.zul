@@ -1,0 +1,27 @@
+<!-- 页面左边导航栏 -->
+<vlayout style="background:rgb(243,243,243);height:100%;overflow-y:auto;border:0px solid black;">
+    <!--"z-tree","z-dottree","z-filetree","z-vfiletree"-->
+    <tree id="menuTree"
+          model="@load(vm.treeModel)"
+          zclass="z-tree"
+          sclass="sidebar"
+          style="background:rgb(242, 242, 242);height:100%;overflow-y:auto;border:0px solid black;">
+        <template name="model">
+            <treeitem onClick="@command('openTab',e=event)" open="${each.data.open}">
+                <treerow height="${each.childCount>0?'35px':'30px'}"
+                         style="border-bottom:1px solid rgb(248,248,248);border-top: 1px solid rgb(248, 248, 248);background:${each.data.background}">
+                    <!--<treecell label="${each.data.name}" style="border-left:3px solid black">-->
+                    <!--<treecell label="${each.data.name}" style="${'font-size:'.concat(each.childCount>0?'13px':'12px')}" >-->
+                    <treecell label="${each.data.name}">
+                        <!--<div style="float:left;font-size:16px;visibility:visible;width:10px;background-color:black"></div>-->
+                        <label value="${each.childCount}" class="badge badge-grey pull-right"
+                               style="${'visibility:'.concat(each.childCount>0?'visible':'hidden')}"/>
+                        <!--<div sclass="z-icon-caret-right" style="float:left;font-size:16px;visibility:hidden"></div>-->
+                    </treecell>
+                    <!--image="${each.data.icon eq ''?'':'images/menu/'.concat(vm.getThemeName()).concat('/').concat(each.data.icon)}"-->
+                    <!--/>-->
+                </treerow>
+            </treeitem>
+        </template>
+    </tree>
+</vlayout>

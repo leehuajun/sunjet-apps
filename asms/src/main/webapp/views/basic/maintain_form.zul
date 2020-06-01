@@ -1,0 +1,47 @@
+<!--
+基础管理 >>维修项目及定时金额表单
+-->
+<window title="维修项目编辑" border="normal" width="500px" height="350px"
+        sizable="false"
+        style="margin:20px;padding-top:0px;padding-left:0px;" position="@load(vm.window_position)" closable="true"
+        onClose="spaceOwner.detach();"
+        viewModel="@id('vm') @init('com.sunjet.vm.basic.MaintainFormVM')"
+        validationMessages="@id('vmsgs')">
+    <borderlayout>
+        <north sclass="c-north" style="border-bottom:1px solid #cccccc;padding-top:10px;padding-bottom:10px">
+            <div sclass="ctoolbars" style="padding-top:2px">
+                <div sclass="ctoolbar">
+                    <button iconSclass="@load(iconVariable.icon_refresh)" sclass="btn-info c-button"
+                            label="保存"
+                            onClick="@command('submit')"/>
+                </div>
+            </div>
+        </north>
+        <center sclass="c-center" hflex="true" vflex="true" autoscroll="true">
+            <grid oddRowSclass="none" sclass="form-grid" style="margin-top:10px">
+                <columns>
+                    <column width="60px"></column>
+                    <column hflex="1"></column>
+                </columns>
+                <rows>
+                    <row>
+                        <label value="项目编号"/>
+                        <textbox value="@bind(vm.maintain.code)" hflex="1" tabindex="1"/>
+                    </row>
+                    <row>
+                        <label value="项目名称"/>
+                        <textbox value="@bind(vm.maintain.name)" hflex="1" tabindex="1"/>
+                    </row>
+                    <row>
+                        <label value="工时定额"/>
+                        <textbox value="@bind(vm.maintain.workTime)" hflex="1" tabindex="1"/>
+                    </row>
+                    <row>
+                        <label value="备注"/>
+                        <textbox value="@bind(vm.maintain.comment)" hflex="1" tabindex="1"/>
+                    </row>
+                </rows>
+            </grid>
+        </center>
+    </borderlayout>
+</window>

@@ -1,0 +1,103 @@
+<borderlayout width="100%" height="100%"
+              apply="org.zkoss.bind.BindComposer"
+              viewModel="@id('vm') @init('com.sunjet.vm.permission.UserVM')"
+              style="background-color:rgb(255,255,255);padding:0px;">
+    <north>
+        <hbox width="100%">
+            <div hflex="true" height="100%" style="margin: 0px 0px;padding:0px 0px">
+                <toolbar style="border:0px solid black;background-color:rgb(255,255,255);">
+                    <toolbarbutton label="新增" image="images/toolbar/${vm.getThemeName()}/add.png"
+                                   onClick="alert(self.label)"/>
+                    <toolbarbutton label="删除" image="images/toolbar/${vm.getThemeName()}/delete.png"
+                                   onClick="alert(self.label)"/>
+                    <toolbarbutton label="修改" image="images/toolbar/${vm.getThemeName()}/edit.png"
+                                   onClick="alert(self.label)"/>
+                    <toolbarbutton label="帮助" image="images/toolbar/${vm.getThemeName()}/help.png"
+                                   onClick="alert(self.label)"/>
+                    <toolbarbutton label="导出" image="images/toolbar/${vm.getThemeName()}/excel.png"
+                                   onClick="alert(self.label)"/>
+                    <toolbarbutton label="审核" image="images/toolbar/${vm.getThemeName()}/audit.png"
+                                   onClick="alert(self.label)"/>
+                    <!--<toolbarbutton disabled="true"/>-->
+                    <!--<label value="快速查询"/>-->
+                    <textbox value="@bind(vm.keyword)" placeholder="输入关键字,按Enter键" onOK="@command('filterList')"/>
+                </toolbar>
+            </div>
+            <div width="200px" align="right" height="100%">
+                <hbox align="absmiddle">
+                    <textbox value="@bind(vm.keyword)" placeholder="输入关键字,按Enter键" onOK="@command('filterList')"/>
+                    <button image="images/toolbar/${vm.getThemeName()}/search.png" onClick="@command('filterList')"/>
+                </hbox>
+            </div>
+
+        </hbox>
+
+    </north>
+    <center border="none" autoscroll="true">
+        <vlayout width="100%" height="100%">
+            <grid hflex="true" vflex="true"
+                  model="@bind(vm.resultDTO.pageContent)"
+                  style="border-left:0px;border-right:0px;border-bottom:0px">
+                <!--                <auxhead>
+                                    <auxheader colspan="4">
+                                        <hlayout>
+                                            <label value="员工信息"/>
+                                            <separator spacing="20px"/>
+                                            <textbox value="@bind(vm.keyword)" placeholder="请输入关键字"/>
+                                            <button image="/images/icon/search.png" onClick='alert("search")'/>
+                                        </hlayout>
+                                    </auxheader>
+                                </auxhead>-->
+                <columns sizable="true">
+                    <column hflex="2" label="标识"/>
+                    <column hflex="1" label="登录名"/>
+                    <column hflex="1" label="姓名" align="center"/>
+                    <column hflex="1" label="性别" align="center"/>
+                </columns>
+                <template name="model">
+                    <row>
+                        <label value="${each.objId}"/>
+                        <label value="${each.logId}"/>
+                        <label value="${each.name}"/>
+                        <label value="${each.sex}"/>
+                    </row>
+                </template>
+
+                <!--                <foot style="padding:0px 0px;" height="18px">
+                                    <footer span="4" style="margin:0px 0px;padding:0px 0px;height:18px">
+                                        <label value="共有用户数:"/>
+                                        <label value="@load(vm.userVoList.size())"/>
+                                    </footer>
+                                </foot>-->
+            </grid>
+            <paging
+                    pageSize="@bind(vm.resultDTO.pageSize)"
+                    totalSize="@bind(vm.resultDTO.total)"
+                    pageIncrement="1"
+                    detailed="true"
+                    activePage="@bind(vm.currentPageNo)"
+                    onPaging="@command('gotoPageNo',e=event)"
+                    style="border-top:0px"
+            />
+            <!--<label value="测试一下页脚"/>-->
+            <!--            <listbox hflex="1" vflex="true" model="@bind(vm.userVoList)" rows="20">
+                            <auxhead>
+                                <auxheader colspan="3">员工信息列表</auxheader>
+                            </auxhead>
+                            <listhead>
+                                <listheader hflex="1" label="登录名" sort="auto"/>
+                                <listheader hflex="2" label="姓名" align="center" sort="auto"/>
+                                <listheader hflex="1" label="性别" align="center"/>
+                            </listhead>
+                            <template name="model">
+                                <listitem>
+                                    <listcell label="${each.objId}"/>
+                                    <listcell label="${each.name}"/>
+                                    <listcell label="${each.sex}"/>
+                                </listitem>
+                            </template>
+                        </listbox>-->
+            <!--<vbox></vbox>-->
+        </vlayout>
+    </center>
+</borderlayout>

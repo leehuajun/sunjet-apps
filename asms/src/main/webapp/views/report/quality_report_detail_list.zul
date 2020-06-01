@@ -1,0 +1,94 @@
+<!-- 费用速报明细 列表 -->
+<borderlayout width="100%" height="100%"
+              apply="org.zkoss.bind.BindComposer"
+              viewModel="@id('vm') @init('com.sunjet.vm.report.QualityReportDetailListVM')">
+    <north sclass="c-north">
+        <vlayout>
+            <grid oddRowSclass="none" hflex="1" sclass="form-grid" style="margin-top:10px">
+                <columns>
+                    <column width="70px"></column>
+                    <column hflex="1"></column>
+                    <column width="70px"></column>
+                    <column hflex="1"></column>
+                    <column width="70px"></column>
+                    <column hflex="1"></column>
+                    <column width="70px"></column>
+                    <column hflex="1"></column>
+                </columns>
+                <rows>
+                    <row style="border:none;height:30px">
+                        <label value="速报级别"/>
+                        <textbox value="@bind(vm.reportType)" hflex="1"/>
+                        <label value="服务经理"/>
+                        <textbox value="@bind(vm.serviceManager)" hflex="1"/>
+                        <label value="申请日期从"/>
+                        <datebox hflex="1" format="medium" value="@bind(vm.startDate)" readonly="true"/>
+                        <label value="至"/>
+                        <datebox hflex="1" format="medium" value="@bind(vm.endDate)" readonly="true"/>
+                    </row>
+                </rows>
+            </grid>
+            <include src="/views/macros/flow_list_toolbar.zul"/>
+        </vlayout>
+    </north>
+    <center sclass="c-center">
+        <vlayout width="100%" height="100%">
+            <grid hflex="true" vflex="true"
+                  sclass="list-grid"
+                  oddRowSclass="none"
+                  mold="paging"
+                  style="margin:0;padding:0"
+                  model="@load(vm.maps)">
+                <columns sizable="true">
+                    <column width="30px" label="序号" align="center"/>
+                    <column width="120px" label="单据编号" align="center"/>
+                    <column width="80px" label="速报级别" align="center"/>
+                    <column width="75px" label="服务经理" align="center"/>
+                    <column width="75px" label="联系人" align="center"/>
+                    <column width="75px" label="联系人电话" align="center"/>
+                    <column width="100px" label="服务站编号" align="center"/>
+                    <column width="160px" label="服务站名称" align="center"/>
+                    <column width="120px" label="故障描述 " align="center"/>
+                    <column width="120px" label="VIN " align="center"/>
+                    <column width="120px" label="车型 " align="center"/>
+                    <column width="120px" label="发动机号 " align="center"/>
+                    <column width="120px" label="车主姓名" align="center"/>
+                    <column width="120px" label="电话 " align="center"/>
+                    <column width="120px" label="购车日期 " align="center"/>
+                    <column width="120px" label="行驶里程 " align="center"/>
+                    <column width="120px" label="提交时间 " align="center"/>
+                </columns>
+                <template name="model">
+                    <row>
+                        <label value="${forEachStatus.index+1}" sclass="label-index"/>
+                        <label value="@load(each.doc_no)"/>
+                        <label value="@load(each.report_type)"/>
+                        <label value="@load(each.service_manager)"/>
+                        <label value="@load(each.submitter_name)"/>
+                        <label value="@load(each.submitter_phone)"/>
+                        <label value="@load(each.dealer_code)"/>
+                        <label value="@load(each.dealer_name)"/>
+                        <label value="@load(each.fault_desc)"/>
+                        <label value="@load(each.vin)"/>
+                        <label value="@load(each.vehicle_model)"/>
+                        <label value="@load(each.engine_no)"/>
+                        <label value="@load(each.owner_name)"/>
+                        <label value="@load(each.mobile)"/>
+                        <label value="@load(each.purchase_date)"/>
+                        <label value="@load(each.mileage)"/>
+                        <label value="@load(each.created_time)"/>
+                    </row>
+                </template>
+            </grid>
+            <!--<paging-->
+            <!--pageSize="@bind(vm.resultDTO.pageSize)"-->
+            <!--totalSize="@bind(vm.resultDTO.total)"-->
+            <!--pageIncrement="1"-->
+            <!--detailed="true"-->
+            <!--activePage="@bind(vm.currentPageNo)"-->
+            <!--onPaging="@command('gotoPageNo',e=event)"-->
+            <!--style="border:0px"-->
+            <!--/>-->
+        </vlayout>
+    </center>
+</borderlayout>

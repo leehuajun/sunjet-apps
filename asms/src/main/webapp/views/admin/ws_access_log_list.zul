@@ -1,0 +1,56 @@
+<!-- 系统配置 -->
+<borderlayout width="100%" height="100%"
+              apply="org.zkoss.bind.BindComposer"
+              viewModel="@id('vm') @init('com.sunjet.vm.admin.WebServiceLogListVM')">
+    <north sclass="c-north">
+        <div sclass="ctoolbars">
+            <div sclass="ctoolbar">
+                <button iconSclass="@load(iconVariable.icon_refresh)" sclass="btn-info c-button"
+                        label="刷新"
+                        onClick="@command('refreshData')"/>
+            </div>
+            <!-- Search input-->
+            <div sclass="nav-search">
+                <bandbox value="@bind(vm.keyword)" placeholder="输入关键字..回车搜索" sclass="input-prepend"
+                         onOK="@command('filterList')"/>
+            </div>
+        </div>
+    </north>
+    <center sclass="c-center">
+        <vlayout width="100%" height="100%">
+            <grid hflex="true" vflex="true" sclass="list-grid"
+                  model="@bind(vm.resultDTO.pageContent)"
+                  emptyMessage="@load(vm.emptyMessage)">
+                <columns sizable="true">
+                    <column width="80px" label="接口类型" align="left"/>
+                    <column width="80px" label="操作类型" align="left"/>
+                    <column width="120px" label="开始时间" align="center"/>
+                    <column width="100px" label="结束时间" align="center"/>
+                    <column width="100px" label="调用参数"/>
+                    <column hflex="1" label="失败原因"/>
+                    <column width="80px" label="执行状态" align="center"/>
+                </columns>
+                <template name="model">
+                    <row onDoubleClick="@command('editEntity',model=each)">
+                        <label value="@bind(each.type)"/>
+                        <label value="@bind(each.operateType)"/>
+                        <label value="@bind(each.beginTime)"/>
+                        <label value="@bind(each.endTime)"/>
+                        <label value="@bind(each.param)"/>
+                        <label value="@bind(each.failResult)"/>
+                        <label value="@bind(each.status)"/>
+                    </row>
+                </template>
+            </grid>
+            <paging
+                    pageSize="@bind(vm.resultDTO.pageSize)"
+                    totalSize="@bind(vm.resultDTO.total)"
+                    pageIncrement="1"
+                    detailed="true"
+                    activePage="@bind(vm.currentPageNo)"
+                    onPaging="@command('gotoPageNo',e=event)"
+                    style="border:0px"
+            />
+        </vlayout>
+    </center>
+</borderlayout>

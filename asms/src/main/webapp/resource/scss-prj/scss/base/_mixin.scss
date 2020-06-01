@@ -1,0 +1,55 @@
+@mixin button-style($color,$bg,$border,$hover_bg,$hover_border,$active_bg,$active_border) {
+  color: $border;
+  background-color: $bg !important;
+  border-color: $border;
+  //text-shadow: 0px 0px 0px #000000;
+
+  &:focus {
+    color: $border;
+    background-color: $bg !important;
+    border-color: $border;
+  }
+  &:hover {
+    color: $hover_border;
+    //color:$color;
+    background-color: $hover_bg !important;
+    border-color: $hover_border;
+  }
+  &.open {
+    //color: $hover_border;
+    color: $color;
+    background-color: $hover_bg !important;
+    border-color: $hover_border;
+  }
+  &:active {
+    //color: $active_border;
+    color: $color;
+    background-color: $active_bg !important;
+    border-color: $active_border;
+    text-shadow: 0px 0px 0px #000000;
+  }
+  //&[disabled]{
+  //  color:$btn-disabled-color !important;
+  //  background-color: $btn-disabled-bg !important;
+  //  border-color: $btn-disabled-border !important;
+  //  &:focus{
+  //    background-color: $btn-disabled-bg !important;
+  //    border-color: $btn-disabled-border !important;
+  //  }
+  //  &:hover{
+  //    background-color: $btn-disabled-bg !important;
+  //    border-color: $btn-disabled-border !important;
+  //  }
+  //  &.open{
+  //    background-color: $btn-disabled-bg !important;
+  //    border-color: $btn-disabled-border !important;
+  //  }
+  //}
+}
+
+// 设置区域padding属性
+@mixin region-padding($border,$pading_top,$padding_right,$padding_bottom,$padding_left) {
+  border: $border;
+  padding: $pading_top $padding_right $padding_bottom $padding_left;
+  //margin: 0 $margin_right 0 $margin_left;
+}
